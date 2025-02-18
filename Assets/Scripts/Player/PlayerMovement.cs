@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Threading;
-using static UnityEngine.GridBrushBase;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -260,6 +255,16 @@ public class PlayerMovement : MonoBehaviour
         run = runProperties.Mode == RunMode.ReverseHold;
         readyToSlide = readyToJump = readyToDash = true;
         currentSlideForce = 1f;
+    }
+
+    private void Start()
+    {
+        new InputManager();
+        var playerInputs = InputManager.Player;
+        playerInputs.Move.SubscribeToAllActions(Move);
+        playerInputs.Sprint.SubscribeToAllActions(Run);
+        playerInputs.Crouch.SubscribeToAllActions(Crouch);
+        playerInputs.Jump.SubscribeToAllActions(Jump);
     }
 
     private void Update()

@@ -201,6 +201,16 @@ public class CinemachineController : MonoBehaviour
         };
     }
 
+    private void Start()
+    {
+        var playerInputs = InputManager.Player;
+        playerInputs.LeanLeft.SubscribeToAllActions(LeanLeft);
+        playerInputs.LeanRight.SubscribeToAllActions(LeanRight);
+        playerInputs.Quickturn.SubscribeToAllActions(Quickturn);
+        playerInputs.Zoom.SubscribeToAllActions(Zoom);
+        playerInputs.Freelook.SubscribeToAllActions(Freelook);
+    }
+
     public void LeanLeft(InputAction.CallbackContext context)
     {
         Lean(context, ToggleLeanLeft, () => leaningRight);
