@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.6",
       "depth": 0,
@@ -243,6 +249,16 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.unity.universal-forwardplus-volumetric": {
+      "version": "https://github.com/mseonKim/URP-VolumetricFog-ForwardPlus.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "14.0.8",
+        "com.unity.render-pipelines.universal": "14.0.8"
+      },
+      "hash": "3a31262d3d66efc7ecb87d35b9b32038e86c94be"
     },
     "com.unity.visualscripting": {
       "version": "1.9.5",
