@@ -38,7 +38,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.25
   response:
     m_OverrideState: 1
     m_Value: 0.8
@@ -106,7 +106,7 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -15
   tint:
     m_OverrideState: 1
     m_Value: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.05
 --- !u!114 &1355672719502470559
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -346,7 +346,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.1
   smoothness:
     m_OverrideState: 1
     m_Value: 1
@@ -619,7 +619,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.5
   tintColor:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -655,7 +655,7 @@ MonoBehaviour:
     m_Value: 1.5
   streaksIntensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   streaksLength:
     m_OverrideState: 1
     m_Value: 0.5
@@ -717,13 +717,13 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.7
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   scatter:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.75
   clamp:
     m_OverrideState: 1
     m_Value: 65472
@@ -745,4 +745,4 @@ MonoBehaviour:
     dimension: 1
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 15

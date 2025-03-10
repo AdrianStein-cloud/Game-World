@@ -124,10 +124,10 @@ MonoBehaviour:
     NormalSamples: 1
     Intensity: 1
     DirectLightingStrength: 0.5
-    Radius: 0.3
+    Radius: 2
     Samples: 1
     BlurQuality: 0
-    Falloff: 100
+    Falloff: 50
     SampleCount: -1
   m_BlueNoise256Textures:
   - {fileID: 2800000, guid: 36f118343fc974119bee3d09e2111500, type: 3}
