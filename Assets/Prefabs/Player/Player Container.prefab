@@ -379,6 +379,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3328758010130070809}
+    - target: {fileID: 996609051230850015, guid: 9053d3f656e494440b68db3526fa9353, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5142783169669908752, guid: 9053d3f656e494440b68db3526fa9353, type: 3}
       propertyPath: crouchProperties.Height
       value: 1
