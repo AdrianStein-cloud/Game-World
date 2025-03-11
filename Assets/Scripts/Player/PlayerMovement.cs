@@ -262,7 +262,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        new InputManager();
         var playerInputs = InputManager.Player;
         playerInputs.Move.SubscribeToAllActions(Move);
         playerInputs.Sprint.SubscribeToAllActions(Run);
@@ -367,7 +366,8 @@ public class PlayerMovement : MonoBehaviour
             if (runProperties.Mode == RunMode.Toggle) run = false;
         }
 
-        if (IsRunning || (CanStand && IsCrouching && !crouchContext.performed)) StopCrouch();
+        // Stop crouching when not holding crouch and can stand
+        if (CanStand && IsCrouching && crouchProperties.Mode == InputMode.Hold && !crouchContext.performed) StopCrouch();
 
         if (runProperties.AllowRunningInAllDirections)
         {
