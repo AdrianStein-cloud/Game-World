@@ -28,7 +28,7 @@ MonoBehaviour:
   mipFogFar: 1000
   baseHeight: 0
   maximumHeight: 2000
-  fogAttenuationDistance: 63
+  fogAttenuationDistance: 60
   volumetricLighting: 1
   enableDirectionalLight: 1
   enablePointAndSpotLight: 1
