@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         public Transform Head;
         public Transform GroundCheck;
+        public Transform Model;
         public CinemachineController CameraController;
     }
 
@@ -203,6 +204,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 inputDirection;
     Vector3 cameraPosition;
+    Vector3 modelPosition;
     Vector3 groundCheckPosition;
 
     float movementSpeed;
@@ -250,6 +252,7 @@ public class PlayerMovement : MonoBehaviour
         
         airSpeed = currentSpeed = movementProperties.WalkSpeed;
         cameraPosition = assignables.Head.localPosition;
+        modelPosition = assignables.Model.localPosition;
         groundCheckPosition = assignables.GroundCheck.localPosition;
         controllerHeight = controller.height;
         run = runProperties.Mode == RunMode.ReverseHold;
@@ -452,11 +455,15 @@ public class PlayerMovement : MonoBehaviour
         var heightStart = controller.height;
         var heightEnd = IsCrouching ? crouchProperties.Height : controllerHeight;
 
+        var modelStart = assignables.Model.localPosition;
+        var modelEnd = IsCrouching ? modelPosition / (controllerHeight / crouchProperties.Height) : modelPosition;
+
         while (time < crouchProperties.SmoothTime)
         {
             var t = time / crouchProperties.SmoothTime;
             assignables.Head.localPosition = Vector3.Lerp(cameraStart, cameraEnd, t);
             assignables.GroundCheck.localPosition = Vector3.Lerp(groundStart, groundEnd, t);
+            assignables.Model.localPosition = Vector3.Lerp(modelStart, modelEnd, t);
             controller.height = Mathf.Lerp(heightStart, heightEnd, t);
             time += Time.deltaTime;
             await Awaitable.NextFrameAsync();
@@ -464,6 +471,7 @@ public class PlayerMovement : MonoBehaviour
 
         assignables.Head.localPosition = cameraEnd;
         assignables.GroundCheck.localPosition = groundEnd;
+        assignables.Model.localPosition = modelEnd;
         controller.height = heightEnd;
     }
 
