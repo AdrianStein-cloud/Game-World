@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class StartSequence : MonoBehaviour
 {
@@ -15,24 +16,50 @@ public class StartSequence : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private Image blackOverlay;
+    [SerializeField] private Button startButton;
 
 
     public void Start()
     {
-        if(runStartSequence)
-            StartCoroutine(WakeUpFailSafe());
+
+        if (runStartSequence)
+        {
+            startButton.onClick.AddListener(StartButtonPressed);
+            blackOverlay.gameObject.SetActive(true);
+            InputManager.InputActions.Player.Disable();
+            InputManager.InputActions.UI.Enable();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else blackOverlay.gameObject.SetActive(false);
+    }
+
+    public void OnDisable()
+    {
+        blackOverlay.gameObject.SetActive(false);
+        startButton.onClick.RemoveListener(StartButtonPressed);
+    }
+
+    private void StartButtonPressed()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        startButton.gameObject.SetActive(false);
+        StartCoroutine(WakeUpFailSafe());
     }
 
     private IEnumerator WakeUpFailSafe()
     {
-        blackOverlay.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2);
         AudioSource.PlayClipAtPoint(powerOutageSound, Vector3.zero);
         yield return new WaitForSeconds(3);
         AudioSource.PlayClipAtPoint(powerOutageAIAnnouncement, Vector3.zero);
         yield return new WaitForSeconds(3);
         AudioSource.PlayClipAtPoint(startupSound, Vector3.zero);
         yield return new WaitForSeconds(3);
+
+        InputManager.InputActions.Player.Enable();
+        InputManager.InputActions.UI.Disable();
+
         float duration = 2f;
         while (duration > 0)
         {
