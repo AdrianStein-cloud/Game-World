@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 1
+  isLocked: 0
   door: {fileID: 6999992195810232462}
+  angle: 90
+  duration: 0.5
 --- !u!1 &1320924672726346761
 GameObject:
   m_ObjectHideFlags: 0
