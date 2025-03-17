@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5190949642139820044}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.083}
+  m_LocalPosition: {x: 0, y: 0, z: 0.163}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,13 +44,13 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.1716981, b: 0.1716981, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 0.17
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -131,7 +131,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.453
+      value: 3.248
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -216,3 +216,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interval: 1
   bulb: {fileID: 1061466718149223221}
+  fullIntensity: 1
+  leastIntensity: 0.5
+  fadeDuration: 0.5

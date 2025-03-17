@@ -528,6 +528,7 @@ MonoBehaviour:
   assignables:
     Head: {fileID: 3676301203258204095}
     GroundCheck: {fileID: 1985926762749542619}
+    Model: {fileID: 6507143100851211202}
     CameraController: {fileID: 0}
   movementProperties:
     WalkSpeed: 3
@@ -553,7 +554,7 @@ MonoBehaviour:
     CanCrouchInAir: 1
     Mode: 0
     Speed: 2
-    Height: 1.8
+    Height: 1.2
     CameraOffset: 0
     SmoothTime: 0.2
     CeilingCheckDistance: 2.1
@@ -661,7 +662,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 957506168400746, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 588854396716394453, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_Controller
@@ -674,6 +675,10 @@ PrefabInstance:
     - target: {fileID: 1297314268777055392, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122856698416341348, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
+      propertyPath: m_CastShadows
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6312296609889299319, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_LocalPosition.x
