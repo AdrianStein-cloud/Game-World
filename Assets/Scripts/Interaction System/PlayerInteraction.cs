@@ -6,14 +6,14 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] LayerMask interactionLayer;
     [SerializeField] float interactionDistance;
     Interactable hoveringObject;
-    GameObject mainCamera;
+    Transform mainCamera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        mainCamera = Camera.main.gameObject;
+        mainCamera = Camera.main.transform;
         var playerInputs = InputManager.Player;
-        playerInputs.Interact.SubscribeToAllActions(TryInteract);
+        playerInputs.Interact.started += TryInteract;
     }
 
     // Update is called once per frame
@@ -24,10 +24,10 @@ public class PlayerInteraction : MonoBehaviour
 
     void TryHoverInteractable()
     {
-        var hasHit = Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hit, interactionDistance, interactionLayer);
+        var hasHit = Physics.Raycast(mainCamera.position, mainCamera.forward, out RaycastHit hit, interactionDistance, interactionLayer);
 
         // Looking at interactable
-        if (hasHit && hit.transform.gameObject.TryGetComponent(out Interactable interactable))
+        if (hasHit && hit.transform.TryGetComponent(out Interactable interactable))
         {
             if (hoveringObject != interactable)
             {
@@ -36,6 +36,11 @@ public class PlayerInteraction : MonoBehaviour
 
             hoveringObject = interactable;
             interactable.Hover();
+        }
+        else if (hoveringObject != null)
+        {
+            hoveringObject?.HoverOut();
+            hoveringObject = null;
         }
     }
 

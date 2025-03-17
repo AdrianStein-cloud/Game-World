@@ -14,27 +14,17 @@ public class Door : MonoBehaviour
     bool doorMoving = false;
     CancellationTokenSource tokenSource;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (isOpen)
-            {
-                LightFlicker.LightsOn = false;
-                Close();
-            }
-            else
-            {
-                LightFlicker.LightsOn = true;
-                Open();
-            }
-            isOpen = !isOpen;
-        }
-    }
-
     private void Awake()
     {
         tokenSource = new();
+    }
+
+    public void Interact()
+    {
+        if (isLocked) return;
+        if (isOpen) Close();
+        else Open();
+        isOpen = !isOpen;
     }
 
     private void Close()
