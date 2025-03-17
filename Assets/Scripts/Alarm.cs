@@ -16,11 +16,14 @@ public class Alarm : MonoBehaviour
     private Coroutine fadeCoroutine;
     private Color originalEmissionColor;
     private Color leastEmissionColor; // Dim emission when "off"
+    private LightFlicker lightFlicker;
+    private bool off = false;
 
     void Start()
     {
         light = GetComponentInChildren<Light>();
         timer = interval;
+        lightFlicker = GetComponentInChildren<LightFlicker>();
 
         if (bulb != null)
         {
@@ -37,11 +40,21 @@ public class Alarm : MonoBehaviour
 
     void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0f)
+        if (!LightFlicker.LightsOn)
         {
-            timer = interval;
-            TriggerAlarm();
+            off = false;
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
+            {
+                timer = interval;
+                TriggerAlarm();
+            }
+        }
+        else if (!off)
+        {
+            StopAllCoroutines();
+            lightFlicker.TurnOff();
+            off = true;
         }
     }
 

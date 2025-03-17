@@ -26,12 +26,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5190949642139820044}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.163}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.16299994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 428060731689105807}
+  m_Father: {fileID: 4500040262640219353}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &8565312804382358346
 Light:
@@ -121,6 +121,61 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &5777589162759182012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4500040262640219353}
+  - component: {fileID: 9153131478961400311}
+  m_Layer: 0
+  m_Name: Lights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4500040262640219353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5777589162759182012}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3939318225262199285}
+  m_Father: {fileID: 428060731689105807}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9153131478961400311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5777589162759182012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b194cac781f89e14081450fa9e27c250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulb: {fileID: 1061466718149223221}
+  offFlickerSpeedMin: 0.1
+  offFlickerSpeedMax: 0.2
+  onFlickerSpeedMin: 0.05
+  onFlickerSpeedMax: 20
+  alwaysOn: 0
+  hasSound: 0
+  canScare: 0
+  scaryObject: {fileID: 0}
+  isAlarm: 1
 --- !u!1001 &178595369408667236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,16 +185,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3459319
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3459319
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.248
+      value: 20.249998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.032
+      value: 2.32
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.016
+      value: 0.50980467
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       propertyPath: m_LocalRotation.w
@@ -186,7 +249,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3939318225262199285}
+      addedObject: {fileID: 4500040262640219353}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c256337abb724bd478c57bffbfd457ef, type: 3}
       insertIndex: -1

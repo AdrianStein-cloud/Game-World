@@ -20,10 +20,12 @@ public class Door : MonoBehaviour
         {
             if (isOpen)
             {
+                LightFlicker.LightsOn = false;
                 Close();
             }
             else
             {
+                LightFlicker.LightsOn = true;
                 Open();
             }
             isOpen = !isOpen;
