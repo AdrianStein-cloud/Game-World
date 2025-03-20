@@ -3,10 +3,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    public static PlayerInteraction Instance;
+
     [SerializeField] LayerMask interactionLayer;
     [SerializeField] float interactionDistance;
+
+    [field: SerializeField] public Material normalOutlineMaterial { get; private set; }
+
     Interactable hoveringObject;
     GameObject mainCamera;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,16 +42,20 @@ public class PlayerInteraction : MonoBehaviour
             if (hoveringObject != interactable)
             {
                 hoveringObject?.HoverOut();
+             
+                hoveringObject = interactable;
+                interactable.Hover();
             }
-
-            hoveringObject = interactable;
-            interactable.Hover();
+        }
+        else
+        {
+            hoveringObject?.HoverOut();
+            hoveringObject = null;
         }
     }
 
     void TryInteract(InputAction.CallbackContext context)
     {
-        Debug.Log("Interacting");
         hoveringObject?.Interact();
     }
 }

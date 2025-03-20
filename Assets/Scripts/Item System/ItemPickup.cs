@@ -6,9 +6,9 @@ public class ItemPickup : MonoBehaviour
 
     public void PickupItem()
     {
-        if (PlayerSimpleInventory.Instance.TryPickupItem(item))
+        if (PlayerSimpleInventory.Instance.TryPickupItem(item, this.gameObject))
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }
