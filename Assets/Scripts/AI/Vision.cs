@@ -40,13 +40,11 @@ public class Vision : MonoBehaviour
             if (hit.collider.gameObject == _target.gameObject)
             { 
                 Debug.DrawRay(transform.position, _target.position - transform.position, Color.green); 
-                //Debug.Log("Saw it");
                 _see_something = true;
             }
             else
             { 
                 Debug.DrawRay(transform.position, (_target.position - transform.position).normalized * hit.distance, Color.red); 
-                Debug.Log("Vision was blocked by " + hit.collider.gameObject.name);
                 _see_something = false;
             }
         }
@@ -74,13 +72,11 @@ public class Vision : MonoBehaviour
             if (hit.collider.gameObject == target.gameObject)
             { 
                 Debug.DrawRay(transform.position, target.position - transform.position, Color.green); 
-                //Debug.Log("Saw it");
                 return true;
             }
             else
             { 
                 Debug.DrawRay(transform.position, (target.position - transform.position).normalized * hit.distance, Color.red); 
-                Debug.Log("Vision was blocked by " + hit.collider.gameObject.name);
                 return false;
             }
         }
