@@ -50,7 +50,7 @@ public class ZomibeAI : MonoBehaviour
         _state = (zBehaviour)_fsm.GetCurrentState();
         if (_behaviourMap.TryGetValue(_state, out var action))
         {
-            action(); // Calls the mapped function
+            action();
         }
         else
         {
@@ -62,26 +62,6 @@ public class ZomibeAI : MonoBehaviour
     CONTROLLER STUFF, maybe it should be in it's own script one day
     */
     //currently using navmesh agent to move, maybe there should be a controller or animator instead
-    /*
-    void MoveToPosition(Vector3 position){
-        Vector3 target;
-        if (_moveTargetPosition != position){
-            _moveTargetPosition = position;
-            _navMeshAgent.SetDestination(position);
-        }
-        if (_navMeshAgent.path.corners.Count() > 1) target = _navMeshAgent.path.corners[1];
-        else target = position;
-        Debug.Log(target);
-        if (!FacingPosition(target)){
-            _navMeshAgent.speed = 0;
-            TurnToFace(target);
-            return;
-        }
-        _navMeshAgent.speed = _speed;
-        
-    }
-    */
-    
     public void MoveToPosition(Vector3 destination)
     {
         _navMeshAgent.SetDestination(destination);
@@ -91,19 +71,16 @@ public class ZomibeAI : MonoBehaviour
     
     IEnumerator TurnThenMoveRoutine(Vector3 destination)
     {
-        // Continuously update the destination to ensure the path is valid
         _navMeshAgent.SetDestination(destination);
 
         while (true)
         {
-            // Get the desired direction.
-            // Use the first corner of the path if available; otherwise, use the destination.
             Vector3 targetPoint = (_navMeshAgent.path.corners.Length > 1) ? _navMeshAgent.path.corners[1] : destination;
             
-            // Compute the horizontal direction (ignore Y)
+            
             Vector3 flatDir = targetPoint - transform.position;
             flatDir.y = 0;
-            //if(Vector3.Distance(targetPoint, transform.position) < 0.5f)
+            
             if(flatDir.sqrMagnitude < 0.001f)
             {
                 //this is compensating for the distance to the floor, it should probably be +/- height/distance to floor rather than flat
@@ -115,29 +92,27 @@ public class ZomibeAI : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(flatDir);
             float angleDiff = Quaternion.Angle(transform.rotation, targetRot);
             
-            // If we're not facing the target within our threshold, turn.
             if (angleDiff > 5f)
             {
                 Debug.Log("I'm turning");
-                _navMeshAgent.isStopped = true; // Stop moving while turning
+                _navMeshAgent.isStopped = true;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * Time.fixedDeltaTime);
             }
             else
             {
                 Debug.Log("I'm moving");
-                // Aligned enough; resume movement.
                 _navMeshAgent.isStopped = false;
                 _navMeshAgent.speed = _speed;
                 break;
             }
             
-            yield return null; // Wait until next frame
+            yield return null;
         }
     }
     bool FacingPosition(Vector3 target)
     {
         Vector3 dir = (target - transform.position).normalized;
-        dir.y = 0; // Ignore vertical difference
+        dir.y = 0;
 
         return Vector3.Dot(dir, transform.forward) > 0.95f;
     }
@@ -168,11 +143,9 @@ public class ZomibeAI : MonoBehaviour
         {
             Vector3 targetPoint = hit.point;
             Debug.DrawRay(transform.position, direction * hit.distance, Color.green, 1f);
-            Debug.Log("Hit point: " + hit.collider.name);
             NavMeshHit navMeshHit;
             if (NavMesh.SamplePosition(hit.point, out navMeshHit, 1f, NavMesh.AllAreas))
             {
-                Debug.Log("Hit on NavMesh: " + navMeshHit.position);
                 return targetPoint;
             }
         }
@@ -182,7 +155,6 @@ public class ZomibeAI : MonoBehaviour
     Behaviours
     */
     void Idle(){
-        Debug.Log("I'm idling");
         if (_look == 0) {
             if (_timer == 0 && _wait == 0){
                 _wait = Random.Range(5,15);
@@ -200,7 +172,6 @@ public class ZomibeAI : MonoBehaviour
         if (_vision._see_something){
             _targetPosition = _vision._target.position;
         }
-        Debug.Log("I'm Chasing: " + _targetPosition);
         MoveToPosition(_targetPosition);
     }
     void ShambleForwards(){
@@ -283,7 +254,6 @@ public class ZomibeAI : MonoBehaviour
                 var target = GetNearbyPoint();
                 if (target != Vector3.zero){
                     _targetPosition = target;
-                    //MoveToPosition(_targetPosition);
                 }
             }
         }else {
@@ -294,9 +264,7 @@ public class ZomibeAI : MonoBehaviour
     Transitions
     */
     bool SeeSomething(){
-        Debug.Log("trying to see");
         if (_vision._see_something){
-            Debug.Log("Saw Something and changing state");
             return true;
         }
         return false;
@@ -306,7 +274,6 @@ public class ZomibeAI : MonoBehaviour
             _count = 0;
             _timer = 0;
             _look = 0;
-            Debug.Log("Hit target position");
             return true;
         }
         return false;
