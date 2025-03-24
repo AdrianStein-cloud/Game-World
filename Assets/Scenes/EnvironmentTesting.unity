@@ -3081,15 +3081,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6995870026352028469, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.248
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 6995870026352028469, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.278
+      value: 0.268
       objectReference: {fileID: 0}
     - target: {fileID: 6995870026352028469, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 6995870026352028469, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3155,6 +3155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 1
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -3176,7 +3177,6 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
-  once: 1
 --- !u!114 &125176985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42711,6 +42711,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
+      propertyPath: <denyOutlineMaterial>k__BackingField
+      value: 
+      objectReference: {fileID: 2100000, guid: 0f7f39f521a64ef48ab1a6491a18625c, type: 2}
+    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
+      propertyPath: <normalOutlineMaterial>k__BackingField
+      value: 
+      objectReference: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
     - target: {fileID: 7870443602692568768, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
       propertyPath: m_Name
       value: Player Container
@@ -51842,6 +51850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -51863,7 +51872,6 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
-  once: 0
 --- !u!65 &8506797734637983059
 BoxCollider:
   m_ObjectHideFlags: 0

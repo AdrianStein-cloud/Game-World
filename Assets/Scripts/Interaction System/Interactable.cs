@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,20 +9,20 @@ using UnityEngine.Rendering;
 
 public class Interactable : MonoBehaviour
 {
-    [SerializeField] UnityEvent OnInteract, OnHoverIn, OnHoverOut;
     [SerializeField] bool once = false;
-
-    bool hovering;
+    [SerializeField] UnityEvent OnInteract, OnHoverIn, OnHoverOut;
 
     private List<Renderer> renderers;
     private Dictionary<Renderer, Material[]> originalMaterials;
+    private bool hovering;
+
     public void Interact()
     {
         OnInteract?.Invoke();
         if (once)
         {
-            this.enabled = false;
             if (hovering) HoverOut();
+            Destroy(this);
         }
     }
 
@@ -57,7 +58,9 @@ public class Interactable : MonoBehaviour
         foreach (Renderer renderer in renderers)
         {
             List<Material> materials = new List<Material>(renderer.materials);
-            materials.Add(PlayerInteraction.Instance.normalOutlineMaterial);
+
+            var playerInteract = PlayerInteraction.Instance;
+            materials.Add(playerInteract.normalOutlineMaterial);
             renderer.materials = materials.ToArray();
         }
     }

@@ -9,6 +9,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] float interactionDistance;
 
     [field: SerializeField] public Material normalOutlineMaterial { get; private set; }
+    [field: SerializeField] public Material denyOutlineMaterial { get; private set; }
 
     Interactable hoveringObject;
     Transform mainCamera;
