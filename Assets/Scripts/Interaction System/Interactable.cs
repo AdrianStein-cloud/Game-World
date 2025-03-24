@@ -9,43 +9,67 @@ using UnityEngine.Rendering;
 public class Interactable : MonoBehaviour
 {
     [SerializeField] UnityEvent OnInteract, OnHoverIn, OnHoverOut;
+    [SerializeField] bool once = false;
 
-    Material[] initialMaterials;
-    Renderer renderer;
+    bool hovering;
 
-    public void Interact() => OnInteract?.Invoke();
+    private List<Renderer> renderers;
+    private Dictionary<Renderer, Material[]> originalMaterials;
+    public void Interact()
+    {
+        OnInteract?.Invoke();
+        if (once)
+        {
+            this.enabled = false;
+            if (hovering) HoverOut();
+        }
+    }
 
     private void Awake()
     {
         OnHoverIn.AddListener(BeginOutline);
         OnHoverOut.AddListener(EndOutline);
 
-        renderer = GetComponent<Renderer>();
-        initialMaterials = renderer.materials;
+        renderers = new List<Renderer>();
+        originalMaterials = new Dictionary<Renderer, Material[]>();
+
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        {
+            renderers.Add(renderer);
+            originalMaterials[renderer] = renderer.materials;
+        }
     }
 
     public void Hover()
     {
+        hovering = true;
         OnHoverIn?.Invoke();
     }
 
     public void HoverOut()
     {
+        hovering = false;
         OnHoverOut?.Invoke();
     }
 
     public void BeginOutline()
     {
-        // Create a new list and add the outline material
-        List<Material> materials = new List<Material>(renderer.materials);
-        materials.Add(PlayerInteraction.Instance.normalOutlineMaterial);
-
-        // Assign back to the renderer
-        renderer.materials = materials.ToArray();
+        foreach (Renderer renderer in renderers)
+        {
+            List<Material> materials = new List<Material>(renderer.materials);
+            materials.Add(PlayerInteraction.Instance.normalOutlineMaterial);
+            renderer.materials = materials.ToArray();
+        }
     }
 
     public void EndOutline()
     {
-        renderer.materials = initialMaterials;
+        foreach (Renderer renderer in renderers)
+        {
+            if (originalMaterials.TryGetValue(renderer, out Material[] originalMats))
+            {
+                renderer.materials = originalMats;
+            }
+        }
     }
 }

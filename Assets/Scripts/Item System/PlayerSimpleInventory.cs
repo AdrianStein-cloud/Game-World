@@ -46,8 +46,9 @@ public class PlayerSimpleInventory : MonoBehaviour
             {
                 var groundItem = groundItems[currentlySelectedSlot];
                 groundItem.SetActive(true);
-                Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, dropItemLayer);
-                groundItem.transform.position = hit.point + new Vector3(0, (groundItem.transform.localScale.y / 2), 0);
+                //Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, dropItemLayer);
+                //groundItem.transform.position = hit.point + new Vector3(0, (groundItem.transform.localScale.y / 2), 0);
+                groundItem.transform.position = transform.position + 0.1f * transform.forward;
             }
             onInventorySlotChange?.Invoke(currentlySelectedSlot, null);
             items[currentlySelectedSlot] = null;
@@ -88,5 +89,8 @@ public class PlayerSimpleInventory : MonoBehaviour
         onInventorySlotChange?.Invoke(currentlySelectedSlot, item);
     }
 
-    public bool ContainsItem(Item item) => items.Contains(item);
+    public bool ContainsItem(Item item)
+    {
+        return items.Contains(item);
+    }
 }

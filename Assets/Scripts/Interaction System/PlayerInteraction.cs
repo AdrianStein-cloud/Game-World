@@ -52,11 +52,6 @@ public class PlayerInteraction : MonoBehaviour
             hoveringObject?.HoverOut();
             hoveringObject = null;
         }
-        else if (hoveringObject != null)
-        {
-            hoveringObject?.HoverOut();
-            hoveringObject = null;
-        }
     }
 
     void TryInteract(InputAction.CallbackContext context)
