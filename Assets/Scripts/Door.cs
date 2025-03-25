@@ -12,11 +12,13 @@ public class Door : MonoBehaviour
 
     bool isOpen = false;
     bool doorMoving = false;
+    Transform player;
     CancellationTokenSource tokenSource;
 
     private void Awake()
     {
         tokenSource = new();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void Interact()
@@ -34,7 +36,17 @@ public class Door : MonoBehaviour
 
     private void Open()
     {
-        Move(angle);
+        float doorAngle = DetermineOpeningDirection();
+        Move(doorAngle);
+    }
+
+    private float DetermineOpeningDirection()
+    {
+        if (player == null) return angle;
+        Vector3 doorToPlayer = player.position - door.transform.position;
+        float dotProduct = Vector3.Dot(transform.right, doorToPlayer.normalized);
+        Debug.Log(dotProduct);
+        return dotProduct > 0 ? -angle : angle;
     }
 
     private async void Move(float angle)
@@ -48,6 +60,18 @@ public class Door : MonoBehaviour
         {
             var timeElapsed = 0f;
             var startAngle = door.transform.localRotation.eulerAngles.y;
+
+            if (startAngle > 180f)
+                startAngle -= 360f;
+
+            // Choose the shortest path to the target angle
+            if (isOpen && Math.Abs(startAngle - angle) > 180f)
+            {
+                if (startAngle > angle)
+                    startAngle -= 360f;
+                else
+                    startAngle += 360f;
+            }
 
             while (timeElapsed < duration && !tokenSource.IsCancellationRequested)
             {
