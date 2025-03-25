@@ -9,12 +9,13 @@ using System.Collections;
 public class ZomibeAI : MonoBehaviour
 {
     public MonoBehaviour _eyes;
-    public float _speed;
-    public float _turnSpeed;
-    public float _shambleDistance;
-    public float _bigTurn;
-    public float _smallTurn;
-
+    [SerializeField] private float _speed;
+    [SerializeField] private float _turnSpeed;
+    [SerializeField] private float _shambleDistance;
+    [SerializeField] private float _bigTurn;
+    [SerializeField] private float _smallTurn;
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private List<Vector3> _patrolPath;
     public zBehaviour _state;
     private Vector3 _targetPosition;
     private Vector3 _moveTargetPosition;
@@ -26,19 +27,19 @@ public class ZomibeAI : MonoBehaviour
     private int _look;
     private float _timer;
     private int _wait;
-    public LayerMask _layerMask;
 
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _vision = _eyes.GetComponent<Vision>();
         _navMeshAgent.angularSpeed = _turnSpeed;
+        _navMeshAgent.updateRotation = false;
         _navMeshAgent.speed = _speed;
 
     }
     void Awake()
     {
-        MakeStateMap();
+        MakeStateMachine();
     }
 
     void Update()
@@ -85,7 +86,6 @@ public class ZomibeAI : MonoBehaviour
             {
                 //this is compensating for the distance to the floor, it should probably be +/- height/distance to floor rather than flat
                 _targetPosition = transform.position;
-                Debug.Log("very close" + Vector3.Distance(targetPoint, transform.position));
                 break;
             }
             
@@ -94,20 +94,23 @@ public class ZomibeAI : MonoBehaviour
             
             if (angleDiff > 5f)
             {
-                Debug.Log("I'm turning");
-                _navMeshAgent.isStopped = true;
+                //_navMeshAgent.isStopped = true;
+                _navMeshAgent.speed = _speed * 0.20f;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * Time.fixedDeltaTime);
             }
             else
             {
-                Debug.Log("I'm moving");
-                _navMeshAgent.isStopped = false;
+                //_navMeshAgent.isStopped = false;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * Time.fixedDeltaTime);
                 _navMeshAgent.speed = _speed;
                 break;
             }
             
             yield return null;
         }
+    }
+    bool CloseEnough(){
+        return Vector3.Distance(transform.position, _targetPosition) < 0.5f;
     }
     bool FacingPosition(Vector3 target)
     {
@@ -118,7 +121,6 @@ public class ZomibeAI : MonoBehaviour
     }
     void TurnToFace(Vector3 target)
     {
-        Debug.Log("I'm turning");
         Vector3 dir = (target - transform.position).normalized;
         dir.y = 0;
         
@@ -133,7 +135,12 @@ public class ZomibeAI : MonoBehaviour
     void TurnRight(){
         transform.Rotate(0, _turnSpeed * Time.fixedDeltaTime *2.5f, 0);
     }
-
+    void ResetCounts()
+    {
+        _count = 0;
+        _timer = 0;
+        _look = 0;
+    }
     Vector3 GetNearbyPoint(){
         float angle = 70f;
         Vector3 direction = Quaternion.Euler(angle, Random.Range(45f, 315f), 0) * Vector3.down;
@@ -175,7 +182,7 @@ public class ZomibeAI : MonoBehaviour
         MoveToPosition(_targetPosition);
     }
     void ShambleForwards(){
-        if (Vector3.Distance(transform.position, _targetPosition) < 0.5f){
+        if (CloseEnough()){
             _targetPosition = transform.position + transform.forward * _shambleDistance;
         }
         _navMeshAgent.destination = _targetPosition;
@@ -242,11 +249,10 @@ public class ZomibeAI : MonoBehaviour
     }
     void Investigate(){
         if (_count == 0) _count = Random.Range(3,6);
-        Debug.Log(_count);
         if(_look != 0){
             RandomLook();
         }
-        else if (Vector3.Distance(transform.position, _targetPosition) < 0.5f){
+        else if (CloseEnough()){
             _count -=1;
             _look = Random.Range(1,5)*2;
 
@@ -260,6 +266,30 @@ public class ZomibeAI : MonoBehaviour
             MoveToPosition(_targetPosition);
         }
     }
+    void Patrol(){
+        if (_patrolPath.Count() == 0 | _patrolPath.Count() == 1 & CloseEnough()) {
+            Idle();
+            return;
+            }
+        if (!_patrolPath.Contains(_targetPosition)){
+            _targetPosition = _patrolPath.OrderBy(n => GetNMDistance(transform.position, n)).First();
+            if (GetNMDistance(transform.position, _targetPosition) > 199999){
+                Idle();
+                return;
+            }
+            while(_patrolPath[0] != _targetPosition){
+                var tmp = _patrolPath[0];
+                _patrolPath.RemoveAt(0);
+                _patrolPath.Add(tmp);
+            }
+        }
+        if (CloseEnough()){
+            _targetPosition = _patrolPath[0];
+            _patrolPath.RemoveAt(0);
+            _patrolPath.Add(_targetPosition);
+        }
+        MoveToPosition(_targetPosition);
+    }
     /**
     Transitions
     */
@@ -270,34 +300,51 @@ public class ZomibeAI : MonoBehaviour
         return false;
     }
     bool WildGooseChace(){
-        if (Vector3.Distance(transform.position, _targetPosition) < 0.5f){
-            _count = 0;
-            _timer = 0;
-            _look = 0;
+        if (CloseEnough()){
+            ResetCounts();
             return true;
         }
         return false;
     }
     bool CountDown(){
-        return _count == 0;
+        if (_count == 0){
+            ResetCounts();
+            return true;
+        }
+        return false;
     }
     /**
     State Machine Creation
     */
-        private void MakeStateMap(){
-        _fsm = new FSM(zBehaviour.Idle);
-        _fsm.AddState(zBehaviour.Idle, SeeSomething, zBehaviour.Chase);
+    private void MakeStateMachine(){
+        _fsm = new FSM(zBehaviour.Patrol);
+        _fsm.AddState(zBehaviour.Patrol, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Chase, WildGooseChace, zBehaviour.Shamble);
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
-        _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.Idle);
         _fsm.AddState(zBehaviour.Investigate, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.Patrol);
 
 
         _behaviourMap[zBehaviour.Idle] = Idle;
         _behaviourMap[zBehaviour.Investigate] = Investigate;
         _behaviourMap[zBehaviour.Chase] = Chase;
         _behaviourMap[zBehaviour.Shamble] = ShambleForwards;
+        _behaviourMap[zBehaviour.Patrol] = Patrol;
+    }
+    /*
+    Tools
+    */
+    float GetPathDistance(NavMeshPath path)
+    {
+        return path.corners
+                .Zip(path.corners.Skip(1), (a, b) => Vector3.Distance(a, b))
+                .Sum();
+    }
+    float GetNMDistance(Vector3 from, Vector3 to){
+        var path = new NavMeshPath();
+        if (NavMesh.CalculatePath(from, to, NavMesh.AllAreas, path)) return GetPathDistance(path);
+        return 200000;
     }
 
 }
@@ -307,5 +354,6 @@ public enum zBehaviour{
     Investigate,
     Search,
     Idle,
-    Roam
+    Roam,
+    Patrol
 }

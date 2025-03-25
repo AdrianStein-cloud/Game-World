@@ -17,10 +17,9 @@ public class FSM
     }
     public void UpdateState()
     {
-        //Debug.Log(_stateMap);
         if (!_stateMap.ContainsKey(_currentState))
         {
-            Console.WriteLine($"State {_currentState} not found in _stateMap.");
+            Debug.Log($"State {_currentState} not found in _stateMap.");
             return;
         }
         foreach (var item in _stateMap[_currentState])
@@ -42,7 +41,6 @@ public class FSM
                 [transition] = toState
             };
         }
-        Debug.Log(_stateMap.Keys.Count);
     }
 }
 
