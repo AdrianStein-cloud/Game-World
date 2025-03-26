@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ItemTest
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: ceb599c33b7247c42b63db40bebac881, type: 3}
+  Name: Room door key 1
