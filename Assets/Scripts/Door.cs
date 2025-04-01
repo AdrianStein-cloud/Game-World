@@ -2,6 +2,7 @@ using Mono.Cecil;
 using System;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Door : MonoBehaviour, ILockChecker
 {
@@ -29,7 +30,7 @@ public class Door : MonoBehaviour, ILockChecker
         isOpen = !isOpen;
     }
 
-    private void Close()
+    public void Close()
     {
         Move(0f);
     }
@@ -40,12 +41,16 @@ public class Door : MonoBehaviour, ILockChecker
         Move(doorAngle);
     }
 
+    public void Open(bool direction)
+    {
+        Move(direction ? -angle : angle);
+    }
+
     private float DetermineOpeningDirection()
     {
         if (player == null) return angle;
         Vector3 doorToPlayer = player.position - door.transform.position;
         float dotProduct = Vector3.Dot(door.transform.right, doorToPlayer.normalized);
-        Debug.Log(dotProduct);
         return dotProduct > 0 ? -angle : angle;
     }
 
