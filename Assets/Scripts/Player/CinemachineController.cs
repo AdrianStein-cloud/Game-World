@@ -283,7 +283,7 @@ public class CinemachineController : MonoBehaviour
 
     public void Quickturn(InputAction.CallbackContext context)
     {
-        if (!context.started || Quickturning || !readyToQuickturn) return;
+        if (!quickturnProperties.Enable || !context.started || Quickturning || !readyToQuickturn) return;
         LerpQuickturn();
     }
 
