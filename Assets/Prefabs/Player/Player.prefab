@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 1302782410326537757}
   - component: {fileID: 5370834908716277923}
   - component: {fileID: 7060078005215711329}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -669,6 +669,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   interactionDistance: 2
+  <normalOutlineMaterial>k__BackingField: {fileID: 0}
+  <denyOutlineMaterial>k__BackingField: {fileID: 0}
 --- !u!1001 &997490684451905717
 PrefabInstance:
   m_ObjectHideFlags: 0
