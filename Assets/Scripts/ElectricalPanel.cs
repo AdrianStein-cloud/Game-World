@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricalPanel : MonoBehaviour
+public class ElectricalPanel : MonoBehaviour, ILockChecker
 {
     [Header("Audio Settings")]
     [SerializeField] private AudioClip switchSoundEffect;
     [SerializeField] private AudioClip poweringUpSound;
+    [Header("Other")]
+    [SerializeField] Item item;
+    public bool IsLocked()
+    {
+        return !PlayerSimpleInventory.Instance.ContainsItem(item);
+    }
 
     public void TurnOn()
     {
