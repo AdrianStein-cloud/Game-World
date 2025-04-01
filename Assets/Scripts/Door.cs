@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, ILockChecker
 {
     [SerializeField] private bool isLocked = true;
     [SerializeField] private GameObject door;
@@ -90,5 +90,10 @@ public class Door : MonoBehaviour
     {
         tokenSource?.Cancel();
         tokenSource?.Dispose();
+    }
+
+    public bool IsLocked()
+    {
+        return isLocked;
     }
 }

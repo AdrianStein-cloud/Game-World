@@ -3471,6 +3471,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 125176985}
 --- !u!114 &125176985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53591,6 +53592,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4645418623039910628, guid: 792a39f594bedd04480dee312795d634, type: 3}
+      propertyPath: lockCheckerComponent
+      value: 
+      objectReference: {fileID: 2647898423872164279}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -54107,6 +54112,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3254787039712283658, guid: 792a39f594bedd04480dee312795d634, type: 3}
   m_PrefabInstance: {fileID: 615353282006594835}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2647898423872164279 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7195158158663909951, guid: 792a39f594bedd04480dee312795d634, type: 3}
+  m_PrefabInstance: {fileID: 615353282006594835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2701342484073446521
 Transform:
   m_ObjectHideFlags: 0
@@ -54776,7 +54792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  once: 0
+  once: 1
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -54822,6 +54838,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!65 &8506797734637983059
 BoxCollider:
   m_ObjectHideFlags: 0

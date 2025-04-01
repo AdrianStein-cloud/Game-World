@@ -314,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -335,6 +336,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 8323932246609119659}
 --- !u!65 &49916041545810960
 BoxCollider:
   m_ObjectHideFlags: 0
