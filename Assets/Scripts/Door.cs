@@ -44,7 +44,7 @@ public class Door : MonoBehaviour
     {
         if (player == null) return angle;
         Vector3 doorToPlayer = player.position - door.transform.position;
-        float dotProduct = Vector3.Dot(transform.right, doorToPlayer.normalized);
+        float dotProduct = Vector3.Dot(door.transform.right, doorToPlayer.normalized);
         Debug.Log(dotProduct);
         return dotProduct > 0 ? -angle : angle;
     }
