@@ -249,7 +249,8 @@ GameObject:
   - component: {fileID: 5142783169669908752}
   - component: {fileID: 1302782410326537757}
   - component: {fileID: 5370834908716277923}
-  m_Layer: 7
+  - component: {fileID: 7060078005215711329}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -528,6 +529,7 @@ MonoBehaviour:
   assignables:
     Head: {fileID: 3676301203258204095}
     GroundCheck: {fileID: 1985926762749542619}
+    Model: {fileID: 6507143100851211202}
     CameraController: {fileID: 0}
   movementProperties:
     WalkSpeed: 3
@@ -553,7 +555,7 @@ MonoBehaviour:
     CanCrouchInAir: 1
     Mode: 0
     Speed: 2
-    Height: 1.8
+    Height: 1.2
     CameraOffset: 0
     SmoothTime: 0.2
     CeilingCheckDistance: 2.1
@@ -651,6 +653,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationDampTime: 0.1
+--- !u!114 &7060078005215711329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419541264559891762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baea6567222806b469ddb6c6a7bd38ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  interactionDistance: 2
 --- !u!1001 &997490684451905717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -661,7 +679,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 957506168400746, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 588854396716394453, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_Controller
@@ -674,6 +692,10 @@ PrefabInstance:
     - target: {fileID: 1297314268777055392, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122856698416341348, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
+      propertyPath: m_CastShadows
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6312296609889299319, guid: 7ee6bd4a34d1217458bd869e9928e92a, type: 3}
       propertyPath: m_LocalPosition.x
