@@ -11,6 +11,8 @@ TagManager:
   - Ground
   - Water
   - UI
+  - Target
+  - NavMesh
   - Player
   - 
   - 
