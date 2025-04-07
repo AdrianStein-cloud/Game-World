@@ -11,7 +11,8 @@ public class PlayerInteraction : MonoBehaviour
     [field: SerializeField] public Material normalOutlineMaterial { get; private set; }
     [field: SerializeField] public Material denyOutlineMaterial { get; private set; }
 
-    Interactable hoveringObject;
+    public Interactable hoveringObject {get; private set;}
+    
     Transform mainCamera;
 
     private void Awake()

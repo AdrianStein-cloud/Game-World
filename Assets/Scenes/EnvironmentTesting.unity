@@ -3678,6 +3678,10 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 1394032554}
+    - target: {fileID: 6562366592861718388, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
+      propertyPath: OnInteract.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6995870026352028469, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -3733,97 +3737,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1260345870990631637, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 125176984}
-    - targetCorrespondingSourceObject: {fileID: 1260345870990631637, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 125176985}
-    - targetCorrespondingSourceObject: {fileID: 1260345870990631637, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 125176988}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
 --- !u!4 &125176982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6995870026352028469, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
   m_PrefabInstance: {fileID: 125176981}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &125176983 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1260345870990631637, guid: 94fbb8900d25f75459addd9c0c0fdca0, type: 3}
-  m_PrefabInstance: {fileID: 125176981}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &125176984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125176983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  once: 1
-  OnInteract:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 125176985}
-        m_TargetAssemblyTypeName: VentOpen, Assembly-CSharp
-        m_MethodName: OpenVentGrate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHoverIn:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHoverOut:
-    m_PersistentCalls:
-      m_Calls: []
-  lockCheckerComponent: {fileID: 0}
---- !u!114 &125176985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125176983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09a06e9bcb502b14f9085f3c691b484d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 56c54e264827b8b469810cfddbfb97c1, type: 2}
-  anim: {fileID: 1394032554}
---- !u!65 &125176988
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125176983}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.30232695, y: 0.20076281, z: 0.012148953}
-  m_Center: {x: 0.0009225011, y: -0.000000007450581, z: -0.0000056759454}
 --- !u!43 &127844332
 Mesh:
   m_ObjectHideFlags: 0
