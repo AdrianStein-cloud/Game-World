@@ -40,6 +40,16 @@ public class PlayerSimpleInventory : MonoBehaviour
         {
             DropItem();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            TryUseItem();
+        }
+    }
+
+    void TryUseItem()
+    {
+        items[currentlySelectedSlot]?.Use();
     }
 
     void DropItem()
@@ -53,6 +63,7 @@ public class PlayerSimpleInventory : MonoBehaviour
             groundItem.transform.position = transform.position + 0.1f * transform.forward;
         }
         onInventorySlotChange?.Invoke(currentlySelectedSlot, null);
+        items[currentlySelectedSlot].OnDrop();
         items[currentlySelectedSlot] = null;
         groundItems[currentlySelectedSlot] = null;
         selectedItem = null;
@@ -104,6 +115,7 @@ public class PlayerSimpleInventory : MonoBehaviour
     {
         items[slotIndex] = item;
         groundItems[slotIndex] = go;
+        items[slotIndex].OnPickup();
 
         onInventorySlotChange?.Invoke(slotIndex, item);
         if (currentlySelectedSlot == slotIndex) SelectItem(slotIndex);
