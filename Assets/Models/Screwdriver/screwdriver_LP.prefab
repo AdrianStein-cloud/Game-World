@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -190,7 +191,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8730996864291373112}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9fb1a41459140354d8e38b33e575de3d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

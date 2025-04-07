@@ -534,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1082,6 +1083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1238,6 +1240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1394,6 +1397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1835,6 +1839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1978,6 +1983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -2561,6 +2567,7 @@ MonoBehaviour:
     m_Bits: 1
   interactionDistance: 2.5
   <normalOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
+  <denyOutlineMaterial>k__BackingField: {fileID: 0}
 --- !u!114 &626257424831662372
 MonoBehaviour:
   m_ObjectHideFlags: 0
