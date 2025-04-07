@@ -6,14 +6,14 @@ using UnityEngine.Rendering.Universal;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject menu;
-    [SerializeField] SliderSetting brightnessSetting;
+    [SerializeField] SliderSetting gammaSetting;
 
     PlayerInput playerInput;
     bool isPaused = true;
 
     private void Start()
     {
-        brightnessSetting.Init(PostProcessingHandler.GetEffect<ColorAdjustments>().postExposure.value, SetBrightness);
+        gammaSetting.Init(PostProcessingHandler.GetEffect<LiftGammaGain>().gamma.value[3], SetGamma);
 
         playerInput = FindFirstObjectByType<PlayerInput>();
         playerInput.actions["Pause"].started += _ => Pause();
@@ -22,9 +22,9 @@ public class PauseMenu : MonoBehaviour
         Resume();
     }
 
-    private void SetBrightness(float value)
+    private void SetGamma(float value)
     {
-        PostProcessingHandler.GetEffect<ColorAdjustments>().postExposure.value = value;
+        PostProcessingHandler.GetEffect<LiftGammaGain>().gamma.value = new Vector4(1f,1f,1f,value / 10);
     }
 
     private void Pause()
