@@ -32,8 +32,6 @@ public class PlayerSimpleInventory : MonoBehaviour
 
         var playerInputs = InputManager.Player;
         playerInputs.InventoryButtons.performed += InventoryButtons;
-
-        //onInventorySlotChange += SelectItem;
     }
 
     private void Update()
@@ -46,8 +44,6 @@ public class PlayerSimpleInventory : MonoBehaviour
 
     void DropItem()
     {
-        Debug.Log("Dropping item: " + selectedItem?.Name);
-
         if (selectedItem != null)
         {
             var groundItem = groundItems[currentlySelectedSlot];
@@ -110,6 +106,7 @@ public class PlayerSimpleInventory : MonoBehaviour
         groundItems[slotIndex] = go;
 
         onInventorySlotChange?.Invoke(slotIndex, item);
+        if (currentlySelectedSlot == slotIndex) SelectItem(slotIndex);
     }
 
     public bool ContainsItem(Item item)
