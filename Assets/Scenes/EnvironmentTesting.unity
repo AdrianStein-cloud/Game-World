@@ -16952,6 +16952,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5429251063470252044, guid: 86150856c4138c74c851c99c92c9bac0, type: 3}
   m_PrefabInstance: {fileID: 625044366}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &625044368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8323932246609119659, guid: 86150856c4138c74c851c99c92c9bac0, type: 3}
+  m_PrefabInstance: {fileID: 625044366}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &625822288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1139638636039081370, guid: 9ad37ab5a663e4942bfb5df884fea798, type: 3}
@@ -29689,6 +29700,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5429251063470252044, guid: 86150856c4138c74c851c99c92c9bac0, type: 3}
   m_PrefabInstance: {fileID: 1107607062}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1107607064 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8323932246609119659, guid: 86150856c4138c74c851c99c92c9bac0, type: 3}
+  m_PrefabInstance: {fileID: 1107607062}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1114556308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2588893597720776001, guid: da2b80440564c9542b6a738e64464ced, type: 3}
@@ -44837,6 +44859,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5429251063470252044, guid: 86150856c4138c74c851c99c92c9bac0, type: 3}
   m_PrefabInstance: {fileID: 1794843862}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1794843864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8323932246609119659, guid: 86150856c4138c74c851c99c92c9bac0, type: 3}
+  m_PrefabInstance: {fileID: 1794843862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1798102718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55394,6 +55427,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 792a39f594bedd04480dee312795d634, type: 3}
+--- !u!114 &615353282006594836 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7195158158663909951, guid: 792a39f594bedd04480dee312795d634, type: 3}
+  m_PrefabInstance: {fileID: 615353282006594835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &919132148141800630
 GameObject:
   m_ObjectHideFlags: 0
@@ -56664,6 +56708,54 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Toggle
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 615353282006594836}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Toggle
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1107607064}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Toggle
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1794843864}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Toggle
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 625044368}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
