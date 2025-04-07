@@ -32,28 +32,30 @@ public class PlayerSimpleInventory : MonoBehaviour
 
         var playerInputs = InputManager.Player;
         playerInputs.InventoryButtons.performed += InventoryButtons;
-
-        onInventorySlotChange += SelectItem;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Debug.Log("Dropping item: " + selectedItem?.Name);
-
-            if (selectedItem != null)
-            {
-                var groundItem = groundItems[currentlySelectedSlot];
-                groundItem.SetActive(true);
-                //Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, dropItemLayer);
-                //groundItem.transform.position = hit.point + new Vector3(0, (groundItem.transform.localScale.y / 2), 0);
-                groundItem.transform.position = transform.position + 0.1f * transform.forward;
-            }
-            onInventorySlotChange?.Invoke(currentlySelectedSlot, null);
-            items[currentlySelectedSlot] = null;
-            groundItems[currentlySelectedSlot] = null;
+            DropItem();
         }
+    }
+
+    void DropItem()
+    {
+        if (selectedItem != null)
+        {
+            var groundItem = groundItems[currentlySelectedSlot];
+            groundItem.SetActive(true);
+            //Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, dropItemLayer);
+            //groundItem.transform.position = hit.point + new Vector3(0, (groundItem.transform.localScale.y / 2), 0);
+            groundItem.transform.position = transform.position + 0.1f * transform.forward;
+        }
+        onInventorySlotChange?.Invoke(currentlySelectedSlot, null);
+        items[currentlySelectedSlot] = null;
+        groundItems[currentlySelectedSlot] = null;
+        selectedItem = null;
     }
 
     void SelectItem(int index, Item _ = null)
@@ -75,18 +77,36 @@ public class PlayerSimpleInventory : MonoBehaviour
 
     public bool TryPickupItem(Item item, GameObject go)
     {
-        if (items[currentlySelectedSlot] != null) return false;
+        var freeSlotIndex = -1;
 
-        PickUpItem(item, go);
+        if (items[currentlySelectedSlot] == null)
+        {
+            freeSlotIndex = currentlySelectedSlot;
+        }
+        else
+        {
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i] == null)
+                {
+                    freeSlotIndex = i;
+                    break;
+                }
+            }
+        if (freeSlotIndex == -1) return false;
+        }
+
+        PickUpItem(freeSlotIndex, item, go);
         return true;
     }
 
-    void PickUpItem(Item item, GameObject go)
+    void PickUpItem(int slotIndex, Item item, GameObject go)
     {
-        items[currentlySelectedSlot] = item;
-        groundItems[currentlySelectedSlot] = go;
+        items[slotIndex] = item;
+        groundItems[slotIndex] = go;
 
-        onInventorySlotChange?.Invoke(currentlySelectedSlot, item);
+        onInventorySlotChange?.Invoke(slotIndex, item);
+        if (currentlySelectedSlot == slotIndex) SelectItem(slotIndex);
     }
 
     public bool ContainsItem(Item item)

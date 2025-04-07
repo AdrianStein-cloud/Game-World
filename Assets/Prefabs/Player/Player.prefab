@@ -668,9 +668,26 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 1
-  interactionDistance: 2
-  <normalOutlineMaterial>k__BackingField: {fileID: 0}
-  <denyOutlineMaterial>k__BackingField: {fileID: 0}
+  interactionDistance: 2.5
+  <normalOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
+  <denyOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 0f7f39f521a64ef48ab1a6491a18625c, type: 2}
+--- !u!114 &5170681725515363735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419541264559891762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51701dafb8326b847adfb419709081e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+  selectedItem: {fileID: 0}
+  dropItemLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &997490684451905717
 PrefabInstance:
   m_ObjectHideFlags: 0
