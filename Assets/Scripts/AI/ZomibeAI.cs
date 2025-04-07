@@ -267,7 +267,7 @@ public class ZomibeAI : MonoBehaviour
         }
     }
     void Patrol(){
-        if (_patrolPath.Any() | _patrolPath.Count() == 1 & CloseEnough()) {
+        if (!_patrolPath.Any() | _patrolPath.Count() == 1 & CloseEnough()) {
             Idle();
             return;
             }
