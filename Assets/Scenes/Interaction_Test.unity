@@ -556,6 +556,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!114 &573089761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +570,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: dafac32d5484c614c92276150d439428, type: 2}
+--- !u!1001 &743661351
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.17586517
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.000020980835
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.3059537
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675638189029927469, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4055964091125952663, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
+      propertyPath: m_Name
+      value: key
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 665ca37e72a02ce4993668ca724805ca, type: 3}
 --- !u!1 &805004961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,6 +1163,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!135 &1189208282
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1262,6 +1321,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!135 &1429915084
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1419,6 +1479,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!135 &1437173150
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1861,6 +1922,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!135 &1820704436
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2005,6 +2067,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!65 &1926699858
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2708,3 +2771,4 @@ SceneRoots:
   - {fileID: 1437173153}
   - {fileID: 1429915087}
   - {fileID: 1013534227}
+  - {fileID: 743661351}

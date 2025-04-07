@@ -12,12 +12,17 @@ public class Interactable : MonoBehaviour
     [SerializeField] bool once = false;
     [SerializeField] UnityEvent OnInteract, OnHoverIn, OnHoverOut;
 
+
+    [SerializeField] private MonoBehaviour lockCheckerComponent;
+
     private List<Renderer> renderers;
     private Dictionary<Renderer, Material[]> originalMaterials;
     private bool hovering;
 
     public void Interact()
     {
+        if (IsLocked()) return;
+
         OnInteract?.Invoke();
         if (once)
         {
@@ -60,7 +65,8 @@ public class Interactable : MonoBehaviour
             List<Material> materials = new List<Material>(renderer.materials);
 
             var playerInteract = PlayerInteraction.Instance;
-            materials.Add(playerInteract.normalOutlineMaterial);
+            if(IsLocked()) materials.Add(playerInteract.denyOutlineMaterial);
+            else materials.Add(playerInteract.normalOutlineMaterial);
             renderer.materials = materials.ToArray();
         }
     }
@@ -74,5 +80,15 @@ public class Interactable : MonoBehaviour
                 renderer.materials = originalMats;
             }
         }
+    }
+
+    public bool IsLocked()
+    {
+        if (lockCheckerComponent != null && lockCheckerComponent is ILockChecker checker)
+        {
+            return checker.IsLocked();
+        }
+        // If no lockChecker is assigned, or it doesn't implement ILockChecker, assume it's unlocked.
+        return false;
     }
 }

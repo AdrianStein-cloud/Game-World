@@ -2,8 +2,9 @@ using Mono.Cecil;
 using System;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, ILockChecker
 {
     [SerializeField] private bool isLocked = true;
     [SerializeField] private GameObject door;
@@ -29,7 +30,7 @@ public class Door : MonoBehaviour
         isOpen = !isOpen;
     }
 
-    private void Close()
+    public void Close()
     {
         Move(0f);
     }
@@ -40,12 +41,16 @@ public class Door : MonoBehaviour
         Move(doorAngle);
     }
 
+    public void Open(bool direction)
+    {
+        Move(direction ? -angle : angle);
+    }
+
     private float DetermineOpeningDirection()
     {
         if (player == null) return angle;
         Vector3 doorToPlayer = player.position - door.transform.position;
         float dotProduct = Vector3.Dot(door.transform.right, doorToPlayer.normalized);
-        Debug.Log(dotProduct);
         return dotProduct > 0 ? -angle : angle;
     }
 
@@ -90,5 +95,10 @@ public class Door : MonoBehaviour
     {
         tokenSource?.Cancel();
         tokenSource?.Dispose();
+    }
+
+    public bool IsLocked()
+    {
+        return isLocked;
     }
 }
