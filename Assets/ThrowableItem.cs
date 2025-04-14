@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ThrowableItem : Item
 {
-    [SerializeField] float force;
+    [SerializeField] float force = 500f;
+    [SerializeField] float randomTorqueStrength = 50f;
     static float forwardOffset = 0.15f;
     static float upOffset = -0.15f;
     static float rightOffset = 0.15f;
@@ -17,6 +18,11 @@ public class ThrowableItem : Item
             (Camera.main.transform.forward * forwardOffset) + 
             upOffset * Vector3.up + 
             rightOffset * Camera.main.transform.right;
-        groundItem.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * force);
+
+        var rb = groundItem.GetComponent<Rigidbody>();
+        rb.AddForce(Camera.main.transform.forward * force);
+
+        Vector3 randomTorque = Random.onUnitSphere * randomTorqueStrength;
+        rb.AddTorque(randomTorque, ForceMode.Impulse);
     }
 }
