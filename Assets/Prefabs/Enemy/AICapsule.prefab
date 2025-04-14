@@ -46,11 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _see_something: 0
   _target: {fileID: 0}
-  _sight_range: 0
+  _sight_range: 10
   _field_of_view: 90
   _layerMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 321
 --- !u!1 &4283558583091148100
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +204,8 @@ MonoBehaviour:
   _shambleDistance: 1.5
   _bigTurn: 3.5
   _smallTurn: 2
-  _state: 4
   _layerMask:
     serializedVersion: 2
     m_Bits: 129
+  _patrolPath: []
+  _state: 4
