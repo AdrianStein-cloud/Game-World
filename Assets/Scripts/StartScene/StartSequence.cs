@@ -16,7 +16,6 @@ public class StartSequence : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private Image blackOverlay;
-    [SerializeField] private Button startButton;
 
 
     public void Start()
@@ -24,12 +23,12 @@ public class StartSequence : MonoBehaviour
 
         if (runStartSequence)
         {
-            startButton.onClick.AddListener(StartButtonPressed);
             blackOverlay.gameObject.SetActive(true);
             InputManager.InputActions.Player.Disable();
             InputManager.InputActions.UI.Enable();
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            StartCoroutine(WakeUpFailSafe());
         }
         else blackOverlay.gameObject.SetActive(false);
     }
@@ -37,15 +36,6 @@ public class StartSequence : MonoBehaviour
     public void OnDisable()
     {
         blackOverlay.gameObject.SetActive(false);
-        startButton.onClick.RemoveListener(StartButtonPressed);
-    }
-
-    private void StartButtonPressed()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        startButton.gameObject.SetActive(false);
-        StartCoroutine(WakeUpFailSafe());
     }
 
     private IEnumerator WakeUpFailSafe()
