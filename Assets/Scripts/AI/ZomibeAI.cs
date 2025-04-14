@@ -165,16 +165,32 @@ public class ZomibeAI : MonoBehaviour
     }
     bool FacingPosition(Vector3 target)
     {
-        Vector3 dir = (target - transform.position).normalized;
+        Vector3 diff = target - transform.position;
+        if(diff.sqrMagnitude < 0.0001f) {
+            // The difference is negligible. Consider the agent as already facing.
+            return true;
+        }
+        Vector3 dir = diff.normalized;
         dir.y = 0;
-
+        Debug.Log("am I looking at " + target + " offset: " + Vector3.Dot(dir, transform.forward) );
         return Vector3.Dot(dir, transform.forward) > 0.98f;
     }
     void TurnToFace(Vector3 target)
     {
-        Vector3 dir = (target - transform.position).normalized;
-        dir.y = 0;
+        Vector3 diff = target - transform.position;
+        diff.y = 0;
+        if(diff.sqrMagnitude < 0.0001f) return; // target is essentially at the same position
+
+        Vector3 dir = diff.normalized;
         
+        // If the target is almost exactly behind, add a tiny bias
+        if(Vector3.Dot(transform.forward, dir) < -0.999f)
+        {
+            // Adding a small bias in an arbitrary direction (e.g., right)
+            dir = (dir + Vector3.right * 0.01f).normalized;
+        }
+        
+        Debug.Log("TurnToFace: direction = " + dir);
         if (dir != Vector3.zero)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), _turnSpeed * _runFactor* Time.fixedDeltaTime);
@@ -191,6 +207,8 @@ public class ZomibeAI : MonoBehaviour
         _count = 0;
         _timer = 0;
         _look = 0;
+        _navMeshAgent.ResetPath();
+        _navMeshAgent.SetDestination(transform.position);
     }
     Vector3 GetNearbyPoint(){
         float angle = Random.Range(50f,70f);
@@ -438,7 +456,7 @@ public class ZomibeAI : MonoBehaviour
     }
     bool Looked(){
         if (_look == 0){
-            Debug.Log("looked");
+            Debug.Log("looked done");
             WalkSpeed();
             ResetCounts();
             return true;
@@ -456,10 +474,12 @@ public class ZomibeAI : MonoBehaviour
     bool Touched(){
         var targetPos = _eyes.GetComponent<Vision>()._target.position;
         if (Vector3.Distance(targetPos, transform.position) < _toouchDistance){
+
             RunSpeed();
+            ResetCounts();
             _targetPosition = targetPos;
             _patrolFsm.SetState(zBehaviour.Patrol);
-            ResetCounts();
+            Debug.Log("touched");
             return true;
         } 
         return false;
