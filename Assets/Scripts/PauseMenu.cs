@@ -2,11 +2,19 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject menu;
+    [SerializeField] GameObject optionsMenu;
     [SerializeField] SliderSetting gammaSetting;
+    [SerializeField] Button resumeButton;
+    [SerializeField] Button optionsButton;
+    [SerializeField] Button exitButton;
+    [SerializeField] Button backButton;
 
     PlayerInput playerInput;
     bool isPaused = true;
@@ -19,6 +27,11 @@ public class PauseMenu : MonoBehaviour
         playerInput.actions["Pause"].started += _ => Pause();
         playerInput.actions["Resume"].started += _ => Resume();
 
+        exitButton.onClick.AddListener(BackToMainMenu);
+        resumeButton.onClick.AddListener(Resume);
+        optionsButton.onClick.AddListener(OpenOptions);
+        backButton.onClick.AddListener(CloseOptions);
+
         Resume();
     }
 
@@ -27,23 +40,42 @@ public class PauseMenu : MonoBehaviour
         PostProcessingHandler.GetEffect<LiftGammaGain>().gamma.value = new Vector4(1f,1f,1f,value / 10);
     }
 
+    private void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     private void Pause()
     {
         if (isPaused) return;
         isPaused = true;
         playerInput.SwitchCurrentActionMap("UI");
+        pauseMenu.SetActive(true);
         menu.SetActive(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        CloseOptions();
+    }
+
+    private void OpenOptions()
+    {
+        menu.SetActive(false);
+        optionsMenu.SetActive(true);
+    }
+
+    private void CloseOptions()
+    {
+        menu.SetActive(true);
+        optionsMenu.SetActive(false);
     }
 
     private void Resume()
     {
         if (!isPaused) return;
+        Cursor.lockState = CursorLockMode.Locked;
         isPaused = false;
         playerInput.SwitchCurrentActionMap("Player");
-        menu.SetActive(false);
+        pauseMenu.SetActive(false);
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 }
