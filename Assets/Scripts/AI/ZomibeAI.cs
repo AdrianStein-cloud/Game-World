@@ -16,6 +16,7 @@ public class ZomibeAI : MonoBehaviour
     [SerializeField] private float _smallTurn;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private List<Vector3> _patrolPath;
+    public float _toouchDistance;
     public zBehaviour _state;
     public zBehaviour _pState;
     public int _runMultiplier;
@@ -454,7 +455,7 @@ public class ZomibeAI : MonoBehaviour
     }
     bool Touched(){
         var targetPos = _eyes.GetComponent<Vision>()._target.position;
-        if (Vector3.Distance(targetPos, transform.position) < 0.5){
+        if (Vector3.Distance(targetPos, transform.position) < _toouchDistance){
             RunSpeed();
             _targetPosition = targetPos;
             _patrolFsm.SetState(zBehaviour.Patrol);

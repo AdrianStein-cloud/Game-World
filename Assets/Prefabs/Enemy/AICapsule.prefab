@@ -208,4 +208,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   _patrolPath: []
+  _toouchDistance: 1.5
   _state: 7
+  _pState: 0
+  _runMultiplier: 2
