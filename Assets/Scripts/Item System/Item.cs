@@ -6,6 +6,7 @@ public class Item : ScriptableObject
 {
     public Sprite sprite;
     public string Name;
+    public string UseText;
 
     public virtual void OnPickup() { }
     public virtual void OnDrop() { }

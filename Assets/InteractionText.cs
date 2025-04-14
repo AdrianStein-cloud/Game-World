@@ -23,20 +23,21 @@ public class InteractionText : MonoBehaviour
         // If there is any text to display...
         if (!string.IsNullOrEmpty(displayText))
         {
+            transform.GetChild(0).gameObject.SetActive(true);
+
             textmeshpro.text = displayText;
-            textmeshpro.ForceMeshUpdate(); // 🔧 Force text update
+            textmeshpro.ForceMeshUpdate(); // Force text update
 
             // Optional: if your UI scales with layout
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)textmeshpro.transform.parent);
 
-            transform.GetChild(0).gameObject.SetActive(true);
 
             // Align and position UI
             var dirToPlayer = interactable.transform.position - player.transform.position;
             transform.parent = interactable.transform;
             transform.localPosition = Vector3.zero;
             transform.position += interactable.transform.forward * toPlayerOffset + offset;
-            transform.localRotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            //transform.localRotation = Quaternion.Euler(new Vector3(0, 180, 0));
         }
     }
 

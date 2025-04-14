@@ -17,6 +17,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] private MonoBehaviour lockCheckerComponent;
 
     [TextArea(1, 3)] public string nametext;
+    [TextArea(1, 3)] public string actiontext;
 
     private List<Renderer> renderers;
     private Dictionary<Renderer, Material[]> originalMaterials;
@@ -56,12 +57,14 @@ public class Interactable : MonoBehaviour
     {
         hovering = true;
         OnHoverIn?.Invoke();
+        InteractionIndicators.Instance.IndicateInteraction(this);
     }
 
     public void HoverOut()
     {
         hovering = false;
         OnHoverOut?.Invoke();
+        InteractionIndicators.Instance.IndicateInteraction(null);
     }
 
     public void BeginOutline()

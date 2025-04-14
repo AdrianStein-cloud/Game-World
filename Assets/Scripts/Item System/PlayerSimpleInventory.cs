@@ -52,11 +52,13 @@ public class PlayerSimpleInventory : MonoBehaviour
         items[currentlySelectedSlot]?.Use();
     }
 
-    void DropItem()
+    public GameObject DropItem()
     {
+        GameObject groundItem = null;
+
         if (selectedItem != null)
         {
-            var groundItem = groundItems[currentlySelectedSlot];
+            groundItem = groundItems[currentlySelectedSlot];
             groundItem.SetActive(true);
             //Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, dropItemLayer);
             //groundItem.transform.position = hit.point + new Vector3(0, (groundItem.transform.localScale.y / 2), 0);
@@ -67,12 +69,15 @@ public class PlayerSimpleInventory : MonoBehaviour
         items[currentlySelectedSlot] = null;
         groundItems[currentlySelectedSlot] = null;
         selectedItem = null;
+
+        return groundItem;
     }
 
-    void SelectItem(int index, Item _ = null)
+    void SelectItem(int index)
     {
         currentlySelectedSlot = index;
         selectedItem = items[currentlySelectedSlot];
+        InteractionIndicators.Instance.IndicateUse(selectedItem);
     }
 
     void InventoryButtons(InputAction.CallbackContext context)
@@ -124,5 +129,10 @@ public class PlayerSimpleInventory : MonoBehaviour
     public bool ContainsItem(Item item)
     {
         return items.Contains(item);
+    }
+
+    public bool HoldsItem(Item item)
+    {
+        return items[currentlySelectedSlot] == item;
     }
 }

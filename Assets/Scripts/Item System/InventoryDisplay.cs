@@ -17,7 +17,9 @@ public class InventoryDisplay : MonoBehaviour
 
     void OnItemSlotUpdated(int index, Item item)
     {
-        itemSlots[index].GetComponent<Image>().sprite = item?.sprite;
+        var imageComponent = itemSlots[index].transform.Find("ItemSprite").GetComponent<Image>();
+        imageComponent.sprite = item?.sprite;
+        imageComponent.enabled = item != null;
     }
 
     void OnSlotSelectedUpdated(int index)
@@ -25,5 +27,6 @@ public class InventoryDisplay : MonoBehaviour
         var rectTrans = itemhoverVisual.GetComponent<RectTransform>();
         rectTrans.SetParent(itemSlots[index].transform);
         rectTrans.anchoredPosition = Vector3.zero;
+        rectTrans.transform.SetSiblingIndex(0);
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4726fffa03e021a4e93cf18b8c9fadf3, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 6812e8df87a54e946804558c81e79481, type: 3}
+  sprite: {fileID: 21300000, guid: fdc4833b4e7e1b24fbe6b3f3baab8c46, type: 3}
   Name: Flashlight
+  UseText: Toggle
   flashlightPrefab: {fileID: 2860249061288260337, guid: a21a1f0bbf1911b43981650acf6f7819, type: 3}

@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f2cc53b2d25a04a90526fbe3c2449f, type: 3}
-  m_Name: Screwdriver
+  m_Script: {fileID: 11500000, guid: 045b7877f18fcc842b6ce099b695d062, type: 3}
+  m_Name: Rock
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 2d2d3cde72ccc184d9a615d9309aa146, type: 3}
-  Name: Screwdriver
-  UseText: Unscrew
+  sprite: {fileID: 21300000, guid: fcb350c63b49cda4488962be3f3fb28e, type: 3}
+  Name: Rock
+  UseText: Throw
+  force: 500
