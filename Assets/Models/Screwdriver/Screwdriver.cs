@@ -7,7 +7,7 @@ public class Screwdriver : Item
     {
         var playerInteract = PlayerInteraction.Instance;
 
-        if (playerInteract.hoveringObject.TryGetComponent(out VentOpen vent))
+        if (playerInteract.hoveringObject && playerInteract.hoveringObject.TryGetComponent(out VentOpen vent))
         {
             vent.OpenVentGrate();
         }

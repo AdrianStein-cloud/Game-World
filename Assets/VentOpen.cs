@@ -12,9 +12,7 @@ public class VentOpen : MonoBehaviour, ILockChecker
 
     public void OpenVentGrate()
     {
-        if (PlayerSimpleInventory.Instance.ContainsItem(item))
-        {
-            anim.SetTrigger("Open");
-        }
+        anim.SetTrigger("Open");
+        Destroy(this.GetComponent<Interactable>());
     }
 }

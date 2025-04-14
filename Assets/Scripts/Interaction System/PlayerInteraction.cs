@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerInteraction : MonoBehaviour
 
     [field: SerializeField] public Material normalOutlineMaterial { get; private set; }
     [field: SerializeField] public Material denyOutlineMaterial { get; private set; }
+
+    public UnityEvent<Interactable> OnHoverInteractable, OnHoverOutInteractable;
 
     public Interactable hoveringObject {get; private set;}
     
@@ -47,10 +50,12 @@ public class PlayerInteraction : MonoBehaviour
              
                 hoveringObject = interactable;
                 interactable.Hover();
+                OnHoverInteractable?.Invoke(hoveringObject);
             }
         }
         else
         {
+            OnHoverOutInteractable?.Invoke(hoveringObject);
             hoveringObject?.HoverOut();
             hoveringObject = null;
         }
