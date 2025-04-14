@@ -91,12 +91,12 @@ public class ZomibeAI : MonoBehaviour
         // Pause movement until facing close enough
         //_navMeshAgent.isStopped = true;
         _navMeshAgent.speed = _speed * _runFactor * 0.10f;
+        _navMeshAgent.SetDestination(destination);
 
         while (angleDiff > 5f)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * _runFactor* Time.fixedDeltaTime);
             angleDiff = Quaternion.Angle(transform.rotation, targetRot);
-            _navMeshAgent.SetDestination(destination);
             yield return new WaitForFixedUpdate();
         }
 
@@ -192,7 +192,7 @@ public class ZomibeAI : MonoBehaviour
         _look = 0;
     }
     Vector3 GetNearbyPoint(){
-        float angle = Random.Range(30f,70f);
+        float angle = Random.Range(50f,70f);
         Vector3 direction = Quaternion.Euler(angle, Random.Range(45f, 315f), 0) * Vector3.down;
 
         RaycastHit hit;
@@ -375,13 +375,38 @@ public class ZomibeAI : MonoBehaviour
         }
         MoveToPosition(_targetPosition);
     }
+    void TurnToTarget(){
+        if (_look == 0) _look = 1;
+        if (FacingPosition(_targetPosition)) _look = 0;
+        TurnToFace(_targetPosition);
+    }
     /**
     Transitions
     */
+    bool PathFucked() {
+        if (!_navMeshAgent.pathPending) {
+            if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) {
+                Debug.Log("No valid path at all.");
+                return true;  // Fail immediately if the path is invalid.
+            }
+            if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) {
+                // Check if the agent has reached the end of its partial path.
+                if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance && !_navMeshAgent.hasPath) {
+                    Debug.Log("Reached the end of partial path — treat as failure.");
+                    return true; // Agent has gone as far as it can.
+                } else {
+                    Debug.Log("Partial path — agent is still moving toward the reachable end.");
+                    return false; // Still traveling along a partial path.
+                }
+            }
+        }
+        return false; // If still pending or a fully valid path, return false.
+    }
     bool SeeSomething(){
         if (_vision._see_something){
             ResetCounts();
             RunSpeed();
+            _patrolFsm.SetState(zBehaviour.Patrol);
             return true;
         }
         return false;
@@ -413,6 +438,7 @@ public class ZomibeAI : MonoBehaviour
     bool Looked(){
         if (_look == 0){
             Debug.Log("looked");
+            WalkSpeed();
             ResetCounts();
             return true;
         }
@@ -422,9 +448,19 @@ public class ZomibeAI : MonoBehaviour
         if (!_patrolPath.Any() || _patrolPath.Count() == 1 && CloseEnough()) return true;
         if (CloseEnough() && FacingPosition(_patrolPath[0])){
             Debug.Log("look p");
-
             return true;
         }
+        return false;
+    }
+    bool Touched(){
+        var targetPos = _eyes.GetComponent<Vision>()._target.position;
+        if (Vector3.Distance(targetPos, transform.position) < 0.5){
+            RunSpeed();
+            _targetPosition = targetPos;
+            _patrolFsm.SetState(zBehaviour.Patrol);
+            ResetCounts();
+            return true;
+        } 
         return false;
     }
     /**
@@ -433,17 +469,27 @@ public class ZomibeAI : MonoBehaviour
     private void MakeStateMachine(){
         _fsm = new FSM(zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.PatrolFSM, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.PatrolFSM, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Chase, WildGooseChace, zBehaviour.Shamble);
+        _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Chase, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.TurnTo, Looked, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.TurnTo, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Investigate, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Investigate, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.PatrolFSM);
+
 
 
         _fsm.AddBehaviour(zBehaviour.Investigate, Investigate);
         _fsm.AddBehaviour(zBehaviour.Chase, Chase);
         _fsm.AddBehaviour(zBehaviour.Shamble, ShambleForwards);
         _fsm.AddBehaviour(zBehaviour.PatrolFSM, PatrolFSM);
+        _fsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
     }
 
     /**
@@ -496,5 +542,6 @@ public enum zBehaviour{
     PatrolFSM,
     Wait,
     LookOut,
-    LookAt
+    LookAt,
+    TurnTo
 }
