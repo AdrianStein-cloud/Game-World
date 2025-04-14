@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Elevator : MonoBehaviour
 {
@@ -7,6 +8,11 @@ public class Elevator : MonoBehaviour
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+    }
+
+    public void LoadScene(int level)
+    {
+        SceneManager.LoadSceneAsync(level);
     }
 
     public void Open()
