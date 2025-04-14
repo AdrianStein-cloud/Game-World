@@ -15,6 +15,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Button optionsButton;
     [SerializeField] Button exitButton;
     [SerializeField] Button backButton;
+    [SerializeField] Image background;
 
     PlayerInput playerInput;
     bool isPaused = true;
@@ -61,12 +62,14 @@ public class PauseMenu : MonoBehaviour
     {
         menu.SetActive(false);
         optionsMenu.SetActive(true);
+        background.gameObject.SetActive(false);
     }
 
     private void CloseOptions()
     {
         menu.SetActive(true);
         optionsMenu.SetActive(false);
+        background.gameObject.SetActive(true);
     }
 
     private void Resume()

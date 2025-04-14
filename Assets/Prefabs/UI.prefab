@@ -570,6 +570,7 @@ MonoBehaviour:
   optionsButton: {fileID: 2639302855543232405}
   exitButton: {fileID: 7490422791529899422}
   backButton: {fileID: 7749420851963423793}
+  background: {fileID: 8375509092111867671}
 --- !u!1 &1863068481175214536
 GameObject:
   m_ObjectHideFlags: 0
