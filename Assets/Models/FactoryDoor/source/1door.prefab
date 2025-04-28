@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 0
+  useForwardDirection: 1
   door: {fileID: 4299621407357635741}
-  angle: 90
+  angle: -90
   duration: 0.5
