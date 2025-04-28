@@ -78,6 +78,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3dfd8286d464a446ac1bc2d488355b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 169968420152104463}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3dfd8286d464a446ac1bc2d488355b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4199184686793369746}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: d3dfd8286d464a446ac1bc2d488355b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4416136742878096664}
@@ -297,6 +300,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4199184686793369746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926444695706383287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e284463dd6d6947814cfcc13b67da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 169968420152104463}
+  playOnAwake: 0
+  playOnTrigger: 0
+  playOnCollision: 0
+  once: 0
+  zombiesCanHear: 1
+  audioRange: 5
+  zombieLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &5471947513238440814 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: d3dfd8286d464a446ac1bc2d488355b2, type: 3}

@@ -19931,6 +19931,11 @@ MonoBehaviour:
   playOnTrigger: 0
   playOnCollision: 0
   once: 0
+  zombiesCanHear: 0
+  audioRange: 0
+  zombieLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &709408062
 GameObject:
   m_ObjectHideFlags: 0
@@ -37077,6 +37082,11 @@ MonoBehaviour:
   playOnTrigger: 0
   playOnCollision: 0
   once: 0
+  zombiesCanHear: 0
+  audioRange: 0
+  zombieLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1405385959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3345392540890356031, guid: bc81b3d7ddc28cf4db77c06f66394292, type: 3}

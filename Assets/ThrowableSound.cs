@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ThrowableSound : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;  // Sound to play when the item hits with high velocity
     [SerializeField] float velocityThreshold = 10f;  // Minimum velocity required to trigger the sound
     private Rigidbody rb;
 
@@ -28,6 +27,6 @@ public class ThrowableSound : MonoBehaviour
 
     private void PlayCollisionSound()
     {
-        audioSource.Play();
+        GetComponent<PlaySound>().PlayAudio();
     }
 }
