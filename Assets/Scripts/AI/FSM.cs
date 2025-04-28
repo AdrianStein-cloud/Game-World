@@ -8,7 +8,8 @@ public class FSM
 {
     private Enum _currentState;
     private Dictionary<Enum,Dictionary<Func<bool>,Enum>> _stateMap = new Dictionary<Enum, Dictionary<Func<bool>, Enum>>();
-
+    private Dictionary<zBehaviour, Action> _behaviourMap = new Dictionary<zBehaviour, Action>();
+    
     public FSM(Enum startState){
         _currentState = startState;
     }
@@ -30,7 +31,9 @@ public class FSM
             }
         }
     }
-
+    public void SetState(zBehaviour state){
+        _currentState = state;
+    }
     public void AddState(Enum fromState, Func<bool> transition, Enum toState){
         if (_stateMap.ContainsKey(fromState)){
             _stateMap[fromState][transition] = toState;
@@ -40,6 +43,19 @@ public class FSM
             {
                 [transition] = toState
             };
+        }
+    }
+    public void AddBehaviour(zBehaviour state, Action action){
+        _behaviourMap[state] = action;
+    }
+    public void DoAction(zBehaviour state){
+        if (_behaviourMap.TryGetValue(state, out var action))
+        {
+            action();
+        }
+        else
+        {
+            Debug.Log("No function mapped");
         }
     }
 }
