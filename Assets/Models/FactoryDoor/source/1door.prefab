@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1002690594383829195}
   - component: {fileID: 3812040152716451752}
   - component: {fileID: 5565625365277399268}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: FM_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 4746115429944567787}
   - component: {fileID: 7673458013607966846}
   - component: {fileID: 6256709976588184363}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: R_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   once: 0
+  cosmetic: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -279,6 +280,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   lockCheckerComponent: {fileID: 3117582002316614580}
+  nametext: 
+  actiontext: 
 --- !u!1 &6242312135393320621
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9143335731001593319}
   - component: {fileID: 3117582002316614580}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: 1door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
