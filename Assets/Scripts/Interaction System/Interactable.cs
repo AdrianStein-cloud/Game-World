@@ -10,18 +10,25 @@ using UnityEngine.Rendering;
 public class Interactable : MonoBehaviour
 {
     [SerializeField] bool once = false;
+    [SerializeField] bool cosmetic = false;
     [SerializeField] UnityEvent OnInteract, OnHoverIn, OnHoverOut;
 
 
     [SerializeField] private MonoBehaviour lockCheckerComponent;
 
+    [TextArea(1, 3)] public string nametext;
+    [TextArea(1, 3)] public string actiontext;
+
     private List<Renderer> renderers;
     private Dictionary<Renderer, Material[]> originalMaterials;
     private bool hovering;
 
+    
+
     public void Interact()
     {
-        if (IsLocked()) return;
+        // If there isn't set any interaction, then we don't want anything to happen on interact.
+        if (IsLocked() || cosmetic) return;
 
         OnInteract?.Invoke();
         if (once)
@@ -48,14 +55,17 @@ public class Interactable : MonoBehaviour
 
     public void Hover()
     {
-        hovering = true;
+        if (hovering) OnHoverOut?.Invoke();
         OnHoverIn?.Invoke();
+        hovering = true;
+        InteractionIndicators.Instance.IndicateInteraction(this);
     }
 
     public void HoverOut()
     {
         hovering = false;
         OnHoverOut?.Invoke();
+        InteractionIndicators.Instance.IndicateInteraction(null);
     }
 
     public void BeginOutline()
@@ -90,5 +100,10 @@ public class Interactable : MonoBehaviour
         }
         // If no lockChecker is assigned, or it doesn't implement ILockChecker, assume it's unlocked.
         return false;
+    }
+
+    private void OnDestroy()
+    {
+        if (hovering) HoverOut();
     }
 }

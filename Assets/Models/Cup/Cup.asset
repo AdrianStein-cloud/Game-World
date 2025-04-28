@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045b7877f18fcc842b6ce099b695d062, type: 3}
+  m_Name: Cup
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: bb713b999bfae9744b533b0ac42a5222, type: 3}
+  Name: Cup
+  UseText: Throw
+  force: 500
+  randomTorqueStrength: 50
+  shatterObjectPrefab: {fileID: 9155417542136973564, guid: 147e7096125a6bb449e27afb965b18b4, type: 3}
+  shatterObject: 1
+  collisionChildIndex: 0

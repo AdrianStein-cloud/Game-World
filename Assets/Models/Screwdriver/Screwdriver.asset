@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e90fae2633a8246b681248bdadc83d, type: 3}
+  m_Script: {fileID: 11500000, guid: 65f2cc53b2d25a04a90526fbe3c2449f, type: 3}
   m_Name: Screwdriver
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 4b0a61516ea8f4347bbab308c41e0e75, type: 3}
+  sprite: {fileID: 21300000, guid: 2d2d3cde72ccc184d9a615d9309aa146, type: 3}
   Name: Screwdriver
+  UseText: Unscrew

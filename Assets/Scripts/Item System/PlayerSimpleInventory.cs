@@ -15,7 +15,7 @@ public class PlayerSimpleInventory : MonoBehaviour
     int currentlySelectedSlot = 0;
 
     public UnityAction<int, Item> onInventorySlotChange;
-    public UnityAction<int> onSelectedSlotChange;
+    public UnityAction<int, Item> onSelectedSlotChange;
 
     [SerializeField] LayerMask dropItemLayer;
 
@@ -40,28 +40,45 @@ public class PlayerSimpleInventory : MonoBehaviour
         {
             DropItem();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            TryUseItem();
+        }
     }
 
-    void DropItem()
+    void TryUseItem()
     {
+        items[currentlySelectedSlot]?.Use();
+    }
+
+    public GameObject DropItem()
+    {
+        GameObject groundItem = null;
+
         if (selectedItem != null)
         {
-            var groundItem = groundItems[currentlySelectedSlot];
+            groundItem = groundItems[currentlySelectedSlot];
             groundItem.SetActive(true);
             //Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, dropItemLayer);
             //groundItem.transform.position = hit.point + new Vector3(0, (groundItem.transform.localScale.y / 2), 0);
             groundItem.transform.position = transform.position + 0.1f * transform.forward;
         }
-        onInventorySlotChange?.Invoke(currentlySelectedSlot, null);
+        items[currentlySelectedSlot]?.OnDrop();
         items[currentlySelectedSlot] = null;
         groundItems[currentlySelectedSlot] = null;
         selectedItem = null;
+        onInventorySlotChange?.Invoke(currentlySelectedSlot, null);
+        onSelectedSlotChange?.Invoke(currentlySelectedSlot, null);
+
+        return groundItem;
     }
 
-    void SelectItem(int index, Item _ = null)
+    void SelectItem(int index)
     {
         currentlySelectedSlot = index;
         selectedItem = items[currentlySelectedSlot];
+        InteractionIndicators.Instance.IndicateUse(selectedItem);
     }
 
     void InventoryButtons(InputAction.CallbackContext context)
@@ -70,9 +87,11 @@ public class PlayerSimpleInventory : MonoBehaviour
 
         if (keyboardKey == -1) return; // Unity is weird
 
-        onSelectedSlotChange?.Invoke(keyboardKey);
-
         SelectItem(keyboardKey);
+
+        onSelectedSlotChange?.Invoke(keyboardKey, selectedItem);
+
+        PlayerInteraction.Instance.UpdateHover();
     }
 
     public bool TryPickupItem(Item item, GameObject go)
@@ -104,13 +123,25 @@ public class PlayerSimpleInventory : MonoBehaviour
     {
         items[slotIndex] = item;
         groundItems[slotIndex] = go;
+        items[slotIndex].OnPickup();
 
+        if (currentlySelectedSlot == slotIndex)
+        {
+            SelectItem(slotIndex);
+            onSelectedSlotChange?.Invoke(slotIndex, item);
+        }
         onInventorySlotChange?.Invoke(slotIndex, item);
-        if (currentlySelectedSlot == slotIndex) SelectItem(slotIndex);
+
+        InteractionText.Instance.Detach();
     }
 
     public bool ContainsItem(Item item)
     {
         return items.Contains(item);
+    }
+
+    public bool HoldsItem(Item item)
+    {
+        return items[currentlySelectedSlot] == item;
     }
 }

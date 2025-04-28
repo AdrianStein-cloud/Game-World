@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
@@ -11,7 +13,10 @@ public class PlayerInteraction : MonoBehaviour
     [field: SerializeField] public Material normalOutlineMaterial { get; private set; }
     [field: SerializeField] public Material denyOutlineMaterial { get; private set; }
 
-    Interactable hoveringObject;
+    public UnityEvent<Interactable> OnHoverInteractable, OnHoverOutInteractable;
+
+    public Interactable hoveringObject {get; private set;}
+    
     Transform mainCamera;
 
     private void Awake()
@@ -46,10 +51,12 @@ public class PlayerInteraction : MonoBehaviour
              
                 hoveringObject = interactable;
                 interactable.Hover();
+                OnHoverInteractable?.Invoke(hoveringObject);
             }
         }
         else
         {
+            OnHoverOutInteractable?.Invoke(hoveringObject);
             hoveringObject?.HoverOut();
             hoveringObject = null;
         }
@@ -58,5 +65,10 @@ public class PlayerInteraction : MonoBehaviour
     void TryInteract(InputAction.CallbackContext context)
     {
         hoveringObject?.Interact();
+    }
+
+    public void UpdateHover()
+    {
+        hoveringObject?.Hover();
     }
 }

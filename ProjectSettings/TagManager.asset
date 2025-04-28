@@ -15,9 +15,9 @@ TagManager:
   - Target
   - NavMesh
   - Player
+  - AlwaysShow
   - Door
-  - 
-  - 
+  - Zombie
   - 
   - 
   - 
