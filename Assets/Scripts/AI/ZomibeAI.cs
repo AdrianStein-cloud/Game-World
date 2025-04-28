@@ -32,6 +32,7 @@ public class ZomibeAI : MonoBehaviour
     private float _timer;
     private int _wait;
     private Coroutine _turnRoutine;
+    private Animator anim;
 
 
     void Start()
@@ -48,10 +49,12 @@ public class ZomibeAI : MonoBehaviour
         MakeStateMachine();
         MakePatrolMachine();
         WalkSpeed();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
+        anim.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
     }
     void FixedUpdate()
     {
