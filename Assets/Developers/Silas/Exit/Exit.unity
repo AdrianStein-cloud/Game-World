@@ -729,7 +729,7 @@ ReflectionProbe:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IntensityMultiplier: 1
-  m_BlendDistance: 5
+  m_BlendDistance: 7
   m_HDR: 1
   m_BoxProjection: 0
   m_RenderDynamicObjects: 0
@@ -31104,9 +31104,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.037044793
+    y: 0.010682881
     width: 1
-    height: 0.9259104
+    height: 0.97863424
   near clip plane: 0.03
   far clip plane: 5000
   field of view: 97.63525
@@ -32627,7 +32627,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 4
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.514151, b: 0.514151, a: 1}
   m_Intensity: 0.25
   m_Range: 5
   m_SpotAngle: 139.84091
@@ -32691,7 +32691,7 @@ Transform:
   m_GameObject: {fileID: 1262472142}
   serializedVersion: 2
   m_LocalRotation: {x: 0.8421038, y: -0, z: -0, w: 0.5393155}
-  m_LocalPosition: {x: 0, y: 0.585, z: 14.032}
+  m_LocalPosition: {x: 0, y: 1.386, z: 12.396}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37245,7 +37245,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 2
   blendDistance: 0
-  weight: 0.9
+  weight: 0.50990415
   sharedProfile: {fileID: 11400000, guid: db2badee718ec5346acc0e42a4e4991d, type: 2}
 --- !u!43 &1488070760
 Mesh:
@@ -39078,7 +39078,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_ReceiveGI: 2
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
