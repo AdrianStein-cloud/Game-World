@@ -30977,6 +30977,7 @@ GameObject:
   - component: {fileID: 891809084}
   - component: {fileID: 891809087}
   - component: {fileID: 891809086}
+  - component: {fileID: 891809088}
   m_Layer: 0
   m_Name: CinemachineBrain
   m_TagString: Untagged
@@ -31024,8 +31025,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891809083}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.018392485, y: 0.9383522, z: -0.33536053, w: 0.08179316}
-  m_LocalPosition: {x: -0.9798916, y: 2.0205204, z: -2.2308078}
+  m_LocalRotation: {x: -0.029233498, y: 0.8136177, z: -0.579206, w: -0.04113514}
+  m_LocalPosition: {x: 0.03268566, y: -1.0551438, z: 14.186542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31103,9 +31104,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 0.037044793
     width: 1
-    height: 1
+    height: 0.9259104
   near clip plane: 0.03
   far clip plane: 5000
   field of view: 97.63525
@@ -31126,6 +31127,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &891809088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891809083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f6710ec33cfba47bc9463284a9e28a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetAspect: 2.35
 --- !u!1 &904349070
 GameObject:
   m_ObjectHideFlags: 0
@@ -44306,8 +44320,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145660248}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.018392485, y: 0.9383522, z: -0.33536053, w: 0.08179316}
-  m_LocalPosition: {x: -1.0192969, y: 2.050198, z: -2.0001748}
+  m_LocalRotation: {x: -0.029233498, y: 0.8136177, z: -0.579206, w: -0.04113514}
+  m_LocalPosition: {x: 0.051202744, y: -0.90707827, z: 14.369185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
