@@ -13,6 +13,7 @@ public class VentOpen : MonoBehaviour, ILockChecker
     public void OpenVentGrate()
     {
         anim.SetTrigger("Open");
+        GetComponent<PlaySound>().PlayAudio();
         Destroy(this.GetComponent<Interactable>());
     }
 }

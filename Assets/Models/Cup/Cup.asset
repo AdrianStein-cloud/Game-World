@@ -17,3 +17,6 @@ MonoBehaviour:
   UseText: Throw
   force: 500
   randomTorqueStrength: 50
+  shatterObjectPrefab: {fileID: 9155417542136973564, guid: 147e7096125a6bb449e27afb965b18b4, type: 3}
+  shatterObject: 1
+  collisionChildIndex: 0

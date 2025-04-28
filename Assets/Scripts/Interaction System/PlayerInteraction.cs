@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -64,5 +65,10 @@ public class PlayerInteraction : MonoBehaviour
     void TryInteract(InputAction.CallbackContext context)
     {
         hoveringObject?.Interact();
+    }
+
+    public void UpdateHover()
+    {
+        hoveringObject?.Hover();
     }
 }

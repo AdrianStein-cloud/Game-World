@@ -21,7 +21,7 @@ public class Flashlight : Item
 
     public override void OnDrop()
     {
-        flashlightInstance.ToggleFlashlight(false);
+        flashlightInstance.ToggleFlashlight(true);
     }
 
     public override void Use()

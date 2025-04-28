@@ -55,8 +55,9 @@ public class Interactable : MonoBehaviour
 
     public void Hover()
     {
-        hovering = true;
+        if (hovering) OnHoverOut?.Invoke();
         OnHoverIn?.Invoke();
+        hovering = true;
         InteractionIndicators.Instance.IndicateInteraction(this);
     }
 

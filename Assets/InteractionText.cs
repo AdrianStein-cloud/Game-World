@@ -4,16 +4,25 @@ using UnityEngine.UI;
 
 public class InteractionText : MonoBehaviour
 {
+    public static InteractionText Instance;
+
     [SerializeField] TextMeshProUGUI textmeshpro;
     [SerializeField] Vector3 offset;
     [SerializeField] float toPlayerOffset;
     GameObject player;
+    Vector3 originalLossyScale;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
         PlayerInteraction.Instance.OnHoverInteractable.AddListener(UpdateInteractionText);
         PlayerInteraction.Instance.OnHoverOutInteractable.AddListener((_) => transform.GetChild(0).gameObject.SetActive(false));
         player = GameObject.FindGameObjectWithTag("Player");
+        originalLossyScale = transform.lossyScale;
     }
 
     public void UpdateInteractionText(Interactable interactable)
@@ -31,14 +40,27 @@ public class InteractionText : MonoBehaviour
             // Optional: if your UI scales with layout
             LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)textmeshpro.transform.parent);
 
+            // Reparent
+            transform.SetParent(interactable.transform, worldPositionStays: false); // Note: false keeps local position/rotation/scale
 
-            // Align and position UI
-            var dirToPlayer = interactable.transform.position - player.transform.position;
-            transform.parent = interactable.transform;
+            // Restore scale manually
+            Vector3 parentLossyScale = interactable.transform.lossyScale;
+            transform.localScale = new Vector3(
+                originalLossyScale.x / parentLossyScale.x,
+                originalLossyScale.y / parentLossyScale.y,
+                originalLossyScale.z / parentLossyScale.z
+            );
+
+            // Then reposition
             transform.localPosition = Vector3.zero;
             transform.position += interactable.transform.forward * toPlayerOffset + offset;
-            //transform.localRotation = Quaternion.Euler(new Vector3(0, 180, 0));
         }
+    }
+
+    public void Detach()
+    {
+        transform.SetParent(null, worldPositionStays: false);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     void LateUpdate()
