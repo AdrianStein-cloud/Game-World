@@ -52,7 +52,7 @@ public class LightFlicker : MonoBehaviour
 
         bool failed = false;
 
-        if (!failed && LightsOn == !isAlarm)
+        if (alwaysOn || (!failed && LightsOn == !isAlarm))
         {
             TurnOn();
         }
@@ -162,7 +162,7 @@ public class LightFlicker : MonoBehaviour
         yield return new WaitForSeconds(2);
         while (true)
         {
-            if (!(LightsOn == !isAlarm))
+            if (!(LightsOn == !isAlarm) && !alwaysOn)
             {
                 TurnOff();
                 break;
