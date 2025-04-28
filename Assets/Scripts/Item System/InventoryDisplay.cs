@@ -37,10 +37,14 @@ public class InventoryDisplay : MonoBehaviour
         {
             DoItemTextAnim(index, item);
         }
-
-        if (previousSlot != null && itemSlots[index] != previousSlot)
+        else
         {
-            RemovePreviousItemTextAnim();
+            RemoveItemTextAnim(itemSlots[index]);
+        }
+
+        if ((previousSlot != null && itemSlots[index] != previousSlot))
+        {
+            RemoveItemTextAnim(previousSlot);
         }
 
         previousSlot = itemSlots[index];
@@ -54,9 +58,9 @@ public class InventoryDisplay : MonoBehaviour
         itemName.GetComponent<Animator>().SetBool("FadeIn", true);
     }
 
-    void RemovePreviousItemTextAnim()
+    void RemoveItemTextAnim(GameObject slot)
     {
-        var itemName = previousSlot.transform.Find("ItemName");
+        var itemName = slot.transform.Find("ItemName");
         itemName.GetComponent<Animator>().SetBool("FadeIn", false);
     }
 }

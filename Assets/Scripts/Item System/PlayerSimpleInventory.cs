@@ -69,6 +69,7 @@ public class PlayerSimpleInventory : MonoBehaviour
         groundItems[currentlySelectedSlot] = null;
         selectedItem = null;
         onInventorySlotChange?.Invoke(currentlySelectedSlot, null);
+        onSelectedSlotChange?.Invoke(currentlySelectedSlot, null);
 
         return groundItem;
     }
