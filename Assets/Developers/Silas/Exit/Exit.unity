@@ -31347,8 +31347,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891809083}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.014710469, y: 0.9150821, z: -0.40021557, w: -0.04728643}
-  m_LocalPosition: {x: 0.028152788, y: 1.9913422, z: 6.142537}
+  m_LocalRotation: {x: 0.031479232, y: 0.8700483, z: 0.4838364, w: 0.08903588}
+  m_LocalPosition: {x: -1.3524113, y: 2.2814023, z: -1.2166067}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31426,9 +31426,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.061270177
+    y: 0.12166053
     width: 1
-    height: 0.87745965
+    height: 0.75667894
   near clip plane: 0.03
   far clip plane: 5000
   field of view: 97.63525
@@ -32483,7 +32483,7 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 35
+      - m_Value: 5
         m_Name: Spawn Rate
         m_Overridden: 1
       - m_Value: 10
@@ -38276,7 +38276,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 2
   blendDistance: 0
-  weight: 0.50990415
+  weight: 0.51867723
   sharedProfile: {fileID: 11400000, guid: db2badee718ec5346acc0e42a4e4991d, type: 2}
 --- !u!43 &1488070760
 Mesh:
@@ -45352,8 +45352,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145660248}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.014710469, y: 0.9150821, z: -0.40021557, w: -0.04728643}
-  m_LocalPosition: {x: 0.051202744, y: 2.0532098, z: 6.3689575}
+  m_LocalRotation: {x: 0.031479232, y: 0.8700483, z: 0.4838364, w: 0.08903588}
+  m_LocalPosition: {x: -1.3855672, y: 2.0479112, z: -1.2193576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
