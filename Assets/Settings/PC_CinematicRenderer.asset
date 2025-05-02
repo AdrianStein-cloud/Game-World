@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: FPVolumetricFog
   m_EditorClassIdentifier: 
   m_Active: 1
-  config: {fileID: 11400000, guid: 6de129dd2e343a34eb308f4b264db78b, type: 2}
+  config: {fileID: 11400000, guid: 12a083ed816a66f48bb03e907c6f73b4, type: 2}
 --- !u!114 &3666297428369066337
 MonoBehaviour:
   m_ObjectHideFlags: 0
