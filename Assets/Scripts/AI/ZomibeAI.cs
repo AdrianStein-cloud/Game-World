@@ -456,28 +456,41 @@ public class ZomibeAI : MonoBehaviour
     */
     private void MakeStateMachine(){
         _fsm = new FSM(zBehaviour.PatrolFSM);
+
+        //Patrol behaviour, will go to the closest point in patrol point list and then go from point to point
         _fsm.AddState(zBehaviour.PatrolFSM, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.PatrolFSM, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.PatrolFSM, HearSomething, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.PatrolFSM, HearSomething, zBehaviour.Checkout);
 
+        //chase behaviour is for when the zombie sees the player and starts chasing
         _fsm.AddState(zBehaviour.Chase, WildGooseChace, zBehaviour.Shamble);
         _fsm.AddState(zBehaviour.Chase, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
 
+        //Shamble is taking a few steps forward after a chase ends with broken vision
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
-        _fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Investigate);
+        //_fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Checkout);
     
+        //checkout is basically when the zombie hears something and goes to investigate
+        _fsm.AddState(zBehaviour.Checkout, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
+        _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Checkout, WildGooseChace, zBehaviour.Investigate);
 
+        //TurnTo is used when the zombie is "touched" by player for now
         _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.TurnTo, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.TurnTo, Looked, zBehaviour.Investigate);
 
+        //investigate is when the zombie starts looking around a couple of times because it thought there was something there
         _fsm.AddState(zBehaviour.Investigate, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Investigate, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.Investigate, HearSomething, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Investigate, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Investigate, PathFucked, zBehaviour.PatrolFSM);
 
 
 
@@ -486,6 +499,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddBehaviour(zBehaviour.Shamble, ShambleForwards);
         _fsm.AddBehaviour(zBehaviour.PatrolFSM, PatrolFSM);
         _fsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
+        _fsm.AddBehaviour(zBehaviour.Checkout, Chase);
     }
 
     /**
@@ -531,9 +545,10 @@ public enum zBehaviour{
     Chase,
     Shamble,
     Investigate,
-    Search,
-    Idle,
-    Roam,
+    Checkout,
+    //Search,
+    //Idle,
+    //Roam,
     Patrol,
     PatrolFSM,
     Wait,

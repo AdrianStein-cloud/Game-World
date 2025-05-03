@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2736533030917650882}
   - component: {fileID: 349565799425528549}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 2327234979926169890}
   - component: {fileID: 641083646051732427}
   - component: {fileID: 968993557296632772}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AICapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
