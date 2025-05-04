@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using System.Collections;
+using UnityEditor.UI;
+using Unity.Mathematics;
 
 public class ZomibeAI : MonoBehaviour
 {
@@ -28,11 +30,16 @@ public class ZomibeAI : MonoBehaviour
     private FSM _fsm;
     private FSM _patrolFsm;
     private int _count;
-    private int _look;
+    [SerializeField] private int _look;
     private float _timer;
     private int _wait;
     private Coroutine _turnRoutine;
+
+    private Animator anim;
+
     private bool _heardNoise;
+    private int _attack;
+    private quaternion _prevRot;
 
 
     void Start()
@@ -49,10 +56,16 @@ public class ZomibeAI : MonoBehaviour
         MakeStateMachine();
         MakePatrolMachine();
         WalkSpeed();
+        anim = GetComponent<Animator>();
+        _prevRot = transform.rotation;
     }
 
     void Update()
     {
+        anim.SetFloat("Speed", SpeedPercentage());
+        anim.SetInteger("Look", _look);
+        anim.SetInteger("Attack", _attack);
+        anim.SetFloat("Turn", RotationDeg());
     }
     void FixedUpdate()
     {
@@ -166,9 +179,10 @@ public class ZomibeAI : MonoBehaviour
         _look = 0;
         _navMeshAgent.ResetPath();
         _navMeshAgent.SetDestination(transform.position);
+        _attack = 0;
     }
     Vector3 GetNearbyPoint(){
-        float angle = Random.Range(50f,70f);
+        float angle = Random.Range(60f,75f);
         Vector3 direction = Quaternion.Euler(angle, Random.Range(45f, 315f), 0) * Vector3.down;
 
         RaycastHit hit;
@@ -227,7 +241,70 @@ public class ZomibeAI : MonoBehaviour
             TurnToFace(_patrolPath[0]);
         }
     }
-
+    /*
+    Random look should be changed to coincide with animations
+    */
+    void RandomLook(){
+        switch (_look){
+            case 1:
+                if (_timer > _bigTurn){
+                    _timer = 0;
+                    _look -= 1;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnLeft();
+                }
+                break;
+            case 2:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look -= 1;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnRight();
+                }
+                break;
+            case 3:
+                if (_timer > _bigTurn){
+                    _timer = 0;
+                    _look = 0;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnRight();
+                }
+                break;
+            case 4:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look -=1;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnLeft();
+                }
+                break;
+            case 6:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look = 0;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnLeft();
+                }
+                break;
+            case 8:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look = 0;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnRight();
+                }
+                break;
+            default:
+            break;
+        }
+    }
+    /*
     void RandomLook(){
         switch (_look){
             case 1:
@@ -288,8 +365,9 @@ public class ZomibeAI : MonoBehaviour
             break;
         }
     }
+    */
     void Investigate(){
-        if (_count == 0) _count = Random.Range(3,6);
+        if (_count == 0) _count = Random.Range(2,4);
         if(_look != 0){
             RandomLook();
         }
@@ -356,6 +434,11 @@ public class ZomibeAI : MonoBehaviour
         if (FacingPosition(_targetPosition)) _look = 0;
         TurnToFace(_targetPosition);
     }
+    void Attack(){
+        if (_attack == 0){
+            _attack = 1;
+        }
+    }
     /**
     Transitions
     */
@@ -380,6 +463,7 @@ public class ZomibeAI : MonoBehaviour
     }
     bool SeeSomething(){
         if (_vision._see_something){
+            Debug.Log("See something");
             ResetCounts();
             RunSpeed();
             _patrolFsm.SetState(zBehaviour.Patrol);
@@ -397,10 +481,11 @@ public class ZomibeAI : MonoBehaviour
         }
         return false;
     }
-    bool WildGooseChace(){
+    bool WildGooseChase(){
         if (CloseEnough()){
             WalkSpeed();
             ResetCounts();
+            Debug.Log("wildGooseChase");
             return true;
         }
         return false;
@@ -451,6 +536,23 @@ public class ZomibeAI : MonoBehaviour
         } 
         return false;
     }
+    bool SeeAndTouched(){
+        if (_attack > 0 || (Touched() && SeeSomething())){
+            Debug.Log("seeAndTouch");
+            return true;
+        }
+        return false;
+    }
+
+    bool Whiff(){
+        if (_attack > 0 && !(SeeSomething() || Touched())){
+            Debug.Log("WhiFF!!!");
+            _attack = 0;
+            ResetCounts();
+            return true;
+        }
+        return false;
+    }
     /**
     State Machine Creation
     */
@@ -463,14 +565,15 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.PatrolFSM, HearSomething, zBehaviour.Checkout);
 
         //chase behaviour is for when the zombie sees the player and starts chasing
-        _fsm.AddState(zBehaviour.Chase, WildGooseChace, zBehaviour.Shamble);
+        _fsm.AddState(zBehaviour.Chase, SeeAndTouched, zBehaviour.Attack);
         _fsm.AddState(zBehaviour.Chase, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Chase, WildGooseChase, zBehaviour.Shamble);
         _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
 
         //Shamble is taking a few steps forward after a chase ends with broken vision
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Shamble, WildGooseChase, zBehaviour.Investigate);
         //_fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Checkout);
     
         //checkout is basically when the zombie hears something and goes to investigate
@@ -478,7 +581,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
-        _fsm.AddState(zBehaviour.Checkout, WildGooseChace, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Checkout, WildGooseChase, zBehaviour.Investigate);
 
         //TurnTo is used when the zombie is "touched" by player for now
         _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
@@ -492,6 +595,10 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.Investigate, PathFucked, zBehaviour.PatrolFSM);
 
+        //Attack behaviour for attacking I guess
+        _fsm.AddState(zBehaviour.Attack, Whiff, zBehaviour.Investigate);
+    
+
 
 
         _fsm.AddBehaviour(zBehaviour.Investigate, Investigate);
@@ -500,6 +607,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddBehaviour(zBehaviour.PatrolFSM, PatrolFSM);
         _fsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
         _fsm.AddBehaviour(zBehaviour.Checkout, Chase);
+        _fsm.AddBehaviour(zBehaviour.Attack, Attack);
     }
 
     /**
@@ -508,7 +616,7 @@ public class ZomibeAI : MonoBehaviour
     private void MakePatrolMachine(){
         _patrolFsm = new FSM(zBehaviour.Patrol);
 
-        _patrolFsm.AddState(zBehaviour.Patrol, WildGooseChace, zBehaviour.LookAt);
+        _patrolFsm.AddState(zBehaviour.Patrol, WildGooseChase, zBehaviour.LookAt);
         _patrolFsm.AddState(zBehaviour.LookAt, LookingAtPatrolPoint, zBehaviour.Wait);
         _patrolFsm.AddState(zBehaviour.Wait, TimeOut, zBehaviour.LookOut);
         _patrolFsm.AddState(zBehaviour.LookOut, Looked, zBehaviour.Patrol);
@@ -539,6 +647,15 @@ public class ZomibeAI : MonoBehaviour
         float distance = Vector3.Distance(pos, hit.position);
         return distance;
     }
+    float SpeedPercentage(){
+        return _navMeshAgent.velocity.magnitude/(_speed * _runMultiplier);
+    }
+    float RotationDeg(){
+        float angle = Quaternion.Angle(_prevRot, transform.rotation);
+        float angularSpeed = angle / Time.deltaTime;
+        _prevRot = transform.rotation;
+        return angularSpeed;
+    }
 
 }
 public enum zBehaviour{
@@ -554,5 +671,6 @@ public enum zBehaviour{
     Wait,
     LookOut,
     LookAt,
-    TurnTo
+    TurnTo,
+    Attack
 }

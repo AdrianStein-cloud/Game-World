@@ -47512,7 +47512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
       propertyPath: interactionLayer.m_Bits
-      value: 513
+      value: 1537
       objectReference: {fileID: 0}
     - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
       propertyPath: <denyOutlineMaterial>k__BackingField
@@ -47536,33 +47536,8 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1018728892575430423, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
       insertIndex: -1
       addedObject: {fileID: 409981936}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8958434741150431497, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1902666552}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
---- !u!1 &1902666551 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8958434741150431497, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-  m_PrefabInstance: {fileID: 1902666550}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1902666552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902666551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51701dafb8326b847adfb419709081e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
-  selectedItem: {fileID: 0}
-  dropItemLayer:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!4 &1902666560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8238126096802368444, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
@@ -58007,7 +57982,6 @@ SceneRoots:
   - {fileID: 8041424003483063601}
   - {fileID: 376089224}
   - {fileID: 1283776509}
-  - {fileID: 99914010}
   - {fileID: 443849344}
   - {fileID: 1123019019}
   - {fileID: 687816089}
@@ -58023,3 +57997,4 @@ SceneRoots:
   - {fileID: 957273554}
   - {fileID: 905989491}
   - {fileID: 1499523565}
+  - {fileID: 99914010}
