@@ -5639,6 +5639,7 @@ MonoBehaviour:
   _state: 2
   _pState: 0
   _runMultiplier: 2
+  _look: 0
 --- !u!1 &277649658
 GameObject:
   m_ObjectHideFlags: 0
@@ -24859,6 +24860,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
+      propertyPath: _shambleDistance
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: _patrolPath.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -29984,6 +29989,7 @@ MonoBehaviour:
   _state: 2
   _pState: 0
   _runMultiplier: 2
+  _look: 0
 --- !u!195 &1860748000
 NavMeshAgent:
   m_ObjectHideFlags: 0
