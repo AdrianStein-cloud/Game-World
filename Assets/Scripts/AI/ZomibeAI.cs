@@ -32,7 +32,11 @@ public class ZomibeAI : MonoBehaviour
     private float _timer;
     private int _wait;
     private Coroutine _turnRoutine;
+
     private Animator anim;
+
+    private bool _heardNoise;
+
 
 
     void Start()
@@ -63,10 +67,17 @@ public class ZomibeAI : MonoBehaviour
         _fsm.DoAction(_state);
     }
     /**
+    * Senses, here for now
+    */
+    public void HearNoise(Vector3 position){
+        _heardNoise = true;
+        _targetPosition = position;
+    }
+    /**
     CONTROLLER STUFF, maybe it should be in it's own script one day
     */
     //currently using navmesh agent to move, maybe there should be a controller or animator instead
-    public void MoveToPosition(Vector3 destination)
+    void MoveToPosition(Vector3 destination)
     {
         if (_turnRoutine != null) return; // prevent spamming new turn commands
 
@@ -92,8 +103,6 @@ public class ZomibeAI : MonoBehaviour
         Quaternion targetRot = Quaternion.LookRotation(flatDir);
         float angleDiff = Quaternion.Angle(transform.rotation, targetRot);
 
-        // Pause movement until facing close enough
-        //_navMeshAgent.isStopped = true;
         _navMeshAgent.speed = _speed * _runFactor * 0.10f;
         _navMeshAgent.SetDestination(destination);
 
@@ -108,55 +117,6 @@ public class ZomibeAI : MonoBehaviour
 
         _turnRoutine = null;
     }
-
-/**
-    public void MoveToPosition(Vector3 destination)
-    {
-        _navMeshAgent.SetDestination(destination);
-        // Start the turn-then-move coroutine
-        StartCoroutine(TurnThenMoveRoutine(destination));
-    }
-    
-    IEnumerator TurnThenMoveRoutine(Vector3 destination)
-    {
-        _navMeshAgent.SetDestination(destination);
-
-        while (true)
-        {
-            Vector3 targetPoint = (_navMeshAgent.path.corners.Length > 1) ? _navMeshAgent.path.corners[1] : destination;
-            
-            
-            Vector3 flatDir = targetPoint - transform.position;
-            flatDir.y = 0;
-            
-            if(flatDir.sqrMagnitude < 0.001f)
-            {
-                //this is compensating for the distance to the floor, it should probably be +/- height/distance to floor rather than flat
-                _targetPosition = transform.position;
-                break;
-            }
-            
-            Quaternion targetRot = Quaternion.LookRotation(flatDir);
-            float angleDiff = Quaternion.Angle(transform.rotation, targetRot);
-            
-            if (angleDiff > 5f)
-            {
-                //_navMeshAgent.isStopped = true;
-                _navMeshAgent.speed = _speed * 0.20f;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * Time.fixedDeltaTime);
-            }
-            else
-            {
-                //_navMeshAgent.isStopped = false;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * Time.fixedDeltaTime);
-                _navMeshAgent.speed = _speed;
-                break;
-            }
-            
-            yield return null;
-        }
-    }
-*/
     void RunSpeed(){
         _runFactor = _runMultiplier;
     }
@@ -433,6 +393,16 @@ public class ZomibeAI : MonoBehaviour
         }
         return false;
     }
+    bool HearSomething(){
+        if(_heardNoise){
+            WalkSpeed();
+            ResetCounts();
+            _patrolFsm.SetState(zBehaviour.Patrol);
+            _heardNoise = false;
+            return true;
+        }
+        return false;
+    }
     bool WildGooseChace(){
         if (CloseEnough()){
             WalkSpeed();
@@ -492,20 +462,41 @@ public class ZomibeAI : MonoBehaviour
     */
     private void MakeStateMachine(){
         _fsm = new FSM(zBehaviour.PatrolFSM);
+
+        //Patrol behaviour, will go to the closest point in patrol point list and then go from point to point
         _fsm.AddState(zBehaviour.PatrolFSM, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.PatrolFSM, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.PatrolFSM, HearSomething, zBehaviour.Checkout);
+
+        //chase behaviour is for when the zombie sees the player and starts chasing
         _fsm.AddState(zBehaviour.Chase, WildGooseChace, zBehaviour.Shamble);
-        _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.Chase, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
+
+        //Shamble is taking a few steps forward after a chase ends with broken vision
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
-        _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
         _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
+        //_fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Checkout);
+    
+        //checkout is basically when the zombie hears something and goes to investigate
+        _fsm.AddState(zBehaviour.Checkout, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
+        _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Checkout, WildGooseChace, zBehaviour.Investigate);
+
+        //TurnTo is used when the zombie is "touched" by player for now
         _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
-        _fsm.AddState(zBehaviour.TurnTo, Looked, zBehaviour.Investigate);
         _fsm.AddState(zBehaviour.TurnTo, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.Investigate, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.TurnTo, Looked, zBehaviour.Investigate);
+
+        //investigate is when the zombie starts looking around a couple of times because it thought there was something there
         _fsm.AddState(zBehaviour.Investigate, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.Investigate, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Investigate, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Investigate, PathFucked, zBehaviour.PatrolFSM);
 
 
 
@@ -514,6 +505,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddBehaviour(zBehaviour.Shamble, ShambleForwards);
         _fsm.AddBehaviour(zBehaviour.PatrolFSM, PatrolFSM);
         _fsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
+        _fsm.AddBehaviour(zBehaviour.Checkout, Chase);
     }
 
     /**
@@ -559,9 +551,10 @@ public enum zBehaviour{
     Chase,
     Shamble,
     Investigate,
-    Search,
-    Idle,
-    Roam,
+    Checkout,
+    //Search,
+    //Idle,
+    //Roam,
     Patrol,
     PatrolFSM,
     Wait,
