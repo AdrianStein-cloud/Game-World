@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using System.Collections;
+using UnityEditor.UI;
 
 public class ZomibeAI : MonoBehaviour
 {
@@ -58,7 +59,7 @@ public class ZomibeAI : MonoBehaviour
 
     void Update()
     {
-        anim.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
+        anim.SetFloat("Speed", SpeedPercentage());
     }
     void FixedUpdate()
     {
@@ -403,10 +404,11 @@ public class ZomibeAI : MonoBehaviour
         }
         return false;
     }
-    bool WildGooseChace(){
+    bool WildGooseChase(){
         if (CloseEnough()){
             WalkSpeed();
             ResetCounts();
+            Debug.Log("wildGooseChase");
             return true;
         }
         return false;
@@ -469,14 +471,14 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.PatrolFSM, HearSomething, zBehaviour.Checkout);
 
         //chase behaviour is for when the zombie sees the player and starts chasing
-        _fsm.AddState(zBehaviour.Chase, WildGooseChace, zBehaviour.Shamble);
+        _fsm.AddState(zBehaviour.Chase, WildGooseChase, zBehaviour.Shamble);
         _fsm.AddState(zBehaviour.Chase, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
 
         //Shamble is taking a few steps forward after a chase ends with broken vision
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Shamble, WildGooseChase, zBehaviour.Investigate);
         //_fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Checkout);
     
         //checkout is basically when the zombie hears something and goes to investigate
@@ -484,7 +486,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
-        _fsm.AddState(zBehaviour.Checkout, WildGooseChace, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Checkout, WildGooseChase, zBehaviour.Investigate);
 
         //TurnTo is used when the zombie is "touched" by player for now
         _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
@@ -514,7 +516,7 @@ public class ZomibeAI : MonoBehaviour
     private void MakePatrolMachine(){
         _patrolFsm = new FSM(zBehaviour.Patrol);
 
-        _patrolFsm.AddState(zBehaviour.Patrol, WildGooseChace, zBehaviour.LookAt);
+        _patrolFsm.AddState(zBehaviour.Patrol, WildGooseChase, zBehaviour.LookAt);
         _patrolFsm.AddState(zBehaviour.LookAt, LookingAtPatrolPoint, zBehaviour.Wait);
         _patrolFsm.AddState(zBehaviour.Wait, TimeOut, zBehaviour.LookOut);
         _patrolFsm.AddState(zBehaviour.LookOut, Looked, zBehaviour.Patrol);
@@ -544,6 +546,9 @@ public class ZomibeAI : MonoBehaviour
         NavMesh.FindClosestEdge(pos, out hit, NavMesh.AllAreas);
         float distance = Vector3.Distance(pos, hit.position);
         return distance;
+    }
+    float SpeedPercentage(){
+        return _navMeshAgent.velocity.magnitude/(_speed * _runMultiplier);
     }
 
 }
