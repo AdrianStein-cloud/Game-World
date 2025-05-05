@@ -182,7 +182,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 90
+    FieldOfView: 70
     OrthographicSize: 5
     NearClipPlane: 0.01
     FarClipPlane: 1000
@@ -472,10 +472,6 @@ PrefabInstance:
     - target: {fileID: 2092357340925104811, guid: aa1240559ce4995489a1ccfe62529992, type: 3}
       propertyPath: m_ClearFlags
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2092357340925104811, guid: aa1240559ce4995489a1ccfe62529992, type: 3}
-      propertyPath: field of view
-      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 2092357340925104811, guid: aa1240559ce4995489a1ccfe62529992, type: 3}
       propertyPath: far clip plane
