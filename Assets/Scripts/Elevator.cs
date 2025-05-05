@@ -2,20 +2,13 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
-    Animator animator;
+    [SerializeField] private int sceneIndexToLoad = 2; // The index of the scene to load
+    [SerializeField] private float fadeInMultiplier = 5.0f; // Fade in duration
+    [SerializeField] private float fadeOutMultiplier = 1.0f; // Fade out duration
 
-    private void Awake()
+    public void ChangeScene()
     {
-        animator = GetComponentInChildren<Animator>();
-    }
-
-    public void Open()
-    {
-        animator.SetBool("Open", true);
-    }
-
-    public void Close()
-    {
-        animator.SetBool("Open", false);
+        // Assuming you have a method to load the scene by index
+        Initiate.Fade(sceneIndexToLoad, Color.black, fadeInMultiplier, fadeOutMultiplier);
     }
 }
