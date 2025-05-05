@@ -6,7 +6,11 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button startButton;
     [SerializeField] private Button exitButton;
-    [SerializeField] private string sceneToLoad = "GameScene"; // Set your scene name here
+
+    [SerializeField] private int sceneToLoadIndex = 1;
+    [SerializeField] private float fadeInMultiplier = 1.0f; // Fade in duration
+    [SerializeField] private float fadeOutMultiplier = 1.0f; // Fade out duration
+
 
     private void Awake()
     {
@@ -16,7 +20,7 @@ public class MainMenu : MonoBehaviour
 
     private void StartGame()
     {
-        SceneManager.LoadScene(sceneToLoad);
+        Initiate.Fade(sceneToLoadIndex, Color.black, fadeInMultiplier, fadeOutMultiplier);
     }
 
     private void ExitGame()

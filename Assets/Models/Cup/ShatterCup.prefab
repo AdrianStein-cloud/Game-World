@@ -5901,7 +5901,7 @@ MonoBehaviour:
   playOnCollision: 0
   once: 1
   zombiesCanHear: 1
-  audioRange: 3
+  audioRange: 0
   zombieLayer:
     serializedVersion: 2
     m_Bits: 2048

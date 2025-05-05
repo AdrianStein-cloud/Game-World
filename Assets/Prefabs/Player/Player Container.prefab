@@ -81,7 +81,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3583
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -500,6 +500,10 @@ PrefabInstance:
     - target: {fileID: 2092357340925104811, guid: aa1240559ce4995489a1ccfe62529992, type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092357340925104811, guid: aa1240559ce4995489a1ccfe62529992, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1599
       objectReference: {fileID: 0}
     - target: {fileID: 4804533992211832854, guid: aa1240559ce4995489a1ccfe62529992, type: 3}
       propertyPath: m_Name
