@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   once: 0
+  cosmetic: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -158,6 +159,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   lockCheckerComponent: {fileID: 0}
+  nametext: Key
+  actiontext: 
 --- !u!114 &-3406194225716544746
 MonoBehaviour:
   m_ObjectHideFlags: 0

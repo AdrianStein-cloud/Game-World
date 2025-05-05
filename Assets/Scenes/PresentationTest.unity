@@ -58025,7 +58025,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   lockCheckerComponent: {fileID: 919132148141800631}
-  nametext: 
+  nametext: Power box
   actiontext: 
 --- !u!65 &8506797734637983059
 BoxCollider:
