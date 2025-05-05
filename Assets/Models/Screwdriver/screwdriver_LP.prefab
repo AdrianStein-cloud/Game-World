@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  once: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -122,6 +123,7 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  lockCheckerComponent: {fileID: 0}
 --- !u!114 &5959128325220566226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdc9d5ee1267964fa2325ecd3ede11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 56c54e264827b8b469810cfddbfb97c1, type: 2}
+  item: {fileID: 11400000, guid: d7768332b13392c468b8743e621f0b83, type: 2}
 --- !u!135 &2043449012684628692
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -190,7 +192,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8730996864291373112}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9fb1a41459140354d8e38b33e575de3d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

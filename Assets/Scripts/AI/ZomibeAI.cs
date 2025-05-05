@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using System.Collections;
+using UnityEditor.UI;
+using Unity.Mathematics;
 
 public class ZomibeAI : MonoBehaviour
 {
@@ -16,17 +18,29 @@ public class ZomibeAI : MonoBehaviour
     [SerializeField] private float _smallTurn;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private List<Vector3> _patrolPath;
+    public float _toouchDistance;
     public zBehaviour _state;
+    public zBehaviour _pState;
+    public int _runMultiplier;
+    private int _runFactor;
     private Vector3 _targetPosition;
     private Vector3 _moveTargetPosition;
     private NavMeshAgent _navMeshAgent;
     private Vision _vision;
     private FSM _fsm;
-    private Dictionary<zBehaviour, Action> _behaviourMap = new Dictionary<zBehaviour, Action>();
+    private FSM _patrolFsm;
     private int _count;
-    private int _look;
+    [SerializeField] private int _look;
     private float _timer;
     private int _wait;
+    private Coroutine _turnRoutine;
+
+    private Animator anim;
+
+    private bool _heardNoise;
+    private int _attack;
+    private quaternion _prevRot;
+
 
     void Start()
     {
@@ -34,115 +48,141 @@ public class ZomibeAI : MonoBehaviour
         _vision = _eyes.GetComponent<Vision>();
         _navMeshAgent.angularSpeed = _turnSpeed;
         _navMeshAgent.updateRotation = false;
-        _navMeshAgent.speed = _speed;
+        _navMeshAgent.speed = _speed * _runFactor;
 
     }
     void Awake()
     {
         MakeStateMachine();
+        MakePatrolMachine();
+        WalkSpeed();
+        anim = GetComponent<Animator>();
+        _prevRot = transform.rotation;
     }
 
     void Update()
     {
+        anim.SetFloat("Speed", SpeedPercentage());
+        anim.SetInteger("Look", _look);
+        anim.SetInteger("Attack", _attack);
+        anim.SetFloat("Turn", RotationDeg());
     }
     void FixedUpdate()
     {
         _fsm.UpdateState();
         _state = (zBehaviour)_fsm.GetCurrentState();
-        if (_behaviourMap.TryGetValue(_state, out var action))
-        {
-            action();
-        }
-        else
-        {
-            Debug.Log("No function mapped");
-        }
+        _fsm.DoAction(_state);
     }
-
+    /**
+    * Senses, here for now
+    */
+    public void HearNoise(Vector3 position){
+        _heardNoise = true;
+        _targetPosition = position;
+    }
     /**
     CONTROLLER STUFF, maybe it should be in it's own script one day
     */
     //currently using navmesh agent to move, maybe there should be a controller or animator instead
-    public void MoveToPosition(Vector3 destination)
+    void MoveToPosition(Vector3 destination)
     {
-        _navMeshAgent.SetDestination(destination);
-        // Start the turn-then-move coroutine
-        StartCoroutine(TurnThenMoveRoutine(destination));
+        if (_turnRoutine != null) return; // prevent spamming new turn commands
+
+        _turnRoutine = StartCoroutine(TurnThenMoveRoutine(destination));
     }
-    
+
     IEnumerator TurnThenMoveRoutine(Vector3 destination)
     {
+        // Calculate initial direction
+        Vector3 targetPoint = (_navMeshAgent.path.corners.Length > 1)
+            ? _navMeshAgent.path.corners[1]
+            : destination;
+
+        Vector3 flatDir = targetPoint - transform.position;
+        flatDir.y = 0;
+
+        if (flatDir.sqrMagnitude < 0.001f)
+        {
+            _turnRoutine = null;
+            yield break;
+        }
+
+        Quaternion targetRot = Quaternion.LookRotation(flatDir);
+        float angleDiff = Quaternion.Angle(transform.rotation, targetRot);
+
+        _navMeshAgent.speed = _speed * _runFactor * 0.10f;
         _navMeshAgent.SetDestination(destination);
 
-        while (true)
+        while (angleDiff > 5f)
         {
-            Vector3 targetPoint = (_navMeshAgent.path.corners.Length > 1) ? _navMeshAgent.path.corners[1] : destination;
-            
-            
-            Vector3 flatDir = targetPoint - transform.position;
-            flatDir.y = 0;
-            
-            if(flatDir.sqrMagnitude < 0.001f)
-            {
-                //this is compensating for the distance to the floor, it should probably be +/- height/distance to floor rather than flat
-                _targetPosition = transform.position;
-                break;
-            }
-            
-            Quaternion targetRot = Quaternion.LookRotation(flatDir);
-            float angleDiff = Quaternion.Angle(transform.rotation, targetRot);
-            
-            if (angleDiff > 5f)
-            {
-                //_navMeshAgent.isStopped = true;
-                _navMeshAgent.speed = _speed * 0.20f;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * Time.fixedDeltaTime);
-            }
-            else
-            {
-                //_navMeshAgent.isStopped = false;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * Time.fixedDeltaTime);
-                _navMeshAgent.speed = _speed;
-                break;
-            }
-            
-            yield return null;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * _runFactor* Time.fixedDeltaTime);
+            angleDiff = Quaternion.Angle(transform.rotation, targetRot);
+            yield return new WaitForFixedUpdate();
         }
+
+        _navMeshAgent.speed = _speed * _runFactor;
+
+        _turnRoutine = null;
+    }
+    void RunSpeed(){
+        _runFactor = _runMultiplier;
+    }
+    void WalkSpeed(){
+        _runFactor = 1;
     }
     bool CloseEnough(){
-        return Vector3.Distance(transform.position, _targetPosition) < 0.5f;
+        return Vector3.Distance(transform.position, _targetPosition) < .8f;
     }
     bool FacingPosition(Vector3 target)
     {
-        Vector3 dir = (target - transform.position).normalized;
+        Vector3 diff = target - transform.position;
+        if(diff.sqrMagnitude < 0.0001f) {
+            // The difference is negligible. Consider the agent as already facing.
+            return true;
+        }
+        Vector3 dir = diff.normalized;
         dir.y = 0;
-
-        return Vector3.Dot(dir, transform.forward) > 0.95f;
+        Debug.Log("am I looking at " + target + " offset: " + Vector3.Dot(dir, transform.forward) );
+        return Vector3.Dot(dir, transform.forward) > 0.98f;
     }
     void TurnToFace(Vector3 target)
     {
-        Vector3 dir = (target - transform.position).normalized;
-        dir.y = 0;
+        Vector3 diff = target - transform.position;
+        diff.y = 0;
+        if(diff.sqrMagnitude < 0.0001f) return; // target is essentially at the same position
+
+        Vector3 dir = diff.normalized;
         
+        // If the target is almost exactly behind, add a tiny bias
+        if(Vector3.Dot(transform.forward, dir) < -0.999f)
+        {
+            // Adding a small bias in an arbitrary direction (e.g., right)
+            dir = (dir + Vector3.right * 0.01f).normalized;
+        }
+        
+        Debug.Log("TurnToFace: direction = " + dir);
         if (dir != Vector3.zero)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), _turnSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), _turnSpeed * _runFactor* Time.fixedDeltaTime);
         }
     }
     void TurnLeft(){
-        transform.Rotate(0, -_turnSpeed * Time.fixedDeltaTime *2.5f, 0);
+        transform.Rotate(0, -_turnSpeed * _runFactor* Time.fixedDeltaTime, 0);
     }
     void TurnRight(){
-        transform.Rotate(0, _turnSpeed * Time.fixedDeltaTime *2.5f, 0);
+        transform.Rotate(0, _turnSpeed * _runFactor* Time.fixedDeltaTime, 0);
     }
     void ResetCounts()
     {
         _count = 0;
         _timer = 0;
         _look = 0;
+        _navMeshAgent.ResetPath();
+        _navMeshAgent.SetDestination(transform.position);
+        _attack = 0;
     }
     Vector3 GetNearbyPoint(){
-        float angle = 70f;
+        float angle = Random.Range(60f,75f);
         Vector3 direction = Quaternion.Euler(angle, Random.Range(45f, 315f), 0) * Vector3.down;
 
         RaycastHit hit;
@@ -175,6 +215,15 @@ public class ZomibeAI : MonoBehaviour
         }
         else RandomLook();
     }
+    void Wait(){
+        if (_timer == 0 && _wait == 0){
+                _wait = Random.Range(-15,15);
+                if (_wait < 5){
+                    _wait = 0;
+                }
+            }
+            _timer += Time.fixedDeltaTime;
+    }
     void Chase(){
         if (_vision._see_something){
             _targetPosition = _vision._target.position;
@@ -187,6 +236,75 @@ public class ZomibeAI : MonoBehaviour
         }
         _navMeshAgent.destination = _targetPosition;
     }
+    void LookAtNextPoint(){
+        if (_patrolPath.Any() && _patrolPath.Count() > 1){
+            TurnToFace(_patrolPath[0]);
+        }
+    }
+    /*
+    Random look should be changed to coincide with animations
+    */
+    void RandomLook(){
+        switch (_look){
+            case 1:
+                if (_timer > _bigTurn){
+                    _timer = 0;
+                    _look -= 1;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnLeft();
+                }
+                break;
+            case 2:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look -= 1;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnRight();
+                }
+                break;
+            case 3:
+                if (_timer > _bigTurn){
+                    _timer = 0;
+                    _look = 0;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnRight();
+                }
+                break;
+            case 4:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look -=1;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnLeft();
+                }
+                break;
+            case 6:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look = 0;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnLeft();
+                }
+                break;
+            case 8:
+                if (_timer > _smallTurn){
+                    _timer = 0;
+                    _look = 0;
+                } else {
+                    _timer += Time.fixedDeltaTime;
+                    //TurnRight();
+                }
+                break;
+            default:
+            break;
+        }
+    }
+    /*
     void RandomLook(){
         switch (_look){
             case 1:
@@ -247,8 +365,9 @@ public class ZomibeAI : MonoBehaviour
             break;
         }
     }
+    */
     void Investigate(){
-        if (_count == 0) _count = Random.Range(3,6);
+        if (_count == 0) _count = Random.Range(2,4);
         if(_look != 0){
             RandomLook();
         }
@@ -260,14 +379,32 @@ public class ZomibeAI : MonoBehaviour
                 var target = GetNearbyPoint();
                 if (target != Vector3.zero){
                     _targetPosition = target;
+                    return;
                 }
+                else _targetPosition = transform.position;
             }
         }else {
             MoveToPosition(_targetPosition);
         }
     }
+    void RLook(){
+        if (_look == 0){
+            _look = Random.Range(-10,5)*2;
+            if (_look < 0){
+                _look = 0;
+            }
+        }
+        else if(_look != 0){
+            RandomLook();
+        }
+    }
+    void PatrolFSM(){
+        _patrolFsm.UpdateState();
+        _pState = (zBehaviour)_patrolFsm.GetCurrentState();
+        _patrolFsm.DoAction((zBehaviour)_patrolFsm.GetCurrentState());
+    }
     void Patrol(){
-        if (_patrolPath.Any() | _patrolPath.Count() == 1 & CloseEnough()) {
+        if (!_patrolPath.Any() || _patrolPath.Count() == 1 && CloseEnough()) {
             Idle();
             return;
             }
@@ -282,6 +419,8 @@ public class ZomibeAI : MonoBehaviour
                 _patrolPath.RemoveAt(0);
                 _patrolPath.Add(tmp);
             }
+            _patrolPath.RemoveAt(0);
+            _patrolPath.Add(_targetPosition);
         }
         if (CloseEnough()){
             _targetPosition = _patrolPath[0];
@@ -290,24 +429,125 @@ public class ZomibeAI : MonoBehaviour
         }
         MoveToPosition(_targetPosition);
     }
+    void TurnToTarget(){
+        if (_look == 0) _look = 1;
+        if (FacingPosition(_targetPosition)) _look = 0;
+        TurnToFace(_targetPosition);
+    }
+    void Attack(){
+        if (_attack == 0){
+            _attack = 1;
+        }
+    }
     /**
     Transitions
     */
+    bool PathFucked() {
+        if (!_navMeshAgent.pathPending) {
+            if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) {
+                Debug.Log("No valid path at all.");
+                return true;  // Fail immediately if the path is invalid.
+            }
+            if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) {
+                // Check if the agent has reached the end of its partial path.
+                if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance && !_navMeshAgent.hasPath) {
+                    Debug.Log("Reached the end of partial path — treat as failure.");
+                    return true; // Agent has gone as far as it can.
+                } else {
+                    Debug.Log("Partial path — agent is still moving toward the reachable end.");
+                    return false; // Still traveling along a partial path.
+                }
+            }
+        }
+        return false; // If still pending or a fully valid path, return false.
+    }
     bool SeeSomething(){
         if (_vision._see_something){
+            Debug.Log("See something");
+            ResetCounts();
+            RunSpeed();
+            _patrolFsm.SetState(zBehaviour.Patrol);
             return true;
         }
         return false;
     }
-    bool WildGooseChace(){
-        if (CloseEnough()){
+    bool HearSomething(){
+        if(_heardNoise){
+            WalkSpeed();
             ResetCounts();
+            _patrolFsm.SetState(zBehaviour.Patrol);
+            _heardNoise = false;
+            return true;
+        }
+        return false;
+    }
+    bool WildGooseChase(){
+        if (CloseEnough()){
+            WalkSpeed();
+            ResetCounts();
+            Debug.Log("wildGooseChase");
             return true;
         }
         return false;
     }
     bool CountDown(){
         if (_count == 0){
+            ResetCounts();
+            _patrolFsm.SetState(zBehaviour.Patrol);
+            return true;
+        }
+        return false;
+    }
+    bool TimeOut(){
+        if (_timer > _wait){
+            Debug.Log("timeout");
+            ResetCounts();
+            return true;
+        }
+        return false;
+    }
+    bool Looked(){
+        if (_look == 0){
+            Debug.Log("looked done");
+            WalkSpeed();
+            ResetCounts();
+            return true;
+        }
+        return false;
+    }
+    bool LookingAtPatrolPoint(){
+        if (!_patrolPath.Any() || _patrolPath.Count() == 1 && CloseEnough()) return true;
+        if (CloseEnough() && FacingPosition(_patrolPath[0])){
+            Debug.Log("look p");
+            return true;
+        }
+        return false;
+    }
+    bool Touched(){
+        var targetPos = _eyes.GetComponent<Vision>()._target.position;
+        if (Vector3.Distance(targetPos, transform.position) < _toouchDistance){
+
+            RunSpeed();
+            ResetCounts();
+            _targetPosition = targetPos;
+            _patrolFsm.SetState(zBehaviour.Patrol);
+            Debug.Log("touched");
+            return true;
+        } 
+        return false;
+    }
+    bool SeeAndTouched(){
+        if (_attack > 0 || (Touched() && SeeSomething())){
+            Debug.Log("seeAndTouch");
+            return true;
+        }
+        return false;
+    }
+
+    bool Whiff(){
+        if (_attack > 0 && !(SeeSomething() || Touched())){
+            Debug.Log("WhiFF!!!");
+            _attack = 0;
             ResetCounts();
             return true;
         }
@@ -317,21 +557,76 @@ public class ZomibeAI : MonoBehaviour
     State Machine Creation
     */
     private void MakeStateMachine(){
-        _fsm = new FSM(zBehaviour.Patrol);
-        _fsm.AddState(zBehaviour.Patrol, SeeSomething, zBehaviour.Chase);
-        _fsm.AddState(zBehaviour.Chase, WildGooseChace, zBehaviour.Shamble);
+        _fsm = new FSM(zBehaviour.PatrolFSM);
+
+        //Patrol behaviour, will go to the closest point in patrol point list and then go from point to point
+        _fsm.AddState(zBehaviour.PatrolFSM, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.PatrolFSM, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.PatrolFSM, HearSomething, zBehaviour.Checkout);
+
+        //chase behaviour is for when the zombie sees the player and starts chasing
+        _fsm.AddState(zBehaviour.Chase, SeeAndTouched, zBehaviour.Attack);
+        _fsm.AddState(zBehaviour.Chase, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Chase, WildGooseChase, zBehaviour.Shamble);
+        _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
+
+        //Shamble is taking a few steps forward after a chase ends with broken vision
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
-        _fsm.AddState(zBehaviour.Shamble, WildGooseChace, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Shamble, WildGooseChase, zBehaviour.Investigate);
+        //_fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Checkout);
+    
+        //checkout is basically when the zombie hears something and goes to investigate
+        _fsm.AddState(zBehaviour.Checkout, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
+        _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Checkout, WildGooseChase, zBehaviour.Investigate);
+
+        //TurnTo is used when the zombie is "touched" by player for now
+        _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
+        _fsm.AddState(zBehaviour.TurnTo, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.TurnTo, Looked, zBehaviour.Investigate);
+
+        //investigate is when the zombie starts looking around a couple of times because it thought there was something there
         _fsm.AddState(zBehaviour.Investigate, SeeSomething, zBehaviour.Chase);
-        _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.Patrol);
+        _fsm.AddState(zBehaviour.Investigate, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Investigate, HearSomething, zBehaviour.Checkout);
+        _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Investigate, PathFucked, zBehaviour.PatrolFSM);
+
+        //Attack behaviour for attacking I guess
+        _fsm.AddState(zBehaviour.Attack, Whiff, zBehaviour.Investigate);
+    
 
 
-        _behaviourMap[zBehaviour.Idle] = Idle;
-        _behaviourMap[zBehaviour.Investigate] = Investigate;
-        _behaviourMap[zBehaviour.Chase] = Chase;
-        _behaviourMap[zBehaviour.Shamble] = ShambleForwards;
-        _behaviourMap[zBehaviour.Patrol] = Patrol;
+
+        _fsm.AddBehaviour(zBehaviour.Investigate, Investigate);
+        _fsm.AddBehaviour(zBehaviour.Chase, Chase);
+        _fsm.AddBehaviour(zBehaviour.Shamble, ShambleForwards);
+        _fsm.AddBehaviour(zBehaviour.PatrolFSM, PatrolFSM);
+        _fsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
+        _fsm.AddBehaviour(zBehaviour.Checkout, Chase);
+        _fsm.AddBehaviour(zBehaviour.Attack, Attack);
     }
+
+    /**
+    Sub State Machine
+    */
+    private void MakePatrolMachine(){
+        _patrolFsm = new FSM(zBehaviour.Patrol);
+
+        _patrolFsm.AddState(zBehaviour.Patrol, WildGooseChase, zBehaviour.LookAt);
+        _patrolFsm.AddState(zBehaviour.LookAt, LookingAtPatrolPoint, zBehaviour.Wait);
+        _patrolFsm.AddState(zBehaviour.Wait, TimeOut, zBehaviour.LookOut);
+        _patrolFsm.AddState(zBehaviour.LookOut, Looked, zBehaviour.Patrol);
+
+        _patrolFsm.AddBehaviour(zBehaviour.Wait, Wait);
+        _patrolFsm.AddBehaviour(zBehaviour.Patrol, Patrol);
+        _patrolFsm.AddBehaviour(zBehaviour.LookOut, RLook);
+        _patrolFsm.AddBehaviour(zBehaviour.LookAt, LookAtNextPoint);
+    }
+
     /*
     Tools
     */
@@ -346,14 +641,36 @@ public class ZomibeAI : MonoBehaviour
         if (NavMesh.CalculatePath(from, to, NavMesh.AllAreas, path)) return GetPathDistance(path);
         return 200000;
     }
+    float GetDistanceToEdge(Vector3 pos){
+        NavMeshHit hit;
+        NavMesh.FindClosestEdge(pos, out hit, NavMesh.AllAreas);
+        float distance = Vector3.Distance(pos, hit.position);
+        return distance;
+    }
+    float SpeedPercentage(){
+        return _navMeshAgent.velocity.magnitude/(_speed * _runMultiplier);
+    }
+    float RotationDeg(){
+        float angle = Quaternion.Angle(_prevRot, transform.rotation);
+        float angularSpeed = angle / Time.deltaTime;
+        _prevRot = transform.rotation;
+        return angularSpeed;
+    }
 
 }
 public enum zBehaviour{
     Chase,
     Shamble,
     Investigate,
-    Search,
-    Idle,
-    Roam,
-    Patrol
+    Checkout,
+    //Search,
+    //Idle,
+    //Roam,
+    Patrol,
+    PatrolFSM,
+    Wait,
+    LookOut,
+    LookAt,
+    TurnTo,
+    Attack
 }

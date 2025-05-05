@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - NoiseMaker
   layers:
   - Default
   - TransparentFX
@@ -14,11 +15,9 @@ TagManager:
   - Target
   - NavMesh
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
+  - AlwaysShow
+  - Door
+  - Zombie
   - 
   - 
   - 

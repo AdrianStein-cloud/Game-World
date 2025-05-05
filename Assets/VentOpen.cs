@@ -1,15 +1,19 @@
 using UnityEngine;
 
-public class VentOpen : MonoBehaviour
+public class VentOpen : MonoBehaviour, ILockChecker
 {
     [SerializeField] Item item;
     [SerializeField] Animator anim;
 
+    public bool IsLocked()
+    {
+        return !PlayerSimpleInventory.Instance.HoldsItem(item);
+    }
+
     public void OpenVentGrate()
     {
-        if (PlayerSimpleInventory.Instance.ContainsItem(item))
-        {
-            anim.SetTrigger("Open");
-        }
+        anim.SetTrigger("Open");
+        GetComponent<PlaySound>().PlayAudio();
+        Destroy(this.GetComponent<Interactable>());
     }
 }
