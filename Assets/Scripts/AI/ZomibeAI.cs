@@ -131,7 +131,7 @@ public class ZomibeAI : MonoBehaviour
         _runFactor = 1;
     }
     bool CloseEnough(){
-        return Vector3.Distance(transform.position, _targetPosition) < 1.5f;
+        return Vector3.Distance(transform.position, _targetPosition) < .8f;
     }
     bool FacingPosition(Vector3 target)
     {
