@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e90fae2633a8246b681248bdadc83d, type: 3}
   m_Name: Fuse
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: d0a08f3f0baa1bd4cb7709eee02abd5e, type: 3}
   Name: Fuse
   UseText: 
