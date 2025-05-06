@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 1302782410326537757}
   - component: {fileID: 5370834908716277923}
   - component: {fileID: 7060078005215711329}
+  - component: {fileID: 5170681725515363735}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -532,7 +533,7 @@ MonoBehaviour:
     Model: {fileID: 6507143100851211202}
     CameraController: {fileID: 0}
   movementProperties:
-    WalkSpeed: 3
+    WalkSpeed: 2.5
     Acceleration: 15
     Deacceleration: 5
     AddedForceDeacceleration: 5
@@ -542,13 +543,13 @@ MonoBehaviour:
     Enable: 1
     Mode: 1
     AllowRunningInAllDirections: 1
-    ForwardSpeed: 6
-    StrafeSpeed: 5
+    ForwardSpeed: 5
+    StrafeSpeed: 4
     BackwardSpeed: 4
   jumpProperties:
     Enable: 1
     HoldJump: 0
-    Force: 1.5
+    Force: 1
     Cooldown: 0.15
   crouchProperties:
     Enable: 1
@@ -558,7 +559,7 @@ MonoBehaviour:
     Height: 1.2
     CameraOffset: 0
     SmoothTime: 0.2
-    CeilingCheckDistance: 2.1
+    CeilingCheckDistance: 1.68
     CeilingCheckMask:
       serializedVersion: 2
       m_Bits: 9
@@ -671,6 +672,12 @@ MonoBehaviour:
   interactionDistance: 2.5
   <normalOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
   <denyOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 0f7f39f521a64ef48ab1a6491a18625c, type: 2}
+  OnHoverInteractable:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverOutInteractable:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5170681725515363735
 MonoBehaviour:
   m_ObjectHideFlags: 0
