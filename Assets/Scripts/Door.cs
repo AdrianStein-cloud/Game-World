@@ -1,4 +1,3 @@
-using Mono.Cecil;
 using System;
 using System.Threading;
 using UnityEngine;
@@ -7,6 +6,7 @@ using UnityEngine.UIElements;
 public class Door : MonoBehaviour, ILockChecker
 {
     [SerializeField] private bool isLocked = true;
+    [SerializeField] private bool useForwardDirection;
     [SerializeField] private GameObject door;
     [SerializeField] private float angle;
     [SerializeField] private float duration;
@@ -49,8 +49,8 @@ public class Door : MonoBehaviour, ILockChecker
     private float DetermineOpeningDirection()
     {
         if (player == null) return angle;
-        Vector3 doorToPlayer = player.position - door.transform.position;
-        float dotProduct = Vector3.Dot(door.transform.right, doorToPlayer.normalized);
+        Vector3 doorToPlayer = player.position - transform.position;
+        float dotProduct = Vector3.Dot(useForwardDirection ? transform.forward : transform.right, doorToPlayer.normalized);
         return dotProduct > 0 ? -angle : angle;
     }
 
