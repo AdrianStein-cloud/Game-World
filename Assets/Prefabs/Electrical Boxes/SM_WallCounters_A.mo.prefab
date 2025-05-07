@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 127417751404284941}
   - component: {fileID: 8273244138590164488}
   - component: {fileID: 4661759835548377504}
+  - component: {fileID: 2628042052992972945}
   m_Layer: 0
   m_Name: SM_WallCounters_A.mo
   m_TagString: Untagged
@@ -86,3 +87,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2628042052992972945
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7832183237115432481}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.018065823, y: 0.00478841, z: 0.0208198}
+  m_Center: {x: -0.0007159365, y: -0.0015305182, z: 0.0013176252}
