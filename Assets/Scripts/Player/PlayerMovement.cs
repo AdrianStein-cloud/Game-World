@@ -779,7 +779,7 @@ public class PlayerMovement : MonoBehaviour
         var pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
 
         var speed = movementProperties.ApplyCurrentSpeedToObjects ? currentSpeed : 1f;
-        rb.linearVelocity = pushDir * movementProperties.PushForce * speed;
+        rb.linearVelocity = pushDir * (movementProperties.PushForce / rb.mass) * speed;
     }
 
     private void OnDrawGizmosSelected()

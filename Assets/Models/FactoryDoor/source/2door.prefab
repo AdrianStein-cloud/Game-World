@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8490984648462515004}
   - component: {fileID: 7510182489386127128}
   - component: {fileID: 3740206756405711265}
-  m_Layer: 0
+  - component: {fileID: 6227992483317642075}
+  m_Layer: 10
   m_Name: FM_2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,6 +88,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6227992483317642075
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207404981201551915}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3496132, y: 0.6872492, z: 0.22054935}
+  m_Center: {x: 0, y: 2.7594328, z: 0}
 --- !u!1 &6534980048360209723
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +120,10 @@ GameObject:
   - component: {fileID: 6970627380813178884}
   - component: {fileID: 7159592389029096877}
   - component: {fileID: 4158809754047327061}
-  m_Layer: 0
+  - component: {fileID: 4933805794115216222}
+  - component: {fileID: 4562887746049774968}
+  - component: {fileID: 6773715951763777763}
+  m_Layer: 10
   m_Name: L_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,6 +200,86 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4933805794115216222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534980048360209723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 0
+  cosmetic: 0
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2322612791961473567}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoverIn:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverOut:
+    m_PersistentCalls:
+      m_Calls: []
+  lockCheckerComponent: {fileID: 2322612791961473567}
+  nametext: 
+  actiontext: 
+--- !u!65 &4562887746049774968
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534980048360209723}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0877309, y: 2.34049, z: 0.06}
+  m_Center: {x: -0.5441506, y: 1.170245, z: -0.030880408}
+--- !u!65 &6773715951763777763
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534980048360209723}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0877309, y: 2.34049, z: 0.19}
+  m_Center: {x: -0.5441506, y: 1.170245, z: -0.030880408}
 --- !u!1 &7121891936125310217
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +291,10 @@ GameObject:
   - component: {fileID: 340724080741735550}
   - component: {fileID: 6186555789331613593}
   - component: {fileID: 4118404864747881361}
-  m_Layer: 0
+  - component: {fileID: 3620153596945306201}
+  - component: {fileID: 4817642503808560807}
+  - component: {fileID: 5005683548009199366}
+  m_Layer: 10
   m_Name: R_2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,6 +372,86 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3620153596945306201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7121891936125310217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 0
+  cosmetic: 0
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5109288887073964939}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoverIn:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverOut:
+    m_PersistentCalls:
+      m_Calls: []
+  lockCheckerComponent: {fileID: 5109288887073964939}
+  nametext: 
+  actiontext: 
+--- !u!65 &4817642503808560807
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7121891936125310217}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0889753, y: 2.34049, z: 0.06}
+  m_Center: {x: 0.5447728, y: 1.170245, z: -0.030880408}
+--- !u!65 &5005683548009199366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7121891936125310217}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0889753, y: 2.34049, z: 0.19}
+  m_Center: {x: 0.5447728, y: 1.170245, z: -0.030880408}
 --- !u!1 &8002739698653889454
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +461,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6464951493904608278}
-  m_Layer: 0
+  - component: {fileID: 2322612791961473567}
+  - component: {fileID: 5109288887073964939}
+  m_Layer: 10
   m_Name: 2door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,3 +488,37 @@ Transform:
   - {fileID: 340724080741735550}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2322612791961473567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002739698653889454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocked: 0
+  useForwardDirection: 1
+  door: {fileID: 6534980048360209723}
+  angle: 90
+  duration: 0.5
+--- !u!114 &5109288887073964939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002739698653889454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250d6f994d5c2c4585f057ba48886c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocked: 0
+  useForwardDirection: 1
+  door: {fileID: 7121891936125310217}
+  angle: -90
+  duration: 0.5

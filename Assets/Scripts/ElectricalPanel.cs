@@ -7,8 +7,10 @@ public class ElectricalPanel : MonoBehaviour, ILockChecker
     [Header("Audio Settings")]
     [SerializeField] private AudioClip switchSoundEffect;
     [SerializeField] private AudioClip poweringUpSound;
+    [SerializeField] private AudioClip ventFallingSound;
     [Header("Other")]
     [SerializeField] Item item;
+    [SerializeField] Transform ventSoundOrigin;
     public bool IsLocked()
     {
         return !PlayerSimpleInventory.Instance.ContainsItem(item);
@@ -25,5 +27,7 @@ public class ElectricalPanel : MonoBehaviour, ILockChecker
         AudioSource.PlayClipAtPoint(switchSoundEffect, transform.position);
         yield return new WaitForSeconds(0.5f);
         AudioSource.PlayClipAtPoint(poweringUpSound, transform.position, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        AudioSource.PlayClipAtPoint(ventFallingSound, ventSoundOrigin.position, 1f);
     }
 }
