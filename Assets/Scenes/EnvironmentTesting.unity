@@ -61551,7 +61551,7 @@ MonoBehaviour:
   switchSoundEffect: {fileID: 8300000, guid: 979673c4fb5fbae49a150ddd9dad6cb5, type: 3}
   poweringUpSound: {fileID: 8300000, guid: e091f9ac9563fec46b107057b3d0d700, type: 3}
   ventFallingSound: {fileID: 8300000, guid: defffeed729a369438fdade5c888022c, type: 3}
-  aiVoicePowerRestored: {fileID: 8300000, guid: c9d699f76d74d26459f6caa8b0653725, type: 3}
+  aiVoicePowerRestored: {fileID: 8300000, guid: 5a6301b395a8e794a8121c45191ed4bd, type: 3}
   item: {fileID: 11400000, guid: 813e381a99e6fbb4f90ea0e1abc7d15b, type: 2}
   ventSoundOrigin: {fileID: 1526588563}
 --- !u!1001 &1063522312154438088
