@@ -188,8 +188,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3621353d8d0db044f93bdfe57270d1fe, type: 3}
   - {fileID: 8300000, guid: da6e75344c94c3343a72cd561d6a3ff3, type: 3}
   - {fileID: 8300000, guid: 0a929533775c5ab4dac73b4be852380d, type: 3}
-  minTimeBetweenPropaganda: 10
-  maxTimeBetweenPropaganda: 15
+  minTimeBetweenPropaganda: 15
+  maxTimeBetweenPropaganda: 30
 --- !u!82 &6994188713052294939
 AudioSource:
   m_ObjectHideFlags: 0
