@@ -24,8 +24,8 @@ public class LightFlicker : MonoBehaviour
     [SerializeField] bool canScare;
     [SerializeField] GameObject scaryObject;
     [SerializeField] private bool isAlarm = false;
+    [SerializeField] private bool reversed;
 
-    private bool reversed;
     private bool off;
 
     private void Start()
