@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 3816224637343393461}
   - component: {fileID: 6977880558023757458}
   m_Layer: 0
-  m_Name: VentilationShaft.JunctionRound
+  m_Name: Vent Junction Round
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
