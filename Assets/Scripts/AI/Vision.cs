@@ -8,6 +8,12 @@ public class Vision : MonoBehaviour
     public int _sight_range;
     public int _field_of_view;
     public LayerMask _layerMask;
+
+    private void Awake()
+    {
+        _target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
     void Start()
     {
         

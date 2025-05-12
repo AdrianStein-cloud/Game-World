@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00b9b79e71d151e44a32572c55870622, type: 3}
-  m_Name: ZombieInfo1
+  m_Name: ZombieInfo1 2
   m_EditorClassIdentifier: 
-  Name: Alvin
-  Age: 25
-  Bloodtype: 0
+  Name: Birgitte
+  Age: 67
+  Bloodtype: 3
   HackedInformation:
-  - Kindergarten teacher
-  - USA
+  - Meth consumer
+  - Netherlands
   - Random information...
   HackedSoundClips: []

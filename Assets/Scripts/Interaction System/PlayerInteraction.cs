@@ -12,6 +12,9 @@ public class PlayerInteraction : MonoBehaviour
 
     [field: SerializeField] public Material normalOutlineMaterial { get; private set; }
     [field: SerializeField] public Material denyOutlineMaterial { get; private set; }
+    [field: SerializeField] public Material hackOutlineMaterial { get; private set; }
+    [field: SerializeField] public Material notHackedOutlineMaterial { get; private set; }
+    [field: SerializeField] public Material hackcooldownOutlineMaterial { get; private set; }
 
     public UnityEvent<Interactable> OnHoverInteractable, OnHoverOutInteractable;
 
