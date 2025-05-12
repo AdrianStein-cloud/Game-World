@@ -44,9 +44,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46c9453da7d6544e8cd12b30f6608fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localSounds: []
+  localSounds:
+  - {fileID: 8300000, guid: b05a3f0193c4d6443b82ab18473276d5, type: 3}
+  - {fileID: 8300000, guid: 93f68ec3b7fa705479d83431e14684f4, type: 3}
+  - {fileID: 8300000, guid: a600d1a9f558e7e41abb226e36510301, type: 3}
+  - {fileID: 8300000, guid: 5808d146a84520f4386937f586fefd4e, type: 3}
+  - {fileID: 8300000, guid: 0d157928800907e4082e6cab2e929171, type: 3}
+  - {fileID: 8300000, guid: e8de10376d1739041a8e1f9eaf62fb82, type: 3}
+  - {fileID: 8300000, guid: ad4f464d26d792d43b9580b7a2e21f64, type: 3}
+  - {fileID: 8300000, guid: 38b28997f14551241bd42c588548fce6, type: 3}
+  - {fileID: 8300000, guid: 3937afac758ddb74da064aab0536ef02, type: 3}
+  - {fileID: 8300000, guid: 79854bea87709cf4c8c869d3bc19d1d0, type: 3}
+  - {fileID: 8300000, guid: 7bf16df2e4da76c4c94579a4569e8867, type: 3}
+  - {fileID: 8300000, guid: 1f949aae86f44ca468758da84e06c0e6, type: 3}
+  - {fileID: 8300000, guid: 3bb7419909a80394c8f049a470226aa9, type: 3}
+  - {fileID: 8300000, guid: 2556889f69050064bb3021ecd22c5ae5, type: 3}
+  - {fileID: 8300000, guid: 0789a7632c181584e9b60f6dc4152565, type: 3}
+  - {fileID: 8300000, guid: 083346161ca7c164f88348891c2e35e6, type: 3}
   globalSounds: []
-  soundIntervalMin: 0
-  soundIntervalMax: 0
-  localSoundMinimumDistance: 0
-  localSoundMaximumDistance: 0
+  soundIntervalMin: 20
+  soundIntervalMax: 40
+  localSoundMinimumDistance: 10
+  localSoundMaximumDistance: 40
