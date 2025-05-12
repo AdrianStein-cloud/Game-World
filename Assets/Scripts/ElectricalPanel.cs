@@ -8,6 +8,7 @@ public class ElectricalPanel : MonoBehaviour, ILockChecker
     [SerializeField] private AudioClip switchSoundEffect;
     [SerializeField] private AudioClip poweringUpSound;
     [SerializeField] private AudioClip ventFallingSound;
+    [SerializeField] private AudioClip aiVoicePowerRestored;
     [Header("Other")]
     [SerializeField] Item item;
     [SerializeField] Transform ventSoundOrigin;
@@ -26,6 +27,7 @@ public class ElectricalPanel : MonoBehaviour, ILockChecker
     {
         AudioSource.PlayClipAtPoint(switchSoundEffect, transform.position);
         yield return new WaitForSeconds(0.5f);
+        AudioSource.PlayClipAtPoint(aiVoicePowerRestored, transform.position, 0.5f);
         AudioSource.PlayClipAtPoint(poweringUpSound, transform.position, 0.5f);
         yield return new WaitForSeconds(0.5f);
         AudioSource.PlayClipAtPoint(ventFallingSound, ventSoundOrigin.position, 1f);
