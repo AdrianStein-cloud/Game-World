@@ -668,7 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 1025
+    m_Bits: 1537
   interactionDistance: 2.5
   <normalOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
   <denyOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 0f7f39f521a64ef48ab1a6491a18625c, type: 2}
