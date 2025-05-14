@@ -15,6 +15,7 @@ public class Interactable : MonoBehaviour
 
 
     [SerializeField] private MonoBehaviour lockCheckerComponent;
+    [SerializeField] private Item requiredItem;
 
     [TextArea(1, 3)] public string nametext;
     [TextArea(1, 3)] public string actiontext;
@@ -98,6 +99,12 @@ public class Interactable : MonoBehaviour
         {
             return checker.IsLocked();
         }
+
+        if (requiredItem != null)
+        {
+            return !PlayerSimpleInventory.Instance.HoldsItem(requiredItem);
+        }
+
         // If no lockChecker is assigned, or it doesn't implement ILockChecker, assume it's unlocked.
         return false;
     }

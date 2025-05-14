@@ -30,6 +30,11 @@ public class Door : MonoBehaviour, ILockChecker
         isOpen = !isOpen;
     }
 
+    public void SetLockState(bool value)
+    {
+        isLocked = value;
+    }
+
     public void Close()
     {
         Move(0f);
