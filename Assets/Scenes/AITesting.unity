@@ -5640,6 +5640,7 @@ MonoBehaviour:
   _pState: 0
   _runMultiplier: 2
   _look: 0
+  _turnDir: 0
 --- !u!1 &277649658
 GameObject:
   m_ObjectHideFlags: 0
@@ -24983,6 +24984,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8513308133963328125, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5c2d954069310fa4abac420241f5476f, type: 2}
+    - target: {fileID: 8513308133963328125, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29994,6 +30003,7 @@ MonoBehaviour:
   _pState: 0
   _runMultiplier: 2
   _look: 0
+  _turnDir: 0
 --- !u!195 &1860748000
 NavMeshAgent:
   m_ObjectHideFlags: 0

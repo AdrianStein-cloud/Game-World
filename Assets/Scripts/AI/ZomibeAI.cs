@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using System.Collections;
 using UnityEditor.UI;
 using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 
 public class ZomibeAI : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class ZomibeAI : MonoBehaviour
     private bool _heardNoise;
     private int _attack;
     private quaternion _prevRot;
+    private float _prevYaw;
+    [SerializeField] private float _turnDir;
 
 
     void Start()
@@ -58,6 +61,7 @@ public class ZomibeAI : MonoBehaviour
         WalkSpeed();
         anim = GetComponent<Animator>();
         _prevRot = transform.rotation;
+        _prevYaw = transform.eulerAngles.y;
     }
 
     void Update()
@@ -65,7 +69,7 @@ public class ZomibeAI : MonoBehaviour
         anim.SetFloat("Speed", SpeedPercentage());
         anim.SetInteger("Look", _look);
         anim.SetInteger("Attack", _attack);
-        anim.SetFloat("Turn", RotationDeg());
+        anim.SetFloat("Turn", _turnDir, 0.2f, Time.deltaTime);
     }
     void FixedUpdate()
     {
@@ -115,7 +119,8 @@ public class ZomibeAI : MonoBehaviour
 
         while (angleDiff > 5f)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * _runFactor* Time.fixedDeltaTime);
+            TurnToFace(targetPoint);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, _turnSpeed * _runFactor* Time.fixedDeltaTime);
             angleDiff = Quaternion.Angle(transform.rotation, targetRot);
             yield return new WaitForFixedUpdate();
         }
@@ -131,7 +136,7 @@ public class ZomibeAI : MonoBehaviour
         _runFactor = 1;
     }
     bool CloseEnough(){
-        return Vector3.Distance(transform.position, _targetPosition) < .8f;
+        return Vector3.Distance(transform.position, _targetPosition) < 1f;
     }
     bool FacingPosition(Vector3 target)
     {
@@ -145,8 +150,13 @@ public class ZomibeAI : MonoBehaviour
         Debug.Log("am I looking at " + target + " offset: " + Vector3.Dot(dir, transform.forward) );
         return Vector3.Dot(dir, transform.forward) > 0.98f;
     }
+    
     void TurnToFace(Vector3 target)
     {
+        var dirr = GetTurnDirection(target);
+        //anim.SetFloat("Turn", dirr/1.7f);
+        //anim.SetFloat("Turn", dirr/1.7f, 0.1f, Time.deltaTime);
+        _turnDir = dirr/1.7f;
         Vector3 diff = target - transform.position;
         diff.y = 0;
         if(diff.sqrMagnitude < 0.0001f) return; // target is essentially at the same position
@@ -160,18 +170,27 @@ public class ZomibeAI : MonoBehaviour
             dir = (dir + Vector3.right * 0.01f).normalized;
         }
         
-        Debug.Log("TurnToFace: direction = " + dir);
+        Debug.Log("TurnToFace: direction = " + dir + transform.forward + Vector3.Dot(transform.forward, dir));
         if (dir != Vector3.zero)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), _turnSpeed * _runFactor* Time.fixedDeltaTime);
         }
     }
+    
+    /*
+    void TurnToFace(Vector3 target){
+        var dir = GetTurnDirection(target);
+        anim.SetFloat("Turn", dir);
+
+    }
     void TurnLeft(){
-        transform.Rotate(0, -_turnSpeed * _runFactor* Time.fixedDeltaTime, 0);
+        anim.SetFloat("Turn", 1);
+
     }
     void TurnRight(){
-        transform.Rotate(0, _turnSpeed * _runFactor* Time.fixedDeltaTime, 0);
+        anim.SetFloat("Turn", -1);
     }
+    */
     void ResetCounts()
     {
         _count = 0;
@@ -517,8 +536,10 @@ public class ZomibeAI : MonoBehaviour
     }
     bool LookingAtPatrolPoint(){
         if (!_patrolPath.Any() || _patrolPath.Count() == 1 && CloseEnough()) return true;
-        if (CloseEnough() && FacingPosition(_patrolPath[0])){
-            Debug.Log("look p");
+        if ( FacingPosition(_patrolPath[0])){
+            //anim.SetFloat("Turn", 0);//, 0.2f, Time.deltaTime);
+            _turnDir = 0f;
+            Debug.Log("look p" + CloseEnough());
             return true;
         }
         return false;
@@ -650,12 +671,48 @@ public class ZomibeAI : MonoBehaviour
     float SpeedPercentage(){
         return _navMeshAgent.velocity.magnitude/(_speed * _runMultiplier);
     }
+    /*
     float RotationDeg(){
         float angle = Quaternion.Angle(_prevRot, transform.rotation);
         float angularSpeed = angle / Time.deltaTime;
         _prevRot = transform.rotation;
+        Debug.Log(angularSpeed);
         return angularSpeed;
     }
+
+    float GetSignedTurnRate()
+    {
+        float currentYaw = transform.eulerAngles.y;
+        float deltaYaw = Mathf.DeltaAngle(_prevYaw, currentYaw);
+
+        float turnRate = deltaYaw / Time.deltaTime; // degrees per second
+        float normalizedTurn = turnRate / (_turnSpeed * _runFactor);
+
+        _prevYaw = currentYaw;
+
+        return normalizedTurn;
+    }
+    */
+    int GetTurnDirection(Vector3 targetPosition)
+    {
+        Vector3 toTarget = (targetPosition - transform.position).normalized;
+        Vector3 forward = transform.forward;
+
+        // Project to XZ plane
+        toTarget.y = 0f;
+        forward.y = 0f;
+
+        // Get signed angle between forward and direction to target
+        float angle = Vector3.SignedAngle(forward, toTarget, Vector3.up);
+
+        if (angle > 0f)
+            return 1;   // Turn right
+        else if (angle < 0f)
+            return -1;  // Turn left
+        else
+            return 0;   // Already facing
+    }
+
 
 }
 public enum zBehaviour{
