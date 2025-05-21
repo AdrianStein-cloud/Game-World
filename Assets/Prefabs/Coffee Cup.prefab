@@ -1,0 +1,220 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4267878818204411038
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -19.753
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0673
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 41.311
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.14693229
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.14693233
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.69167244
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.6916727
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 156.014
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      propertyPath: m_Name
+      value: Coffee Cup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8312581661492551230}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4947221349203119020}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1905719396485842351}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4102289543017734729}
+    - targetCorrespondingSourceObject: {fileID: -2336658959302506480, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3552302445683678126}
+  m_SourcePrefab: {fileID: 100100000, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+--- !u!1 &4034069669260417487 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+  m_PrefabInstance: {fileID: 4267878818204411038}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &8312581661492551230
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034069669260417487}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.03
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4947221349203119020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034069669260417487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cdc9d5ee1267964fa2325ecd3ede11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 82c464b002b35324e972c0f36594a8a6, type: 2}
+--- !u!114 &1905719396485842351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034069669260417487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd3066b14eb3414f86c32692c9ad54a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 0
+  cosmetic: 0
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4947221349203119020}
+        m_TargetAssemblyTypeName: ItemPickup, Assembly-CSharp
+        m_MethodName: PickupItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoverIn:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverOut:
+    m_PersistentCalls:
+      m_Calls: []
+  lockCheckerComponent: {fileID: 0}
+  nametext: Coffee
+  actiontext: 
+--- !u!54 &4102289543017734729
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034069669260417487}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &7253056145340148878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2336658959302506480, guid: a96703623ad89614e9c513c1853699f6, type: 3}
+  m_PrefabInstance: {fileID: 4267878818204411038}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3552302445683678126
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253056145340148878}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.030955397, y: 0.03088749, z: 0.048339583}
+  m_Center: {x: 0.00000035752578, y: -1.17916575e-14, z: 0.001794504}

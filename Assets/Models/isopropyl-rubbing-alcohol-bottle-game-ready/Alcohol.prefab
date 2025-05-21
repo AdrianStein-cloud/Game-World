@@ -142,8 +142,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   lockCheckerComponent: {fileID: 0}
-  requiredItem: {fileID: 0}
-  nametext: 
+  nametext: Alcohol
   actiontext: 
 --- !u!135 &-1539795202311797910
 SphereCollider:
