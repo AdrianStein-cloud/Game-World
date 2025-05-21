@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - NoiseMaker
+  - Zombie
   layers:
   - Default
   - TransparentFX

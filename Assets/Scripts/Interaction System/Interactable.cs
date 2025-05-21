@@ -11,7 +11,7 @@ public class Interactable : MonoBehaviour
 {
     [SerializeField] bool once = false;
     [SerializeField] bool cosmetic = false;
-    [SerializeField] UnityEvent OnInteract, OnHoverIn, OnHoverOut;
+    [SerializeField] protected UnityEvent OnInteract, OnHoverIn, OnHoverOut;
 
 
     [SerializeField] private MonoBehaviour lockCheckerComponent;
@@ -19,9 +19,9 @@ public class Interactable : MonoBehaviour
     [TextArea(1, 3)] public string nametext;
     [TextArea(1, 3)] public string actiontext;
 
-    private List<Renderer> renderers;
-    private Dictionary<Renderer, Material[]> originalMaterials;
-    private bool hovering;
+    protected List<Renderer> renderers;
+    protected Dictionary<Renderer, Material[]> originalMaterials;
+    protected bool hovering;
 
     
 
@@ -68,7 +68,7 @@ public class Interactable : MonoBehaviour
         InteractionIndicators.Instance.IndicateInteraction(null);
     }
 
-    public void BeginOutline()
+    public virtual void BeginOutline()
     {
         foreach (Renderer renderer in renderers)
         {

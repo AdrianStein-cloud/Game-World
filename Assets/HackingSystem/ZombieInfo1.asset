@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ZombieInfo1
   m_EditorClassIdentifier: 
   Name: Alvin
+  Age: 25
+  Bloodtype: 0
   HackedInformation:
-  - 45
   - Kindergarten teacher
-  - A+
   - USA
   - Random information...
   HackedSoundClips: []
