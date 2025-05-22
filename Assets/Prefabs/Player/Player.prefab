@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 5370834908716277923}
   - component: {fileID: 7060078005215711329}
   - component: {fileID: 5170681725515363735}
+  - component: {fileID: 2419815774583209792}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -672,6 +673,7 @@ MonoBehaviour:
   interactionDistance: 2.5
   <normalOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
   <denyOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 0f7f39f521a64ef48ab1a6491a18625c, type: 2}
+  <hackOutlineMaterial>k__BackingField: {fileID: 0}
   OnHoverInteractable:
     m_PersistentCalls:
       m_Calls: []
@@ -695,6 +697,18 @@ MonoBehaviour:
   dropItemLayer:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &2419815774583209792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419541264559891762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbeb9022c2f91ea43bc5b41b2a14127a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &997490684451905717
 PrefabInstance:
   m_ObjectHideFlags: 0
