@@ -196,7 +196,7 @@ MonoBehaviour:
       Duration: 0
       SpeedThreshold: 0
   leanProperties:
-    Enable: 1
+    Enable: 0
     Mode: 1
     Angle: 3
     Speed: 5
