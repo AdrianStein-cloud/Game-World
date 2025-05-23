@@ -554,7 +554,7 @@ MonoBehaviour:
     Cooldown: 0.15
   crouchProperties:
     Enable: 1
-    CanCrouchInAir: 1
+    CanCrouchInAir: 0
     Mode: 0
     Speed: 2
     Height: 1.2
@@ -674,6 +674,8 @@ MonoBehaviour:
   <normalOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
   <denyOutlineMaterial>k__BackingField: {fileID: 2100000, guid: 0f7f39f521a64ef48ab1a6491a18625c, type: 2}
   <hackOutlineMaterial>k__BackingField: {fileID: 0}
+  <notHackedOutlineMaterial>k__BackingField: {fileID: 0}
+  <hackcooldownOutlineMaterial>k__BackingField: {fileID: 0}
   OnHoverInteractable:
     m_PersistentCalls:
       m_Calls: []
@@ -709,6 +711,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbeb9022c2f91ea43bc5b41b2a14127a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hackingUI: {fileID: 0}
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  interactionDistance: 0
+  hackingTargetIndicator: {fileID: 0}
+  hackingProgressText: {fileID: 0}
+  hackingProgressSlider: {fileID: 0}
+  hackingProgressGO: {fileID: 0}
+  zombieInformationGO: {fileID: 0}
+  zombieInformationText: {fileID: 0}
+  zombieAdditionalInformationText: {fileID: 0}
+  nametagPrefab: {fileID: 0}
+  hackingOptionsAnim: {fileID: 0}
+  hackingDoneClip: {fileID: 0}
+  scanningCompleteClip: {fileID: 0}
+  doingScanningClip: {fileID: 0}
 --- !u!1001 &997490684451905717
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,9 +3,10 @@ using UnityEngine;
 public class RequiredItem : MonoBehaviour, ILockChecker
 {
     [SerializeField] private Item requiredItem;
+    [SerializeField] private bool requireHoldingItem;
 
     public bool IsLocked()
     {
-        return !PlayerSimpleInventory.Instance.HoldsItem(requiredItem);
+        return requireHoldingItem ? !PlayerSimpleInventory.Instance.HoldsItem(requiredItem) : !PlayerSimpleInventory.Instance.ContainsItem(requiredItem);
     }
 }

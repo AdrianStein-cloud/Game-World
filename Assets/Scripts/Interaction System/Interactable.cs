@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 public class Interactable : MonoBehaviour
 {
     [SerializeField] bool once = false;
-    [SerializeField] bool cosmetic = false;
+    [SerializeField] protected bool cosmetic = false;
     [SerializeField] protected UnityEvent OnInteract, OnHoverIn, OnHoverOut;
 
 
