@@ -36723,6 +36723,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5101428523205933462, guid: 4d8b52bac6a2bdd4ba5ea430a2880280, type: 3}
   m_PrefabInstance: {fileID: 694011846}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &699926105
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1208314629}
+    m_Modifications:
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.644
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.043
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 37.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0000005513429
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040047993053515993, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+      propertyPath: m_Name
+      value: PropagandaPoster
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+--- !u!4 &699926106 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3390903623736187543, guid: cd3bdc51e75501d468102f11c27e1283, type: 3}
+  m_PrefabInstance: {fileID: 699926105}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &701192547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57546,6 +57608,7 @@ Transform:
   - {fileID: 182337886}
   - {fileID: 945879212}
   - {fileID: 1613332906}
+  - {fileID: 699926106}
   m_Father: {fileID: 514530070}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1209444354 stripped
