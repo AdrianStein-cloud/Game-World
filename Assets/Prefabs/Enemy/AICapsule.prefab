@@ -6536,12 +6536,17 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 1153
+  _wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _patrolPath: []
+  _stopDistance: 1
   _toouchDistance: 1.5
   _state: 7
   _pState: 0
+  _iState: 0
   _runMultiplier: 2
-  _look: 0
+  _freak: 0
 --- !u!95 &8513308133963328125
 Animator:
   serializedVersion: 7
@@ -6555,7 +6560,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 5c2d954069310fa4abac420241f5476f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0

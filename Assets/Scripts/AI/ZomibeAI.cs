@@ -51,6 +51,7 @@ public class ZomibeAI : MonoBehaviour
     private float _currentAttackWeight;
     private float _currentFreakWeight;
     [SerializeField] private bool _freak;
+    private ZomibeAI _ztarget;
 
     void Start()
     {
@@ -59,6 +60,7 @@ public class ZomibeAI : MonoBehaviour
         _navMeshAgent.angularSpeed = _turnSpeed;
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.speed = _speed * _runFactor;
+        ZombieManager.Instance?.Register(this);
 
     }
     void Awake()
@@ -73,6 +75,7 @@ public class ZomibeAI : MonoBehaviour
 
     void Update()
     {
+        _timer += Time.deltaTime;
         anim.SetFloat("Speed", SpeedPercentage());
         anim.SetInteger("Look", _look);
         anim.SetInteger("Attack", _attack);
@@ -119,10 +122,15 @@ public class ZomibeAI : MonoBehaviour
     public void Hack(){
         _vision._see_something = false;
         _vision.enabled = false;
+        ZombieManager.Instance?.NudgeAllZombies(this);
         _freak = true;
     }
     public void Strike(){
         _freak = false;
+    }
+    public void StrikeConnect(){
+        if (_ztarget != null) _ztarget.Strike();
+        _ztarget = null;
     }
     /*
     CONTROLLER STUFF, maybe it should be in it's own script one day
@@ -480,6 +488,13 @@ public class ZomibeAI : MonoBehaviour
         }
         TurnToTarget();
     }
+    void SlashAttack(){
+        if (_attack == 0){
+            _attack = 2;
+            _wait = 2;
+        }
+        TurnToTarget();
+    }
     void FreakOut(){
         if (_freak == false){
             _freak = true;
@@ -673,6 +688,18 @@ public class ZomibeAI : MonoBehaviour
         }
         return false;
     }
+    bool NearFreakingZ(){
+        foreach (var z in ZombieManager.Instance?.GetZomibes())
+        {
+            if (z._freak && Vector3.Distance(z.transform.position, transform.position) < _toouchDistance){
+                ResetCounts();
+                _targetPosition = z.transform.position;
+                _ztarget = z;
+                return true;
+            }
+        }
+        return false;
+    }
     /**
     State Machine Creation
     */
@@ -702,6 +729,7 @@ public class ZomibeAI : MonoBehaviour
         //checkout is basically when the zombie hears something and goes to investigate
         _fsm.AddState(zBehaviour.Checkout, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
+        _fsm.AddState(zBehaviour.Checkout, NearFreakingZ, zBehaviour.SlashAttack);
         _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.Checkout, WildGooseChased, zBehaviour.Investigate);
@@ -723,10 +751,13 @@ public class ZomibeAI : MonoBehaviour
 
         //Attack behaviour for attacking I guess
         _fsm.AddState(zBehaviour.Attack, Whiff, zBehaviour.Investigate);
+        
+        _fsm.AddState(zBehaviour.SlashAttack, TimeOut, zBehaviour.PatrolFSM);
 
         //Freaking out (being hacked)
         _fsm.AddState(zBehaviour.FreakOut, SnapOut, zBehaviour.PatrolFSM);    
     
+        //add behaviours
         _fsm.AddBehaviour(zBehaviour.Investigate, InvestigateFSM);
         _fsm.AddBehaviour(zBehaviour.Chase, Chase);
         _fsm.AddBehaviour(zBehaviour.Shamble, ShambleForwards);
@@ -734,6 +765,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
         _fsm.AddBehaviour(zBehaviour.Checkout, Chase);
         _fsm.AddBehaviour(zBehaviour.Attack, Attack);
+        _fsm.AddBehaviour(zBehaviour.SlashAttack, SlashAttack);
         _fsm.AddBehaviour(zBehaviour.FreakOut, FreakOut);
     }
 
@@ -748,6 +780,7 @@ public class ZomibeAI : MonoBehaviour
         _patrolFsm.AddState(zBehaviour.Wait, TimeOut, zBehaviour.LookOut);
         _patrolFsm.AddState(zBehaviour.LookOut, Looked, zBehaviour.Patrol);
 
+        //add behaviours
         _patrolFsm.AddBehaviour(zBehaviour.Wait, Wait);
         _patrolFsm.AddBehaviour(zBehaviour.Patrol, Patrol);
         _patrolFsm.AddBehaviour(zBehaviour.LookOut, RLook);
@@ -761,6 +794,7 @@ public class ZomibeAI : MonoBehaviour
         _investigateFsm.AddState(zBehaviour.TurnTo, GotTo, zBehaviour.LookOut);
         _investigateFsm.AddState(zBehaviour.GoTo, GotTo, zBehaviour.TurnTo);
 
+        //add behaviours
         _investigateFsm.AddBehaviour(zBehaviour.LookOut, RLook2);
         _investigateFsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
         _investigateFsm.AddBehaviour(zBehaviour.GoTo, GoToTarget);
@@ -841,7 +875,7 @@ public class ZomibeAI : MonoBehaviour
         diff.y = 0f;
         return diff.sqrMagnitude < 0.0001f ? Vector3.zero : diff.normalized;
     }
-    
+
 }
 public enum zBehaviour{
     Chase,
@@ -856,5 +890,6 @@ public enum zBehaviour{
     TurnTo,
     Attack,
     GoTo,
-    FreakOut
+    FreakOut,
+    SlashAttack
 }
