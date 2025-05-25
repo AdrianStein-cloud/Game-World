@@ -121,6 +121,9 @@ public class ZomibeAI : MonoBehaviour
         _vision.enabled = false;
         _freak = true;
     }
+    public void Strike(){
+        _freak = false;
+    }
     /*
     CONTROLLER STUFF, maybe it should be in it's own script one day
     */
@@ -195,22 +198,20 @@ public class ZomibeAI : MonoBehaviour
     void TurnToFace(Vector3 target)
     {
         var dirr = GetTurnDirection(target);
-        //anim.SetFloat("Turn", dirr/1.7f);
-        //anim.SetFloat("Turn", dirr/1.7f, 0.1f, Time.deltaTime);
         _turnDir = dirr/1.7f;
         Vector3 diff = target - transform.position;
         diff.y = 0;
         if(diff.sqrMagnitude < 0.0001f){
             _turnDir = 0;
-            return; // target is essentially at the same position
+            return;
         } 
 
         Vector3 dir = diff.normalized;
         
-        // If the target is almost exactly behind, add a tiny bias
+        //If the target is almost exactly behind, add a tiny bias
         if(Vector3.Dot(transform.forward, dir) < -0.999f)
         {
-            // Adding a small bias in an arbitrary direction (e.g., right)
+            //Adding a small bias in an arbitrary direction (e.g., right)
             dir = (dir + Vector3.right * 0.01f).normalized;
         }
         
@@ -712,7 +713,6 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.TurnTo, LookedToInvestigate, zBehaviour.Investigate);
         _fsm.AddState(zBehaviour.TurnTo, Freak, zBehaviour.FreakOut);
 
-
         //investigate is when the zombie starts looking around a couple of times because it thought there was something there
         _fsm.AddState(zBehaviour.Investigate, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Investigate, Touched, zBehaviour.TurnTo);
@@ -791,31 +791,6 @@ public class ZomibeAI : MonoBehaviour
     float SpeedPercentage(){
         return _navMeshAgent.velocity.magnitude/(_speed * _runMultiplier);
     }
-    /*
-    public Vector3 GetSafeNearbyPoint(float clearance = .3f, int maxAttempts = 200)
-    {
-        for (int i = 0; i < maxAttempts; i++)
-        {
-            Vector3 candidate = GetNearbyPoint();
-            
-            if (candidate == Vector3.zero)
-                continue;
-
-            // Validate it's on the NavMesh (optional if you're already sure)
-            if (!NavMesh.SamplePosition(candidate, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
-                continue;
-            // Check physical clearance using OverlapSphere
-            Collider[] hits = Physics.OverlapSphere(navHit.position, clearance, _layerMaskFloor, QueryTriggerInteraction.Ignore);
-            if (hits.Length == 0)
-            {
-                return navHit.position;
-            }
-        }
-
-        // Fallback
-        return transform.position;
-    }
-    */
 
     public Vector3 GetSafeNearbyPoint(float clearance = .1f, int maxAttempts = 200)
     {
@@ -836,28 +811,7 @@ public class ZomibeAI : MonoBehaviour
 
         return _targetPosition;
     }
-    /*
-    float RotationDeg(){
-        float angle = Quaternion.Angle(_prevRot, transform.rotation);
-        float angularSpeed = angle / Time.deltaTime;
-        _prevRot = transform.rotation;
-        Debug.Log(angularSpeed);
-        return angularSpeed;
-    }
 
-    float GetSignedTurnRate()
-    {
-        float currentYaw = transform.eulerAngles.y;
-        float deltaYaw = Mathf.DeltaAngle(_prevYaw, currentYaw);
-
-        float turnRate = deltaYaw / Time.deltaTime; // degrees per second
-        float normalizedTurn = turnRate / (_turnSpeed * _runFactor);
-
-        _prevYaw = currentYaw;
-
-        return normalizedTurn;
-    }
-    */
     int GetTurnDirection(Vector3 targetPosition)
     {
         Vector3 toTarget = (targetPosition - transform.position).normalized;
@@ -887,17 +841,13 @@ public class ZomibeAI : MonoBehaviour
         diff.y = 0f;
         return diff.sqrMagnitude < 0.0001f ? Vector3.zero : diff.normalized;
     }
-
-
+    
 }
 public enum zBehaviour{
     Chase,
     Shamble,
     Investigate,
     Checkout,
-    //Search,
-    //Idle,
-    //Roam,
     Patrol,
     PatrolFSM,
     Wait,
