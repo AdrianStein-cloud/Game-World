@@ -683,6 +683,7 @@ public class ZomibeAI : MonoBehaviour
     bool Freak(){
         if (_freak == true){
             _vision.enabled = false;
+            WalkSpeed();
             ResetCounts();
             return true;
         }
@@ -753,7 +754,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Attack, Whiff, zBehaviour.Investigate);
         
         _fsm.AddState(zBehaviour.SlashAttack, TimeOut, zBehaviour.PatrolFSM);
-
+        
         //Freaking out (being hacked)
         _fsm.AddState(zBehaviour.FreakOut, SnapOut, zBehaviour.PatrolFSM);    
     
