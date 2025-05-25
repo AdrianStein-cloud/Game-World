@@ -18,10 +18,13 @@ public class ZomibeAI : MonoBehaviour
     [SerializeField] private float _bigTurn;
     [SerializeField] private float _smallTurn;
     [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private LayerMask _wallLayerMask;
     [SerializeField] private List<Vector3> _patrolPath;
+    [SerializeField] private float _stopDistance;
     public float _toouchDistance;
     public zBehaviour _state;
     public zBehaviour _pState;
+    public zBehaviour _iState;
     public int _runMultiplier;
     private int _runFactor;
     private Vector3 _targetPosition;
@@ -30,8 +33,9 @@ public class ZomibeAI : MonoBehaviour
     private Vision _vision;
     private FSM _fsm;
     private FSM _patrolFsm;
+    private FSM _investigateFsm;
     private int _count;
-    [SerializeField] private int _look;
+    private int _look;
     private float _timer;
     private int _wait;
     private Coroutine _turnRoutine;
@@ -40,10 +44,13 @@ public class ZomibeAI : MonoBehaviour
 
     private bool _heardNoise;
     private int _attack;
-    private quaternion _prevRot;
-    private float _prevYaw;
-    [SerializeField] private float _turnDir;
-
+    private float _armLayerWeight;
+    private float _turnDir;
+    private float _currentLookWeight;
+    private float _currentArmWeight;
+    private float _currentAttackWeight;
+    private float _currentFreakWeight;
+    [SerializeField] private bool _freak;
 
     void Start()
     {
@@ -58,10 +65,10 @@ public class ZomibeAI : MonoBehaviour
     {
         MakeStateMachine();
         MakePatrolMachine();
+        MakeInvestigateMachine();
         WalkSpeed();
         anim = GetComponent<Animator>();
-        _prevRot = transform.rotation;
-        _prevYaw = transform.eulerAngles.y;
+        _armLayerWeight = 1;
     }
 
     void Update()
@@ -70,6 +77,31 @@ public class ZomibeAI : MonoBehaviour
         anim.SetInteger("Look", _look);
         anim.SetInteger("Attack", _attack);
         anim.SetFloat("Turn", _turnDir, 0.2f, Time.deltaTime);
+        anim.SetBool("FreakOut",_freak);
+        
+
+        //Animation layers
+        //general arm placement
+        _currentArmWeight = Mathf.MoveTowards(_currentArmWeight, _armLayerWeight, 6f * Time.deltaTime);
+        anim.SetLayerWeight(1,_currentArmWeight);
+
+        //head movement for looking around
+        var _lookWeight = 0;
+        if (_look > 0) _lookWeight = 1;
+        _currentLookWeight = Mathf.MoveTowards(_currentLookWeight, _lookWeight, 6f * Time.deltaTime);
+        anim.SetLayerWeight(2, _currentLookWeight);
+
+        //Freaking
+        var freakWeight = 0;
+        if (_freak) freakWeight = 1;
+        _currentFreakWeight = Mathf.MoveTowards(_currentFreakWeight, freakWeight, 6f * Time.deltaTime);
+        anim.SetLayerWeight(3, _currentFreakWeight);
+
+        //Attacking
+        var attackWeight = 0;
+        if (_attack > 0) attackWeight = 1;
+        _currentAttackWeight = Mathf.MoveTowards(_currentAttackWeight, attackWeight, 6f * Time.deltaTime);
+        anim.SetLayerWeight(4, _currentAttackWeight);
     }
     void FixedUpdate()
     {
@@ -84,16 +116,21 @@ public class ZomibeAI : MonoBehaviour
         _heardNoise = true;
         _targetPosition = position;
     }
-    /**
+    public void Hack(){
+        _vision._see_something = false;
+        _vision.enabled = false;
+        _freak = true;
+    }
+    /*
     CONTROLLER STUFF, maybe it should be in it's own script one day
     */
-    //currently using navmesh agent to move, maybe there should be a controller or animator instead
     void MoveToPosition(Vector3 destination)
     {
         if (_turnRoutine != null) return; // prevent spamming new turn commands
 
         _turnRoutine = StartCoroutine(TurnThenMoveRoutine(destination));
     }
+    
 
     IEnumerator TurnThenMoveRoutine(Vector3 destination)
     {
@@ -136,18 +173,22 @@ public class ZomibeAI : MonoBehaviour
         _runFactor = 1;
     }
     bool CloseEnough(){
-        return Vector3.Distance(transform.position, _targetPosition) < 1f;
+        //return Vector3.Distance(transform.position, _targetPosition) < _stopDistance;
+        Vector3 a = transform.position;
+        Vector3 b = _targetPosition;
+        a.y = b.y = 0f;
+        return Vector3.Distance(a, b) < _stopDistance;
     }
     bool FacingPosition(Vector3 target)
     {
         Vector3 diff = target - transform.position;
+        diff.y = 0;
         if(diff.sqrMagnitude < 0.0001f) {
             // The difference is negligible. Consider the agent as already facing.
             return true;
         }
         Vector3 dir = diff.normalized;
-        dir.y = 0;
-        Debug.Log("am I looking at " + target + " offset: " + Vector3.Dot(dir, transform.forward) );
+        //Debug.Log("am I looking at " + target + " offset: " + Vector3.Dot(dir, transform.forward) );
         return Vector3.Dot(dir, transform.forward) > 0.98f;
     }
     
@@ -159,7 +200,10 @@ public class ZomibeAI : MonoBehaviour
         _turnDir = dirr/1.7f;
         Vector3 diff = target - transform.position;
         diff.y = 0;
-        if(diff.sqrMagnitude < 0.0001f) return; // target is essentially at the same position
+        if(diff.sqrMagnitude < 0.0001f){
+            _turnDir = 0;
+            return; // target is essentially at the same position
+        } 
 
         Vector3 dir = diff.normalized;
         
@@ -177,20 +221,6 @@ public class ZomibeAI : MonoBehaviour
         }
     }
     
-    /*
-    void TurnToFace(Vector3 target){
-        var dir = GetTurnDirection(target);
-        anim.SetFloat("Turn", dir);
-
-    }
-    void TurnLeft(){
-        anim.SetFloat("Turn", 1);
-
-    }
-    void TurnRight(){
-        anim.SetFloat("Turn", -1);
-    }
-    */
     void ResetCounts()
     {
         _count = 0;
@@ -199,24 +229,54 @@ public class ZomibeAI : MonoBehaviour
         _navMeshAgent.ResetPath();
         _navMeshAgent.SetDestination(transform.position);
         _attack = 0;
-    }
-    Vector3 GetNearbyPoint(){
-        float angle = Random.Range(60f,75f);
-        Vector3 direction = Quaternion.Euler(angle, Random.Range(45f, 315f), 0) * Vector3.down;
+        _turnDir = 0f;
 
+    }
+    /*
+    */
+    Vector3 GetNearbyPoint(){
+       
+        float angle = Random.Range(25f,85f);
+        Vector3 direction = Quaternion.Euler(angle, Random.Range(0f, 360f), 0) * Vector3.down;
+       
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, 10f, _layerMask))
+        if (Physics.Raycast(transform.position, direction, out hit, 15f, _layerMask))
         {
             Vector3 targetPoint = hit.point;
-            Debug.DrawRay(transform.position, direction * hit.distance, Color.green, 1f);
             NavMeshHit navMeshHit;
-            if (NavMesh.SamplePosition(hit.point, out navMeshHit, 1f, NavMesh.AllAreas))
+            Debug.DrawRay(transform.position, direction * hit.distance, Color.green, 1f);
+            if (NavMesh.SamplePosition(hit.point, out navMeshHit, 0.01f, NavMesh.AllAreas))
             {
-                return targetPoint;
+                Debug.Log("got hit");
+                return navMeshHit.position;
             }
         }
         return Vector3.zero;
     }
+
+    public Vector3 GetRandomPointOnNavMesh(float radius = 5f)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * Random.Range(2f,radius);
+        randomDirection += transform.position;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+        // If no valid position found, return zero vector
+        return Vector3.zero;
+    }
+    public bool IsWallBetween(Vector3 target)
+    {
+        
+        Vector3 direction = (target - transform.position).normalized;
+        float distance = Vector3.Distance(transform.position, target);
+        Debug.DrawRay(transform.position, direction * distance, Color.green, 1f);
+
+        return Physics.Raycast(transform.position, direction, distance, _wallLayerMask);
+    }
+   
     /**
     Behaviours
     */
@@ -323,74 +383,14 @@ public class ZomibeAI : MonoBehaviour
             break;
         }
     }
-    /*
-    void RandomLook(){
-        switch (_look){
-            case 1:
-                if (_timer > _bigTurn){
-                    _timer = 0;
-                    _look -= 1;
-                } else {
-                    _timer += Time.fixedDeltaTime;
-                    TurnLeft();
-                }
-                break;
-            case 2:
-                if (_timer > _smallTurn){
-                    _timer = 0;
-                    _look -= 1;
-                } else {
-                    _timer += Time.fixedDeltaTime;
-                    TurnRight();
-                }
-                break;
-            case 3:
-                if (_timer > _bigTurn){
-                    _timer = 0;
-                    _look = 0;
-                } else {
-                    _timer += Time.fixedDeltaTime;
-                    TurnRight();
-                }
-                break;
-            case 4:
-                if (_timer > _smallTurn){
-                    _timer = 0;
-                    _look -=1;
-                } else {
-                    _timer += Time.fixedDeltaTime;
-                    TurnLeft();
-                }
-                break;
-            case 6:
-                if (_timer > _smallTurn){
-                    _timer = 0;
-                    _look = 0;
-                } else {
-                    _timer += Time.fixedDeltaTime;
-                    TurnLeft();
-                }
-                break;
-            case 8:
-                if (_timer > _smallTurn){
-                    _timer = 0;
-                    _look = 0;
-                } else {
-                    _timer += Time.fixedDeltaTime;
-                    TurnRight();
-                }
-                break;
-            default:
-            break;
-        }
-    }
-    */
+
     void Investigate(){
         if (_count == 0) _count = Random.Range(2,4);
         if(_look != 0){
             RandomLook();
         }
         else if (CloseEnough()){
+            _turnDir = 0;
             _count -=1;
             _look = Random.Range(1,5)*2;
 
@@ -408,7 +408,7 @@ public class ZomibeAI : MonoBehaviour
     }
     void RLook(){
         if (_look == 0){
-            _look = Random.Range(-10,5)*2;
+            _look = Random.Range(-5,5)*2;
             if (_look < 0){
                 _look = 0;
             }
@@ -417,10 +417,30 @@ public class ZomibeAI : MonoBehaviour
             RandomLook();
         }
     }
+    void RLook2(){
+        if (_look == 0){
+            _look = Random.Range(2,5)*2;
+            if (_look < 0){
+                _look = 0;
+            }
+        }
+        else if(_look != 0){
+            RandomLook();
+        }
+    }
+    void GoToTarget(){
+        MoveToPosition(_targetPosition);
+    }
+
     void PatrolFSM(){
         _patrolFsm.UpdateState();
         _pState = (zBehaviour)_patrolFsm.GetCurrentState();
         _patrolFsm.DoAction((zBehaviour)_patrolFsm.GetCurrentState());
+    }
+    void InvestigateFSM(){
+        _investigateFsm.UpdateState();
+        _iState = (zBehaviour)_investigateFsm.GetCurrentState();
+        _investigateFsm.DoAction((zBehaviour)_investigateFsm.GetCurrentState());
     }
     void Patrol(){
         if (!_patrolPath.Any() || _patrolPath.Count() == 1 && CloseEnough()) {
@@ -449,13 +469,19 @@ public class ZomibeAI : MonoBehaviour
         MoveToPosition(_targetPosition);
     }
     void TurnToTarget(){
-        if (_look == 0) _look = 1;
-        if (FacingPosition(_targetPosition)) _look = 0;
+        //if (_look == 0) _look = 1;
+        //if (FacingPosition(_targetPosition)) _look = 0;
         TurnToFace(_targetPosition);
     }
     void Attack(){
         if (_attack == 0){
             _attack = 1;
+        }
+        TurnToTarget();
+    }
+    void FreakOut(){
+        if (_freak == false){
+            _freak = true;
         }
     }
     /**
@@ -463,14 +489,17 @@ public class ZomibeAI : MonoBehaviour
     */
     bool PathFucked() {
         if (!_navMeshAgent.pathPending) {
+
             if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) {
                 Debug.Log("No valid path at all.");
+                _patrolFsm.SetState(zBehaviour.Patrol);
                 return true;  // Fail immediately if the path is invalid.
             }
             if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) {
                 // Check if the agent has reached the end of its partial path.
                 if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance && !_navMeshAgent.hasPath) {
                     Debug.Log("Reached the end of partial path — treat as failure.");
+                    _patrolFsm.SetState(zBehaviour.Patrol);
                     return true; // Agent has gone as far as it can.
                 } else {
                     Debug.Log("Partial path — agent is still moving toward the reachable end.");
@@ -509,6 +538,28 @@ public class ZomibeAI : MonoBehaviour
         }
         return false;
     }
+    bool WildGooseChased(){
+        if (CloseEnough()){
+            WalkSpeed();
+            ResetCounts();
+            _count = Random.Range(4,6);
+            _look = Random.Range(1,5)*2;
+            _investigateFsm.SetState(zBehaviour.LookOut);
+            Debug.Log("wildGooseChase2");
+            return true;
+        }
+        return false;
+    }
+    bool GotTo(){
+        if (CloseEnough()){
+            _targetPosition = GetSafeNearbyPoint();
+            WalkSpeed();
+            Debug.Log("got to");
+            _count -=1;
+            return true;
+        }
+        return false;
+    }
     bool CountDown(){
         if (_count == 0){
             ResetCounts();
@@ -534,10 +585,38 @@ public class ZomibeAI : MonoBehaviour
         }
         return false;
     }
+    bool LookedToInvestigate(){
+        if (FacingPosition(_targetPosition)){
+            Debug.Log("looked done");
+            WalkSpeed();
+            ResetCounts();
+            _count = Random.Range(2,6);
+            return true;
+        }
+        return false;
+    }
+    bool Turned(){
+        if (FacingPosition(_targetPosition)){
+            Debug.Log("Turned done");
+            WalkSpeed();
+            _turnDir = 0f;
+            
+            return true;
+        }
+        return false;
+    }
+    bool LookedRTarget(){
+        if (_look == 0){
+            WalkSpeed();
+            Debug.Log("Looked R");
+            
+            return true;
+        }
+        return false;
+    }
     bool LookingAtPatrolPoint(){
         if (!_patrolPath.Any() || _patrolPath.Count() == 1 && CloseEnough()) return true;
-        if ( FacingPosition(_patrolPath[0])){
-            //anim.SetFloat("Turn", 0);//, 0.2f, Time.deltaTime);
+        if ( FacingPosition(_patrolPath[0]) ||CloseEnough()){
             _turnDir = 0f;
             Debug.Log("look p" + CloseEnough());
             return true;
@@ -559,6 +638,7 @@ public class ZomibeAI : MonoBehaviour
     }
     bool SeeAndTouched(){
         if (_attack > 0 || (Touched() && SeeSomething())){
+            _armLayerWeight = 0;
             Debug.Log("seeAndTouch");
             return true;
         }
@@ -569,6 +649,24 @@ public class ZomibeAI : MonoBehaviour
         if (_attack > 0 && !(SeeSomething() || Touched())){
             Debug.Log("WhiFF!!!");
             _attack = 0;
+            ResetCounts();
+            _count = Random.Range(4,6);
+            _look = Random.Range(1,5)*2;
+            _investigateFsm.SetState(zBehaviour.LookOut);
+            return true;
+        }
+        return false;
+    }
+    bool SnapOut(){
+        if (_freak == false){
+            _vision.enabled = true;
+            return true;
+        }
+        return false;
+    }
+    bool Freak(){
+        if (_freak == true){
+            _vision.enabled = false;
             ResetCounts();
             return true;
         }
@@ -584,17 +682,20 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.PatrolFSM, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.PatrolFSM, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.PatrolFSM, HearSomething, zBehaviour.Checkout);
+        _fsm.AddState(zBehaviour.PatrolFSM, Freak, zBehaviour.FreakOut);
 
         //chase behaviour is for when the zombie sees the player and starts chasing
         _fsm.AddState(zBehaviour.Chase, SeeAndTouched, zBehaviour.Attack);
         _fsm.AddState(zBehaviour.Chase, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Chase, WildGooseChase, zBehaviour.Shamble);
         _fsm.AddState(zBehaviour.Chase, PathFucked, zBehaviour.PatrolFSM);
+        //_fsm.AddState(zBehaviour.Chase, Freak, zBehaviour.FreakOut);
 
         //Shamble is taking a few steps forward after a chase ends with broken vision
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.Shamble, WildGooseChase, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Shamble, WildGooseChased, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Shamble, Freak, zBehaviour.FreakOut);
         //_fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Checkout);
     
         //checkout is basically when the zombie hears something and goes to investigate
@@ -602,12 +703,15 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
-        _fsm.AddState(zBehaviour.Checkout, WildGooseChase, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Checkout, WildGooseChased, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Checkout, Freak, zBehaviour.FreakOut);
 
         //TurnTo is used when the zombie is "touched" by player for now
         _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.TurnTo, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.TurnTo, Looked, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.TurnTo, LookedToInvestigate, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.TurnTo, Freak, zBehaviour.FreakOut);
+
 
         //investigate is when the zombie starts looking around a couple of times because it thought there was something there
         _fsm.AddState(zBehaviour.Investigate, SeeSomething, zBehaviour.Chase);
@@ -615,24 +719,26 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Investigate, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Investigate, CountDown, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.Investigate, PathFucked, zBehaviour.PatrolFSM);
+        _fsm.AddState(zBehaviour.Investigate, Freak, zBehaviour.FreakOut);
 
         //Attack behaviour for attacking I guess
         _fsm.AddState(zBehaviour.Attack, Whiff, zBehaviour.Investigate);
+
+        //Freaking out (being hacked)
+        _fsm.AddState(zBehaviour.FreakOut, SnapOut, zBehaviour.PatrolFSM);    
     
-
-
-
-        _fsm.AddBehaviour(zBehaviour.Investigate, Investigate);
+        _fsm.AddBehaviour(zBehaviour.Investigate, InvestigateFSM);
         _fsm.AddBehaviour(zBehaviour.Chase, Chase);
         _fsm.AddBehaviour(zBehaviour.Shamble, ShambleForwards);
         _fsm.AddBehaviour(zBehaviour.PatrolFSM, PatrolFSM);
         _fsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
         _fsm.AddBehaviour(zBehaviour.Checkout, Chase);
         _fsm.AddBehaviour(zBehaviour.Attack, Attack);
+        _fsm.AddBehaviour(zBehaviour.FreakOut, FreakOut);
     }
 
     /**
-    Sub State Machine
+    Sub State Machines
     */
     private void MakePatrolMachine(){
         _patrolFsm = new FSM(zBehaviour.Patrol);
@@ -646,6 +752,18 @@ public class ZomibeAI : MonoBehaviour
         _patrolFsm.AddBehaviour(zBehaviour.Patrol, Patrol);
         _patrolFsm.AddBehaviour(zBehaviour.LookOut, RLook);
         _patrolFsm.AddBehaviour(zBehaviour.LookAt, LookAtNextPoint);
+    }
+    private void MakeInvestigateMachine(){
+        _investigateFsm = new FSM(zBehaviour.LookOut);
+
+        _investigateFsm.AddState(zBehaviour.LookOut, LookedRTarget, zBehaviour.GoTo);
+        _investigateFsm.AddState(zBehaviour.TurnTo, Turned, zBehaviour.LookOut);
+        _investigateFsm.AddState(zBehaviour.TurnTo, GotTo, zBehaviour.LookOut);
+        _investigateFsm.AddState(zBehaviour.GoTo, GotTo, zBehaviour.TurnTo);
+
+        _investigateFsm.AddBehaviour(zBehaviour.LookOut, RLook2);
+        _investigateFsm.AddBehaviour(zBehaviour.TurnTo, TurnToTarget);
+        _investigateFsm.AddBehaviour(zBehaviour.GoTo, GoToTarget);
     }
 
     /*
@@ -662,14 +780,61 @@ public class ZomibeAI : MonoBehaviour
         if (NavMesh.CalculatePath(from, to, NavMesh.AllAreas, path)) return GetPathDistance(path);
         return 200000;
     }
-    float GetDistanceToEdge(Vector3 pos){
-        NavMeshHit hit;
-        NavMesh.FindClosestEdge(pos, out hit, NavMesh.AllAreas);
-        float distance = Vector3.Distance(pos, hit.position);
-        return distance;
+    float GetDistanceToEdge(Vector3 pos)
+    {
+        if (NavMesh.FindClosestEdge(pos, out NavMeshHit hit, NavMesh.AllAreas))
+        {
+            return Vector3.Distance(pos, hit.position);
+        }
+        return float.MaxValue; // or some fallback value
     }
     float SpeedPercentage(){
         return _navMeshAgent.velocity.magnitude/(_speed * _runMultiplier);
+    }
+    /*
+    public Vector3 GetSafeNearbyPoint(float clearance = .3f, int maxAttempts = 200)
+    {
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            Vector3 candidate = GetNearbyPoint();
+            
+            if (candidate == Vector3.zero)
+                continue;
+
+            // Validate it's on the NavMesh (optional if you're already sure)
+            if (!NavMesh.SamplePosition(candidate, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
+                continue;
+            // Check physical clearance using OverlapSphere
+            Collider[] hits = Physics.OverlapSphere(navHit.position, clearance, _layerMaskFloor, QueryTriggerInteraction.Ignore);
+            if (hits.Length == 0)
+            {
+                return navHit.position;
+            }
+        }
+
+        // Fallback
+        return transform.position;
+    }
+    */
+
+    public Vector3 GetSafeNearbyPoint(float clearance = .1f, int maxAttempts = 200)
+    {
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            //Vector3 candidate = GetNearbyPoint();
+            var candidate = GetRandomPointOnNavMesh();
+            if (candidate == Vector3.zero)// || IsWallBetween(candidate))
+                continue;
+            Debug.DrawRay(candidate, Vector3.up * clearance, Color.red, 1f);
+            // Skip NavMesh sampling entirely
+            //if (Physics.OverlapSphere(candidate, clearance, _wallLayerMask, QueryTriggerInteraction.Ignore).Length == 0){   
+            Debug.Log("found Candidate " + candidate);
+            Debug.Log("dist" + Vector3.Magnitude(transform.position - candidate));
+            return candidate;
+            //}
+        }
+
+        return _targetPosition;
     }
     /*
     float RotationDeg(){
@@ -698,19 +863,29 @@ public class ZomibeAI : MonoBehaviour
         Vector3 toTarget = (targetPosition - transform.position).normalized;
         Vector3 forward = transform.forward;
 
-        // Project to XZ plane
+        //Project to XZ plane
         toTarget.y = 0f;
         forward.y = 0f;
 
-        // Get signed angle between forward and direction to target
+        //Get signed angle between forward and direction to target
         float angle = Vector3.SignedAngle(forward, toTarget, Vector3.up);
 
         if (angle > 0f)
-            return 1;   // Turn right
+            //Turn right
+            return 1;   
         else if (angle < 0f)
-            return -1;  // Turn left
+            //Turn left
+            return -1;  
         else
-            return 0;   // Already facing
+            //Already facing
+            return 0;   
+    }
+
+    Vector3 GetFlatDirection(Vector3 from, Vector3 to)
+    {
+        Vector3 diff = to - from;
+        diff.y = 0f;
+        return diff.sqrMagnitude < 0.0001f ? Vector3.zero : diff.normalized;
     }
 
 
@@ -729,5 +904,7 @@ public enum zBehaviour{
     LookOut,
     LookAt,
     TurnTo,
-    Attack
+    Attack,
+    GoTo,
+    FreakOut
 }

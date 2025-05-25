@@ -5635,9 +5635,11 @@ MonoBehaviour:
   - {x: 5.68, y: 1, z: 9.9}
   - {x: 5.68, y: 1, z: -1.1}
   - {x: 17.56, y: 1, z: -1.1}
+  _stopDistance: 0
   _toouchDistance: 2
   _state: 2
   _pState: 0
+  _iState: 0
   _runMultiplier: 2
   _look: 0
   _turnDir: 0
@@ -24852,9 +24854,21 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 1656872737}
+    - target: {fileID: 349565799425528549, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
+      propertyPath: _see_something
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 641083646051732427, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: _state
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
+      propertyPath: _iState
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: _pState
@@ -24863,6 +24877,10 @@ PrefabInstance:
     - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: _turnSpeed
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
+      propertyPath: _stopDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 968993557296632772, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: _shambleDistance
@@ -25829,11 +25847,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4199184686793369746, guid: 41a1883e80ff7034a8aca02184a0f7f6, type: 3}
       propertyPath: audioRange
-      value: 8
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 4410809682335885581, guid: 41a1883e80ff7034a8aca02184a0f7f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.786
+      value: 22.87
       objectReference: {fileID: 0}
     - target: {fileID: 4410809682335885581, guid: 41a1883e80ff7034a8aca02184a0f7f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25841,7 +25859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4410809682335885581, guid: 41a1883e80ff7034a8aca02184a0f7f6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.692
+      value: 2.82
       objectReference: {fileID: 0}
     - target: {fileID: 4410809682335885581, guid: 41a1883e80ff7034a8aca02184a0f7f6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29998,9 +30016,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   _patrolPath: []
+  _stopDistance: 0
   _toouchDistance: 1.5
   _state: 2
   _pState: 0
+  _iState: 0
   _runMultiplier: 2
   _look: 0
   _turnDir: 0
