@@ -119,11 +119,13 @@ public class ZomibeAI : MonoBehaviour
         _heardNoise = true;
         _targetPosition = position;
     }
-    public void Hack(){
+    public bool TryHack(){
+        if (_vision._see_something) return false;
         _vision._see_something = false;
         _vision.enabled = false;
         ZombieManager.Instance?.NudgeAllZombies(this);
         _freak = true;
+        return true;
     }
     public void Strike(){
         _freak = false;
