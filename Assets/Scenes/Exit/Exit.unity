@@ -11931,6 +11931,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 894141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &448605605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 448605606}
+  - component: {fileID: 448605607}
+  m_Layer: 0
+  m_Name: CinematicGlobalVolumeFade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &448605606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448605605}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1871625277}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &448605607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448605605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 3
+  blendDistance: 0
+  weight: 0.9257644
+  sharedProfile: {fileID: 11400000, guid: b3733f2c80563c042bb49da9628258c0, type: 2}
 --- !u!1 &456776073
 GameObject:
   m_ObjectHideFlags: 0
@@ -31403,8 +31452,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891809083}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.029233498, y: 0.8136177, z: -0.579206, w: -0.04113514}
-  m_LocalPosition: {x: 0.03268566, y: -1.0551438, z: 14.186542}
+  m_LocalRotation: {x: -0.03124739, y: 0.79629314, z: -0.6024227, w: -0.04503081}
+  m_LocalPosition: {x: 0.03138689, y: -1.0822016, z: 14.097387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -38510,7 +38559,7 @@ GameObject:
   - component: {fileID: 1451354620}
   - component: {fileID: 1451354621}
   m_Layer: 0
-  m_Name: CinematicGlobalVolume
+  m_Name: CinematicGlobalVolumeExposure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43277,6 +43326,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1451354620}
+  - {fileID: 448605606}
   - {fileID: 1503915422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45678,8 +45728,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145660248}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.029233498, y: 0.8136177, z: -0.579206, w: -0.04113514}
-  m_LocalPosition: {x: 0.051202744, y: -0.90707827, z: 14.369185}
+  m_LocalRotation: {x: -0.03124739, y: 0.79629314, z: -0.6024227, w: -0.04503081}
+  m_LocalPosition: {x: 0.051202744, y: -0.92378426, z: 14.270986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

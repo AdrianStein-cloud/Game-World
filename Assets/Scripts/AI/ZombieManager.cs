@@ -8,13 +8,17 @@ public class ZombieManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
         
     }
     public void Register(ZomibeAI zai){
