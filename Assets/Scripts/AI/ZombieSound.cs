@@ -17,11 +17,11 @@ public class ZombieSound : MonoBehaviour
     {
         _timer += Time.deltaTime;
     }
-    void PlayFromList(string soundName){
+    public void PlayFromList(string soundName){
         if (_timer < _targetTime) return;
         var (index,range,delay) = SoundMap(soundName);
         if (index == 0 && range == 0 && delay == 0) return;
-        //Debug.Log("playing sound no: " + index + ", with a range of: " + range);
+        Debug.Log("playing sound no: " + index + ", with a range of: " + range);
         _playSound.PlayNewSound(_sounds[index], range);
         _timer = 0;
         _targetTime = delay;
@@ -30,7 +30,8 @@ public class ZombieSound : MonoBehaviour
         switch (soundName)
         {   case "footStep":
                 return (0,0,0);
-            
+            case "freak":
+                return (0, 15, 0);
             default:
             return (0,0,0);
         }

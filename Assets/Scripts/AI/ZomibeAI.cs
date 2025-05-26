@@ -52,6 +52,7 @@ public class ZomibeAI : MonoBehaviour
     private float _currentFreakWeight;
     [SerializeField] private bool _freak;
     private ZomibeAI _ztarget;
+    private ZombieSound _zSound;
 
     void Start()
     {
@@ -60,6 +61,7 @@ public class ZomibeAI : MonoBehaviour
         _navMeshAgent.angularSpeed = _turnSpeed;
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.speed = _speed * _runFactor;
+        _zSound = GetComponent<ZombieSound>();
         ZombieManager.Instance?.Register(this);
 
     }
@@ -186,12 +188,9 @@ public class ZomibeAI : MonoBehaviour
         _runFactor = 1;
     }
     bool CloseEnough(){
-        //return Vector3.Distance(transform.position, _targetPosition) < _stopDistance;
-        Vector3 a = transform.position;
-        Vector3 b = _targetPosition;
-        a.y = b.y = 0f;
-        return Vector3.Distance(a, b) < _stopDistance;
+        return FlatDistance(transform.position, _targetPosition) < _stopDistance;
     }
+    
     bool FacingPosition(Vector3 target)
     {
         Vector3 diff = target - transform.position;
@@ -497,7 +496,12 @@ public class ZomibeAI : MonoBehaviour
     }
     void FreakOut(){
         if (_freak == false){
+            _timer = 0;
             _freak = true;
+        }
+        if (_timer > 1){
+            _zSound.PlayFromList("freak");
+            _timer = 0;
         }
     }
     /**
@@ -691,10 +695,11 @@ public class ZomibeAI : MonoBehaviour
     bool NearFreakingZ(){
         foreach (var z in ZombieManager.Instance?.GetZomibes())
         {
-            if (z._freak && Vector3.Distance(z.transform.position, transform.position) < _toouchDistance){
+            if (z._freak && FlatDistance(z.transform.position, transform.position) < _toouchDistance){
                 ResetCounts();
                 _targetPosition = z.transform.position;
                 _ztarget = z;
+                Debug.Log("SWIPE!");
                 return true;
             }
         }
@@ -730,7 +735,7 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Checkout, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Checkout, Touched, zBehaviour.TurnTo);
         _fsm.AddState(zBehaviour.Checkout, NearFreakingZ, zBehaviour.SlashAttack);
-        _fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
+        //_fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.Checkout, WildGooseChased, zBehaviour.Investigate);
         _fsm.AddState(zBehaviour.Checkout, Freak, zBehaviour.FreakOut);
@@ -874,6 +879,12 @@ public class ZomibeAI : MonoBehaviour
         Vector3 diff = to - from;
         diff.y = 0f;
         return diff.sqrMagnitude < 0.0001f ? Vector3.zero : diff.normalized;
+    }
+    float FlatDistance(Vector3 from, Vector3 to){
+        Vector3 a = from;
+        Vector3 b = to;
+        a.y = b.y = 0f;
+        return Vector3.Distance(a,b);
     }
 
 }
