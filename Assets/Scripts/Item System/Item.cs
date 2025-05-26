@@ -7,10 +7,17 @@ public class Item : ScriptableObject
     public Sprite sprite;
     public string Name;
     public string UseText;
+    public bool RemoveOnUse;
 
     public virtual void OnPickup() { }
     public virtual void OnDrop() { }
     public virtual void OnSelect() { } // Not setup yet
     public virtual void OnDeselect() { } // Not setup yet
-    public virtual void Use() { }
+    public virtual void Use()
+    {
+        if (RemoveOnUse)
+        {
+            PlayerSimpleInventory.Instance.RemoveItem(this);
+        }
+    }
 }
