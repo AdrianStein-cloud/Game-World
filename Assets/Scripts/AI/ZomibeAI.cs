@@ -119,11 +119,13 @@ public class ZomibeAI : MonoBehaviour
         _heardNoise = true;
         _targetPosition = position;
     }
-    public void Hack(){
+    public bool TryHack(){
+        if (_vision._see_something) return false;
         _vision._see_something = false;
         _vision.enabled = false;
         ZombieManager.Instance?.NudgeAllZombies(this);
         _freak = true;
+        return true;
     }
     public void Strike(){
         _freak = false;
@@ -216,14 +218,12 @@ public class ZomibeAI : MonoBehaviour
 
         Vector3 dir = diff.normalized;
         
-        //If the target is almost exactly behind, add a tiny bias
+        //If the target is almost exactly behind, add a bias
         if(Vector3.Dot(transform.forward, dir) < -0.999f)
         {
-            //Adding a small bias in an arbitrary direction (e.g., right)
             dir = (dir + Vector3.right * 0.01f).normalized;
         }
         
-        Debug.Log("TurnToFace: direction = " + dir + transform.forward + Vector3.Dot(transform.forward, dir));
         if (dir != Vector3.zero)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), _turnSpeed * _runFactor* Time.fixedDeltaTime);
@@ -509,21 +509,20 @@ public class ZomibeAI : MonoBehaviour
             if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid) {
                 Debug.Log("No valid path at all.");
                 _patrolFsm.SetState(zBehaviour.Patrol);
-                return true;  // Fail immediately if the path is invalid.
+                return true;
             }
             if (_navMeshAgent.pathStatus == NavMeshPathStatus.PathPartial) {
-                // Check if the agent has reached the end of its partial path.
                 if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance && !_navMeshAgent.hasPath) {
                     Debug.Log("Reached the end of partial path — treat as failure.");
                     _patrolFsm.SetState(zBehaviour.Patrol);
-                    return true; // Agent has gone as far as it can.
+                    return true;
                 } else {
                     Debug.Log("Partial path — agent is still moving toward the reachable end.");
-                    return false; // Still traveling along a partial path.
+                    return false;
                 }
             }
         }
-        return false; // If still pending or a fully valid path, return false.
+        return false;
     }
     bool SeeSomething(){
         if (_vision._see_something){
