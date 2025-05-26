@@ -19,4 +19,5 @@ MonoBehaviour:
   - Kindergarten teacher
   - USA
   - Random information...
-  HackedSoundClips: []
+  HackedSoundClip: {fileID: 8300000, guid: 8b0b67c3ea0274d4c850fbab7700696a, type: 3}
+  HackedSoundName: Cafeteria

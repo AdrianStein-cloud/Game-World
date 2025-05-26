@@ -8,7 +8,8 @@ public class HackingInformation : ScriptableObject
     public int Age;
     public BloodType Bloodtype;
     public string[] HackedInformation;
-    public AudioClip[] HackedSoundClips;
+    public AudioClip HackedSoundClip;
+    public string HackedSoundName;
 }
 
 public enum BloodType

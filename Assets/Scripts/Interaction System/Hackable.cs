@@ -27,9 +27,13 @@ public class Hackable : Interactable
         }
     }
 
-    public void Hack()
+    public bool Hack()
     {
-        if (hacked) return;
+        if (hacked) return false;
+
+        var hackSuccessfull = GetComponent<ZomibeAI>().TryHack();
+        if (!hackSuccessfull) return false;
+
         hacked = true;
 
         EndOutline();
@@ -38,5 +42,14 @@ public class Hackable : Interactable
         //Effects?
 
         //Call zombie ai
+
+        Invoke(nameof(DisableHackState), 30);
+
+        return true;
+    }
+
+    public void DisableHackState()
+    {
+        hacked = false;
     }
 }

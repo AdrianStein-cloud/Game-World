@@ -36,6 +36,8 @@ public class PlayerHackingSystem : MonoBehaviour
     [SerializeField] TextMeshProUGUI zombieInformationText;
     [SerializeField] TextMeshProUGUI zombieAdditionalInformationText;
 
+    [SerializeField] TextMeshProUGUI zombieSoundclipNameText;
+
     [SerializeField] GameObject nametagPrefab;
 
     List<GameObject> nametags = new List<GameObject>();
@@ -239,6 +241,8 @@ public class PlayerHackingSystem : MonoBehaviour
         var zombieInfoText = "Name: " + hackingInfo.Name + "\n" + "Age: " + hackingInfo.Age + "\n" + "Blood: " + BloodTypeHelper.GetLabel(hackingInfo.Bloodtype);
         zombieInformationText.text = zombieInfoText;
 
+        zombieSoundclipNameText.text = hackingInfo.HackedSoundName;
+
         var additionalInfoText = string.Empty;
         foreach (var item in hackingInfo.HackedInformation)
         {
@@ -250,9 +254,10 @@ public class PlayerHackingSystem : MonoBehaviour
     public void Hack()
     {
         // Hack target
+        if (!hackingTarget.Hack()) return;
 
         AudioSource.PlayClipAtPoint(hackingDoneClip, Camera.main.transform.position);
-        hackingTarget.Hack();
+        AudioSource.PlayClipAtPoint(hackingTarget.hackingInfo.HackedSoundClip, Camera.main.transform.position);
         hackingOptionsAnim.SetBool("Hacking", false);
     }
 

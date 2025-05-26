@@ -11,7 +11,7 @@ public class Vision : MonoBehaviour
 
     private void Awake()
     {
-        _target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (_target == null) _target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Start()
