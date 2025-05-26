@@ -17,6 +17,12 @@ public class PlaySound : MonoBehaviour
         if (playOnAwake) PlayAudio();
     }
 
+    public void PlayNewSound(AudioClip clip, float range = 0){
+        audioSource.clip = clip;
+        audioRange = range;
+        PlayAudio();
+    }
+
     public void PlayAudio()
     {
         if (once && played) return;
