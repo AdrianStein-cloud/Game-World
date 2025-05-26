@@ -69,7 +69,7 @@ public class PlayerHackingSystem : MonoBehaviour
             hacking = !hacking;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && hasScanned && !hackingTarget.hacked)
+        if (hacking && Input.GetKeyDown(KeyCode.Mouse1) && hasScanned && !hackingTarget.hacked)
         {
             Hack();
         }
