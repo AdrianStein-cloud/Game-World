@@ -496,10 +496,10 @@ public class ZomibeAI : MonoBehaviour
     }
     void FreakOut(){
         if (_freak == false){
-            _timer = 0;
+            _timer = 6;
             _freak = true;
         }
-        if (_timer > 1){
+        if (_timer > 5){
             _zSound.PlayFromList("freak");
             _timer = 0;
         }
