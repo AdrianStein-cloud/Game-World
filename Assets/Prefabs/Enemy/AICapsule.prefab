@@ -6532,7 +6532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _eyes: {fileID: 349565799425528549}
   _speed: 2
-  _turnSpeed: 40
+  _turnSpeed: 50
   _shambleDistance: 1.5
   _bigTurn: 3.5
   _smallTurn: 2
@@ -6543,11 +6543,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _patrolPath: []
-  _stopDistance: 1
-  _toouchDistance: 1.5
-  _state: 7
-  _pState: 0
-  _iState: 0
+  _stopDistance: 0.9
+  _toouchDistance: 1.2
+  _state: 5
+  _pState: 4
+  _iState: 7
   _runMultiplier: 2
   _freak: 0
 --- !u!95 &8513308133963328125
@@ -6686,11 +6686,11 @@ MonoBehaviour:
   playOnTrigger: 0
   playOnCollision: 0
   once: 0
-  zombiesCanHear: 0
+  zombiesCanHear: 1
   audioRange: 0
   zombieLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
 --- !u!114 &7093027926869591244
 MonoBehaviour:
   m_ObjectHideFlags: 0
