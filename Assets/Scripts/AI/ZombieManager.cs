@@ -30,5 +30,10 @@ public class ZombieManager : MonoBehaviour
             if (zombie != zai) zombie.Strike();
         }
     }
+
+    public void NudgeAllZombies()
+    {
+        NudgeAllZombies(null);
+    }
     public List<ZomibeAI> GetZomibes() => zombies;
 }
