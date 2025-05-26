@@ -38,5 +38,13 @@ public class Hackable : Interactable
         //Effects?
 
         //Call zombie ai
+        GetComponent<ZomibeAI>().Hack();
+
+        Invoke(nameof(DisableHackState), 30);
+    }
+
+    public void DisableHackState()
+    {
+        hacked = false;
     }
 }
