@@ -126,7 +126,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HackerFadeRange: 2.5
-    - _HackerMaxDrawDistance: 100
+    - _HackerMaxDrawDistance: 0
     - _HackerMinDrawDistance: 0
     - _HackerOverallAlpha: 0
     - _MaxDrawDistance: 10

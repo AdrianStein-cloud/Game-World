@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -46,6 +48,8 @@ public class PlayerHackingSystem : MonoBehaviour
     [SerializeField] Animator hackingOptionsAnim;
 
     [SerializeField] AudioClip hackingDoneClip, scanningCompleteClip, doingScanningClip;
+
+    [SerializeField] Material hackingShader;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -256,13 +260,54 @@ public class PlayerHackingSystem : MonoBehaviour
         // Hack target
         if (!hackingTarget.Hack()) return;
 
+        StartCoroutine(DoHackEffect());
+
         AudioSource.PlayClipAtPoint(hackingDoneClip, Camera.main.transform.position);
         AudioSource.PlayClipAtPoint(hackingTarget.hackingInfo.HackedSoundClip, Camera.main.transform.position);
         hackingOptionsAnim.SetBool("Hacking", false);
+
+        StopHacking();
+        hacking = false;
+    }
+
+    IEnumerator DoHackEffect()
+    {
+        hackingShader.SetFloat("_HackerMinDrawDistance", 10f);
+        hackingShader.SetFloat("_HackerMaxDrawDistance", 20f);
+        hackingShader.SetFloat("_HackerOverallAlpha", 1f);
+
+        float steps = 30;
+        for (float i = 0; i <= steps; i++)
+        {
+            hackingShader.SetFloat("_HackerMinDrawDistance", 10f - (i / steps * 10f));
+
+            yield return new WaitForSeconds((0.075f/3f));
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        for (float i = 0; i <= steps; i++)
+        {
+            hackingShader.SetFloat("_HackerMaxDrawDistance", 20f - (i / steps * 20f));
+
+            yield return new WaitForSeconds((0.125f/3f));
+        }
+
+        hackingShader.SetFloat("_HackerOverallAlpha", 0f);
     }
 
     public void EnableHackingAbility()
     {
         // Enable hacking ability
+    }
+
+    private void OnDestroy()
+    {
+        hackingShader.SetFloat("_HackerOverallAlpha", 0f);
+    }
+
+    private void OnApplicationQuit()
+    {
+        hackingShader.SetFloat("_HackerOverallAlpha", 0f);
     }
 }
