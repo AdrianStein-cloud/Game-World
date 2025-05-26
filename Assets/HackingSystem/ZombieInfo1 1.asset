@@ -19,4 +19,5 @@ MonoBehaviour:
   - Meth cook
   - Germany
   - Random information...
-  HackedSoundClips: []
+  HackedSoundClip: {fileID: 8300000, guid: 5574dd25b1e97134cbe52988ffc96a99, type: 3}
+  HackedSoundName: Research

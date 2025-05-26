@@ -19,4 +19,5 @@ MonoBehaviour:
   - Meth consumer
   - Netherlands
   - Random information...
-  HackedSoundClips: []
+  HackedSoundClip: {fileID: 8300000, guid: 6be4ccf7f8eed30438a6a4ccc7d364e8, type: 3}
+  HackedSoundName: The awakening
