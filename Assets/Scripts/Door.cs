@@ -37,6 +37,7 @@ public class Door : MonoBehaviour, ILockChecker
 
     public void Close()
     {
+        if (isLocked || !isOpen) return;
         Move(0f);
     }
 
@@ -48,6 +49,7 @@ public class Door : MonoBehaviour, ILockChecker
 
     public void Open(bool direction)
     {
+        if (isLocked || isOpen) return;
         Move(direction ? -angle : angle);
     }
 
