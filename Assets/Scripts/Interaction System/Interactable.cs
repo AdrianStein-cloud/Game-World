@@ -12,7 +12,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] bool once = false;
     [SerializeField] protected bool cosmetic = false;
     [SerializeField] protected UnityEvent OnInteract, OnHoverIn, OnHoverOut;
-
+    [field:SerializeField] public Vector3 HovertextOffset { get; private set; }
 
     [SerializeField] private MonoBehaviour lockCheckerComponent;
 

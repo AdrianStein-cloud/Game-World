@@ -54,6 +54,8 @@ public class InteractionText : MonoBehaviour
             // Then reposition
             transform.localPosition = Vector3.zero;
             transform.position += interactable.transform.forward * toPlayerOffset + offset;
+
+            transform.position += interactable.HovertextOffset;
         }
     }
 
