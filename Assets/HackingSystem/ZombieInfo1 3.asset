@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b9b79e71d151e44a32572c55870622, type: 3}
+  m_Name: ZombieInfo1 3
+  m_EditorClassIdentifier: 
+  Name: Birgitte
+  Age: 67
+  Bloodtype: 3
+  HackedInformation:
+  - Meth consumer
+  - Netherlands
+  - Random information...
+  HackedSoundClip: {fileID: 8300000, guid: e7f451732c2c9554cb6cb06298cc11fa, type: 3}
+  HackedSoundName: Another memory

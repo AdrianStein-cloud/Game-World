@@ -688,6 +688,7 @@ public class ZomibeAI : MonoBehaviour
             _vision.enabled = false;
             WalkSpeed();
             ResetCounts();
+            _timer = 6;
             return true;
         }
         return false;

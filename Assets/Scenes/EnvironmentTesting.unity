@@ -48570,7 +48570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.67
+      value: 6.53
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalPosition.y
@@ -48578,11 +48578,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.76
+      value: 10.7
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6411791
+      value: 0.99655527
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalRotation.x
@@ -48590,7 +48590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7673914
+      value: -0.08293207
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalRotation.z
@@ -48602,7 +48602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -100.24
+      value: -9.514
       objectReference: {fileID: 0}
     - target: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -48667,7 +48667,7 @@ MonoBehaviour:
   lockCheckerComponent: {fileID: 0}
   nametext: 
   actiontext: 
-  hackingInfo: {fileID: 0}
+  hackingInfo: {fileID: 11400000, guid: 61f06509e624154409cd92af1a7e7a24, type: 2}
   scanned: 0
 --- !u!4 &1686231805 stripped
 Transform:

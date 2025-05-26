@@ -723,11 +723,13 @@ MonoBehaviour:
   zombieInformationGO: {fileID: 0}
   zombieInformationText: {fileID: 0}
   zombieAdditionalInformationText: {fileID: 0}
+  zombieSoundclipNameText: {fileID: 0}
   nametagPrefab: {fileID: 701314761078310556, guid: 67160d556c90d6c4a9c3d7dd2c0ad885, type: 3}
   hackingOptionsAnim: {fileID: 0}
   hackingDoneClip: {fileID: 8300000, guid: 0697cd4b15443594c9aab9008cb6b6a3, type: 3}
   scanningCompleteClip: {fileID: 8300000, guid: c438e30ddd4fd9040986222ddd9a3c9d, type: 3}
   doingScanningClip: {fileID: 8300000, guid: 5c77b2a8ede9c5c49bdb294ab396848e, type: 3}
+  hackingShader: {fileID: 2100000, guid: 68840bc0b5da9d64e89ab99484b634ab, type: 2}
 --- !u!1001 &997490684451905717
 PrefabInstance:
   m_ObjectHideFlags: 0
