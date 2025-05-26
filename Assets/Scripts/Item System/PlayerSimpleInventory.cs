@@ -135,6 +135,21 @@ public class PlayerSimpleInventory : MonoBehaviour
         InteractionText.Instance.Detach();
     }
 
+    public void RemoveItem(Item item)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == item)
+            {
+                items[i] = null;
+                groundItems[i] = null;
+
+                onInventorySlotChange?.Invoke(i, null);
+                break;
+            }
+        }
+    }
+
     public bool ContainsItem(Item item)
     {
         return items.Contains(item);

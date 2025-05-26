@@ -34,18 +34,21 @@ public class ChemistrySet : MonoBehaviour, ILockChecker
         {
             mixed1 = true;
             powder.SetActive(true);
+            PlayerSimpleInventory.Instance.RemoveItem(requiredItems[0]);
         }
 
         if (!mixed2 && PlayerSimpleInventory.Instance.HoldsItem(requiredItems[1]))
         {
             mixed2 = true;
             liquid1.EnableKeyword("_EMISSION");
+            PlayerSimpleInventory.Instance.RemoveItem(requiredItems[1]);
         }
 
         if (!mixed3 && PlayerSimpleInventory.Instance.HoldsItem(requiredItems[2]))
         {
             mixed3 = true;
             liquid2.EnableKeyword("_EMISSION");
+            PlayerSimpleInventory.Instance.RemoveItem(requiredItems[2]);
         }
 
         if (mixed1 && mixed2 && mixed3)
