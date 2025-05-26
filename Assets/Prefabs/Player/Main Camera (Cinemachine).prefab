@@ -161,7 +161,7 @@ MonoBehaviour:
     Player: {fileID: 0}
     VirtualCamera: {fileID: 0}
   fovProperties:
-    Enable: 1
+    Enable: 0
     DefaultFOV:
       Multiplier: 1
       ChangeSpeed: 3
@@ -196,7 +196,7 @@ MonoBehaviour:
       Duration: 0
       SpeedThreshold: 0
   leanProperties:
-    Enable: 1
+    Enable: 0
     Mode: 1
     Angle: 3
     Speed: 5

@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class Initialization : MonoBehaviour
 {
-    bool isInitialized;
+    static bool isInitialized;
 
     private void Awake()
     {

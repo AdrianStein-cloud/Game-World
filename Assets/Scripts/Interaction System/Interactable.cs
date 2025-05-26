@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 public class Interactable : MonoBehaviour
 {
     [SerializeField] bool once = false;
-    [SerializeField] bool cosmetic = false;
+    [SerializeField] protected bool cosmetic = false;
     [SerializeField] protected UnityEvent OnInteract, OnHoverIn, OnHoverOut;
     [field:SerializeField] public Vector3 HovertextOffset { get; private set; }
 
@@ -98,6 +98,7 @@ public class Interactable : MonoBehaviour
         {
             return checker.IsLocked();
         }
+
         // If no lockChecker is assigned, or it doesn't implement ILockChecker, assume it's unlocked.
         return false;
     }

@@ -13,8 +13,11 @@ public class SpeakerPropaganda : MonoBehaviour
     private static event System.Action<AudioClip> OnPlayClip;
     private static bool timerStarted = false;
 
+    private AudioSource audioSource;
+
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         // every speaker subscribes its PlayVoiceLine handler
         OnPlayClip += PlayVoiceLine;
 
@@ -55,6 +58,7 @@ public class SpeakerPropaganda : MonoBehaviour
     private void PlayVoiceLine(AudioClip clip)
     {
         // each speaker plays the clip at its own position
-        AudioSource.PlayClipAtPoint(clip, transform.position);
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }
