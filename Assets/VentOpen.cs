@@ -10,6 +10,10 @@ public class VentOpen : MonoBehaviour, ILockChecker
         return !PlayerSimpleInventory.Instance.HoldsItem(item);
     }
 
+    public void LockedInteract()
+    {
+    }
+
     public void OpenVentGrate()
     {
         anim.SetTrigger("Open");

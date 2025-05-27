@@ -11,6 +11,9 @@ public class Door : MonoBehaviour, ILockChecker
     [SerializeField] private float angle;
     [SerializeField] private float duration;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip open, close, locked;
+
     bool isOpen = false;
     bool doorMoving = false;
     Transform player;
@@ -24,7 +27,13 @@ public class Door : MonoBehaviour, ILockChecker
 
     public void Interact()
     {
-        if (isLocked) return;
+        if (isLocked)
+        {
+            audioSource.clip = locked;
+            audioSource.Play();
+            return;
+        }
+
         if (isOpen) Close();
         else Open();
         isOpen = !isOpen;
@@ -38,11 +47,15 @@ public class Door : MonoBehaviour, ILockChecker
     public void Close()
     {
         if (!isOpen) return;
+        audioSource.clip = close;
+        audioSource.Play();
         Move(0f);
     }
 
     private void Open()
     {
+        audioSource.clip = open;
+        audioSource.Play();
         float doorAngle = DetermineOpeningDirection();
         Move(doorAngle);
     }
@@ -50,6 +63,8 @@ public class Door : MonoBehaviour, ILockChecker
     public void Open(bool direction)
     {
         if (isOpen) return;
+        audioSource.clip = open;
+        audioSource.Play();
         Move(direction ? -angle : angle);
     }
 
@@ -107,5 +122,11 @@ public class Door : MonoBehaviour, ILockChecker
     public bool IsLocked()
     {
         return isLocked;
+    }
+
+    public void LockedInteract()
+    {
+        audioSource.clip = locked;
+        audioSource.Play();
     }
 }
