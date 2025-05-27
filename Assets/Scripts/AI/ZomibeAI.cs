@@ -565,7 +565,8 @@ public class ZomibeAI : MonoBehaviour
             WalkSpeed();
             ResetCounts();
             _count = Random.Range(4,6);
-            _look = Random.Range(1,5)*2;
+            _look = 10;//Random.Range(1,5)*2;
+            _patrolFsm.SetState(zBehaviour.LookOut);
             _investigateFsm.SetState(zBehaviour.LookOut);
             Debug.Log("wildGooseChase2");
             return true;
