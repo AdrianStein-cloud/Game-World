@@ -15964,6 +15964,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2047401787500406855, guid: b554f644ebe082748937bb0d18bb3211, type: 3}
   m_PrefabInstance: {fileID: 553922891}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &558447209 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1209569967139410987, guid: 6b7ecea8a30e1c74abf2a631b0706dbc, type: 3}
+  m_PrefabInstance: {fileID: 2340787654992519148}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &561929543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53565,6 +53570,10 @@ PrefabInstance:
       propertyPath: hackingUI
       value: 
       objectReference: {fileID: 502137070}
+    - target: {fileID: 2962824731922064251, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
+      propertyPath: panelAnim
+      value: 
+      objectReference: {fileID: 558447209}
     - target: {fileID: 2962824731922064251, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
       propertyPath: nametagYOffset
       value: 0.5

@@ -188,7 +188,6 @@ public class PlayerHackingSystem : MonoBehaviour
         ToggleNametags(true);
         hackingUI.SetActive(true);
         PostProcessingHandler.SetChromaticAberration(0.5f, 1f);
-        PostProcessingHandler.SetLensDistortion(0.5f, 0.5f);
         //HighlightZombies(true);
         panelAnim.SetBool("Hacking", true);
     }
@@ -199,7 +198,6 @@ public class PlayerHackingSystem : MonoBehaviour
         ToggleNametags(false);
         hackingUI.SetActive(false);
         PostProcessingHandler.SetChromaticAberration(0.5f, 0.05f);
-        PostProcessingHandler.SetLensDistortion(0.5f, 0f);
         //HighlightZombies(false);
 
         UpdateHackingTargetIndicator(null);
