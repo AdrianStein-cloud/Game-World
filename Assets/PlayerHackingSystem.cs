@@ -50,6 +50,7 @@ public class PlayerHackingSystem : MonoBehaviour
     [SerializeField] AudioClip hackingDoneClip, scanningCompleteClip, doingScanningClip;
 
     [SerializeField] Material hackingShader;
+    [SerializeField] Animator panelAnim;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -186,7 +187,10 @@ public class PlayerHackingSystem : MonoBehaviour
     {
         ToggleNametags(true);
         hackingUI.SetActive(true);
+        PostProcessingHandler.SetChromaticAberration(0.5f, 1f);
+        PostProcessingHandler.SetLensDistortion(0.5f, 0.5f);
         //HighlightZombies(true);
+        panelAnim.SetBool("Hacking", true);
     }
 
     void StopHacking()
@@ -194,10 +198,13 @@ public class PlayerHackingSystem : MonoBehaviour
         hackingTarget?.EndOutline();
         ToggleNametags(false);
         hackingUI.SetActive(false);
+        PostProcessingHandler.SetChromaticAberration(0.5f, 0.05f);
+        PostProcessingHandler.SetLensDistortion(0.5f, 0f);
         //HighlightZombies(false);
 
         UpdateHackingTargetIndicator(null);
         hackingTarget = null;
+        panelAnim.SetBool("Hacking", false);
     }
 
     void BeginScanning()

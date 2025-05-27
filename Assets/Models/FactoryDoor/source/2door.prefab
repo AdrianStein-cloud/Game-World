@@ -235,9 +235,10 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  <HovertextOffset>k__BackingField: {x: 0.5, y: 1, z: 0}
   lockCheckerComponent: {fileID: 2322612791961473567}
-  nametext: 
-  actiontext: 
+  nametext: Door
+  actiontext: Open
 --- !u!65 &4562887746049774968
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -407,9 +408,10 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  <HovertextOffset>k__BackingField: {x: -0.5, y: 1, z: 0}
   lockCheckerComponent: {fileID: 5109288887073964939}
-  nametext: 
-  actiontext: 
+  nametext: Door
+  actiontext: Open
 --- !u!65 &4817642503808560807
 BoxCollider:
   m_ObjectHideFlags: 0
