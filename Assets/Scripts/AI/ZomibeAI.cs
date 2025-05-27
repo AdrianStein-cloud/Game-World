@@ -8,6 +8,7 @@ using System.Collections;
 using UnityEditor.UI;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.UIElements;
 
 public class ZomibeAI : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class ZomibeAI : MonoBehaviour
     public zBehaviour _iState;
     public int _runMultiplier;
     private int _runFactor;
-    private Vector3 _targetPosition;
+    public Vector3 _targetPosition;
     private Vector3 _moveTargetPosition;
     private NavMeshAgent _navMeshAgent;
     private Vision _vision;
@@ -62,7 +63,10 @@ public class ZomibeAI : MonoBehaviour
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.speed = _speed * _runFactor;
         _zSound = GetComponent<ZombieSound>();
+        anim = GetComponent<Animator>();
         ZombieManager.Instance?.Register(this);
+        if(_patrolPath.Count > 0) _targetPosition = _patrolPath[0];
+        else _targetPosition = transform.position;
 
     }
     void Awake()
@@ -71,7 +75,6 @@ public class ZomibeAI : MonoBehaviour
         MakePatrolMachine();
         MakeInvestigateMachine();
         WalkSpeed();
-        anim = GetComponent<Animator>();
         _armLayerWeight = 1;
     }
 
@@ -195,7 +198,7 @@ public class ZomibeAI : MonoBehaviour
     {
         Vector3 diff = target - transform.position;
         diff.y = 0;
-        if(diff.sqrMagnitude < 0.0001f) {
+        if(diff.sqrMagnitude < 0.001f) {
             // The difference is negligible. Consider the agent as already facing.
             return true;
         }
@@ -679,6 +682,7 @@ public class ZomibeAI : MonoBehaviour
     bool SnapOut(){
         if (_freak == false){
             _vision.enabled = true;
+            _vision._see_something = false;
             return true;
         }
         return false;
@@ -728,7 +732,8 @@ public class ZomibeAI : MonoBehaviour
         //Shamble is taking a few steps forward after a chase ends with broken vision
         _fsm.AddState(zBehaviour.Shamble, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.Shamble, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.Shamble, WildGooseChased, zBehaviour.Investigate);
+        //_fsm.AddState(zBehaviour.Shamble, WildGooseChased, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Shamble, WildGooseChased, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.Shamble, Freak, zBehaviour.FreakOut);
         //_fsm.AddState(zBehaviour.Shamble, HearSomething, zBehaviour.Checkout);
     
@@ -738,13 +743,15 @@ public class ZomibeAI : MonoBehaviour
         _fsm.AddState(zBehaviour.Checkout, NearFreakingZ, zBehaviour.SlashAttack);
         //_fsm.AddState(zBehaviour.Checkout, HearSomething, zBehaviour.Checkout);
         _fsm.AddState(zBehaviour.Checkout, PathFucked, zBehaviour.PatrolFSM);
-        _fsm.AddState(zBehaviour.Checkout, WildGooseChased, zBehaviour.Investigate);
+        //_fsm.AddState(zBehaviour.Checkout, WildGooseChased, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.Checkout, WildGooseChased, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.Checkout, Freak, zBehaviour.FreakOut);
 
         //TurnTo is used when the zombie is "touched" by player for now
         _fsm.AddState(zBehaviour.TurnTo, SeeSomething, zBehaviour.Chase);
         _fsm.AddState(zBehaviour.TurnTo, Touched, zBehaviour.TurnTo);
-        _fsm.AddState(zBehaviour.TurnTo, LookedToInvestigate, zBehaviour.Investigate);
+        //_fsm.AddState(zBehaviour.TurnTo, LookedToInvestigate, zBehaviour.Investigate);
+        _fsm.AddState(zBehaviour.TurnTo, LookedToInvestigate, zBehaviour.PatrolFSM);
         _fsm.AddState(zBehaviour.TurnTo, Freak, zBehaviour.FreakOut);
 
         //investigate is when the zombie starts looking around a couple of times because it thought there was something there
@@ -779,7 +786,7 @@ public class ZomibeAI : MonoBehaviour
     Sub State Machines
     */
     private void MakePatrolMachine(){
-        _patrolFsm = new FSM(zBehaviour.Patrol);
+        _patrolFsm = new FSM(zBehaviour.LookOut);
 
         _patrolFsm.AddState(zBehaviour.Patrol, WildGooseChase, zBehaviour.LookAt);
         _patrolFsm.AddState(zBehaviour.LookAt, LookingAtPatrolPoint, zBehaviour.Wait);
@@ -799,6 +806,7 @@ public class ZomibeAI : MonoBehaviour
         _investigateFsm.AddState(zBehaviour.TurnTo, Turned, zBehaviour.LookOut);
         _investigateFsm.AddState(zBehaviour.TurnTo, GotTo, zBehaviour.LookOut);
         _investigateFsm.AddState(zBehaviour.GoTo, GotTo, zBehaviour.TurnTo);
+        _investigateFsm.AddState(zBehaviour.GoTo, PathFucked, zBehaviour.LookOut);
 
         //add behaviours
         _investigateFsm.AddBehaviour(zBehaviour.LookOut, RLook2);
