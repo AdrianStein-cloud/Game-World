@@ -135,6 +135,10 @@ public class ZomibeAI : MonoBehaviour
         if (_ztarget != null) _ztarget.Strike();
         _ztarget = null;
     }
+    void Bite() {
+        _vision._target.GetComponent<PlayerMovement>().StopMovement(_vision.transform.position);
+        FindFirstObjectByType<CinemachineController>().LookAt(_vision.transform.position);
+    }
     /*
     CONTROLLER STUFF, maybe it should be in it's own script one day
     */
@@ -484,6 +488,7 @@ public class ZomibeAI : MonoBehaviour
     void Attack(){
         if (_attack == 0){
             _attack = 1;
+            Bite();
         }
         TurnToTarget();
     }

@@ -136,6 +136,7 @@ public class CinemachineController : MonoBehaviour
         set => noiseProperties.Enable = value;
     }
 
+    CinemachineBrain brain;
     CinemachineRecomposer recomposer;
     CinemachinePanTilt panTilt;
     CinemachineBasicMultiChannelPerlin noise;
@@ -164,6 +165,8 @@ public class CinemachineController : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 144;
+
+        brain = GetComponent<CinemachineBrain>();
 
         var vc = assignables.VirtualCamera;
         recomposer = vc.GetComponent<CinemachineRecomposer>();
@@ -209,6 +212,17 @@ public class CinemachineController : MonoBehaviour
         playerInputs.Quickturn.SubscribeToAllActions(Quickturn);
         playerInputs.Zoom.SubscribeToAllActions(Zoom);
         playerInputs.Freelook.SubscribeToAllActions(Freelook);
+    }
+
+    public async void LookAt(Vector3 position)
+    {
+        brain.enabled = false;
+
+        while (true)
+        {
+            Camera.main.transform.LookAt(position);
+            await Awaitable.NextFrameAsync();
+        }
     }
 
     public void LeanLeft(InputAction.CallbackContext context)
