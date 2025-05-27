@@ -9,4 +9,9 @@ public class RequiredItem : MonoBehaviour, ILockChecker
     {
         return requireHoldingItem ? !PlayerSimpleInventory.Instance.HoldsItem(requiredItem) : !PlayerSimpleInventory.Instance.ContainsItem(requiredItem);
     }
+
+    public void LockedInteract()
+    {
+        
+    }
 }

@@ -61,4 +61,8 @@ public class ChemistrySet : MonoBehaviour, ILockChecker
     {
         return !mixed1 || !mixed2 || !mixed3;
     }
+
+    public void LockedInteract()
+    {
+    }
 }
