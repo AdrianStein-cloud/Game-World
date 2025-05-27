@@ -39,7 +39,7 @@ MonoBehaviour:
   depthExtent: 200
   screenResolutionPercentage: 20
   volumeSliceCount: 128
-  denoiseMode: 3
+  denoiseMode: 2
   sampleOffsetWeight: 1
   autoSliceDistribution: 1
   sliceDistributionUniformity: 1
