@@ -793,6 +793,7 @@ public class ZomibeAI : MonoBehaviour
         _patrolFsm.AddState(zBehaviour.LookAt, LookingAtPatrolPoint, zBehaviour.Wait);
         _patrolFsm.AddState(zBehaviour.Wait, TimeOut, zBehaviour.LookOut);
         _patrolFsm.AddState(zBehaviour.LookOut, Looked, zBehaviour.Patrol);
+        _patrolFsm.AddState(zBehaviour.Patrol, PathFucked, zBehaviour.SlashAttack);
 
         //add behaviours
         _patrolFsm.AddBehaviour(zBehaviour.Wait, Wait);
