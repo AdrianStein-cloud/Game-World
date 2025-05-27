@@ -10,12 +10,14 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject menu;
     [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject deathMenu;
     [SerializeField] SliderSetting gammaSetting;
     [SerializeField] Button resumeButton;
     [SerializeField] Button optionsButton;
     [SerializeField] Button exitButton;
     [SerializeField] Button backButton;
     [SerializeField] Image background;
+    [SerializeField] GameObject bloodscreen;
 
     PlayerInput playerInput;
     bool isPaused = true;
@@ -80,5 +82,32 @@ public class PauseMenu : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Player");
         pauseMenu.SetActive(false);
         Cursor.visible = false;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void Hit()
+    {
+        bloodscreen.gameObject.SetActive(true);
+    }
+
+    bool once = false;
+    public void Die()
+    {
+        if (once) return;
+        once = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        deathMenu.SetActive(true);
+        deathMenu.GetComponent<Animator>().SetTrigger("Fade");
     }
 }
