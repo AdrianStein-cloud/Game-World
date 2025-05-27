@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimelineAction : MonoBehaviour
 {
@@ -8,5 +9,10 @@ public class TimelineAction : MonoBehaviour
     public void SceneTransition(int sceneIndex)
     {
         Initiate.Fade(sceneIndex, Color.black, fadeInMultiplier, fadeOutMultiplier);
+    }
+
+    public void SceneTransitionImmediate(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
     }
 }
