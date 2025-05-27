@@ -224,6 +224,7 @@ public class PlayerMovement : MonoBehaviour
     bool readyToSlide;
     bool readyToDash;
     bool slidingHorizontal;
+    bool stopMovement;
 
     float wallrunGravity;
 
@@ -271,6 +272,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (stopMovement)
+        {
+            return;
+        }
         CheckRunning();
         CheckWall();
         CheckWallrunning();
@@ -281,6 +286,12 @@ public class PlayerMovement : MonoBehaviour
         OnUpdate?.Invoke();
     }
 
+    public void StopMovement(Vector3 position)
+    {
+        stopMovement = true;
+        inputDirection = Vector2.zero;
+    }
+    
     public void Move(InputAction.CallbackContext context)
     {
         inputDirection = context.ReadValue<Vector2>();
