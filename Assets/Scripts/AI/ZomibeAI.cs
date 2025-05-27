@@ -138,6 +138,9 @@ public class ZomibeAI : MonoBehaviour
     void Bite() {
         _vision._target.GetComponent<PlayerMovement>().StopMovement(_vision.transform.position);
         FindFirstObjectByType<CinemachineController>().LookAt(_vision.transform.position);
+        var menu = FindFirstObjectByType<PauseMenu>();
+        menu.Invoke(nameof(menu.Hit), 2f);
+        menu.Invoke(nameof(menu.Die), 5f);
     }
     /*
     CONTROLLER STUFF, maybe it should be in it's own script one day

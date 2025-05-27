@@ -17,6 +17,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Button exitButton;
     [SerializeField] Button backButton;
     [SerializeField] Image background;
+    [SerializeField] GameObject bloodscreen;
 
     PlayerInput playerInput;
     bool isPaused = true;
@@ -93,11 +94,17 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void Hit()
+    {
+        bloodscreen.gameObject.SetActive(true);
+    }
+
     bool once = false;
     public void Die()
     {
         if (once) return;
         once = true;
+        Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         deathMenu.SetActive(true);
