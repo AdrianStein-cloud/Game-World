@@ -43310,7 +43310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4718bf0bccdcc4f8d698f12805d8cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runStartSequence: 0
+  runStartSequence: 1
   powerOutageSound: {fileID: 8300000, guid: 478998a70fe2bac458bf2f6c4bb25ea1, type: 3}
   powerOutageAIAnnouncement: {fileID: 8300000, guid: c9d699f76d74d26459f6caa8b0653725, type: 3}
   startupSound: {fileID: 8300000, guid: b09e6f2ee03c30a489bfd68c1e23ea35, type: 3}
