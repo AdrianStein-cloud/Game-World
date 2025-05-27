@@ -9306,7 +9306,7 @@ PrefabInstance:
       objectReference: {fileID: 460125178}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 239
+      value: 263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9548,7 +9548,7 @@ PrefabInstance:
       objectReference: {fileID: 1844744752}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 239
+      value: 263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23927,7 +23927,7 @@ PrefabInstance:
       objectReference: {fileID: 2134960933}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 239
+      value: 263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45372,7 +45372,7 @@ PrefabInstance:
       objectReference: {fileID: 49788559}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 239
+      value: 263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46514,7 +46514,7 @@ PrefabInstance:
       objectReference: {fileID: 723277346}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 239
+      value: 263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -56894,7 +56894,7 @@ PrefabInstance:
       objectReference: {fileID: 1776960932}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 98
+      value: 122
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62491,7 +62491,7 @@ PrefabInstance:
       objectReference: {fileID: 285026837}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 98
+      value: 122
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -65865,6 +65865,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3203965696576105781, guid: bf19ff3b7491f7a459f905d3d234767d, type: 3}
   m_PrefabInstance: {fileID: 1400027519}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1402323545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1402323547}
+  - component: {fileID: 1402323546}
+  m_Layer: 0
+  m_Name: ZombieManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1402323546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402323545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 613d55cc803ef9b4e9e3d5c84aa39170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zombies: []
+--- !u!4 &1402323547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402323545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1403559616 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7423176866137220755, guid: 3f9c28483d914004388374f37b73d6c5, type: 3}
@@ -76367,7 +76412,7 @@ PrefabInstance:
       objectReference: {fileID: 973540896}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 239
+      value: 263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -77669,14 +77714,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 746122444}
     m_Modifications:
-    - target: {fileID: 2322612791961473567, guid: 1156e0c8aefaecd4c980307ad341d620, type: 3}
-      propertyPath: isLocked
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5109288887073964939, guid: 1156e0c8aefaecd4c980307ad341d620, type: 3}
-      propertyPath: isLocked
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6464951493904608278, guid: 1156e0c8aefaecd4c980307ad341d620, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.25
@@ -85028,7 +85065,7 @@ PrefabInstance:
       objectReference: {fileID: 2039811575}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 98
+      value: 122
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -99957,7 +99994,7 @@ PrefabInstance:
       objectReference: {fileID: 1384649423}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 239
+      value: 263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -103867,7 +103904,7 @@ PrefabInstance:
       objectReference: {fileID: 272694099}
     - target: {fileID: 6752770869711989340, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_VersionIndex
-      value: 263
+      value: 287
       objectReference: {fileID: 0}
     - target: {fileID: 6921131377012973194, guid: 57c8e073658c331488062cc73d6a5510, type: 3}
       propertyPath: m_Name
@@ -103973,3 +104010,4 @@ SceneRoots:
   - {fileID: 1414698929}
   - {fileID: 1592161855}
   - {fileID: 822313737}
+  - {fileID: 1402323547}

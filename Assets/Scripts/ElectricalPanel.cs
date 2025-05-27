@@ -17,6 +17,10 @@ public class ElectricalPanel : MonoBehaviour, ILockChecker
         return !PlayerSimpleInventory.Instance.ContainsItem(item);
     }
 
+    public void LockedInteract()
+    {
+    }
+
     public void TurnOn()
     {
         LightFlicker.LightsOn = true;

@@ -316,6 +316,7 @@ public class ZomibeAI : MonoBehaviour
     }
     void Chase(){
         if (_vision._see_something){
+            _zSound.PlaySound(EnemySound.Chase);
             _targetPosition = _vision._target.position;
         }
         MoveToPosition(_targetPosition);
@@ -503,7 +504,7 @@ public class ZomibeAI : MonoBehaviour
             _freak = true;
         }
         if (_timer > 5){
-            _zSound.PlayFromList("freak");
+            _zSound.PlaySound(EnemySound.Freakout);
             _timer = 0;
         }
     }

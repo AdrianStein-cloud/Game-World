@@ -28,7 +28,15 @@ public class Interactable : MonoBehaviour
     public void Interact()
     {
         // If there isn't set any interaction, then we don't want anything to happen on interact.
-        if (IsLocked() || cosmetic) return;
+        if (cosmetic) return;
+        if (IsLocked())
+        {
+            if (lockCheckerComponent != null && lockCheckerComponent is ILockChecker checker)
+            {
+                checker.LockedInteract();
+            }
+            return;
+        }
 
         OnInteract?.Invoke();
         if (once)

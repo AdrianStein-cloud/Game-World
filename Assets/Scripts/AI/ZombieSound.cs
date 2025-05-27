@@ -2,38 +2,69 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ZombieSound : MonoBehaviour
 {
-    [SerializeField] List<AudioClip> _sounds;
-    PlaySound _playSound;
-    private float _timer;
-    private float _targetTime;
-    void Start()
+    [SerializeField] AudioSource footstepSource, otherSource;
+
+    [SerializeField] List<AudioClip> footsteps;
+    [SerializeField] AudioClip bite, idle, chase, slash;
+    [SerializeField] PlaySound freakout;
+
+    float lastFootstep;
+    float minFootstepDelay = 0.15f;
+
+    public void PlayFootstepSound()
     {
+        if (Time.time < lastFootstep + minFootstepDelay) return;
+
+        lastFootstep = Time.time;
+        footstepSource.clip = footsteps[Random.Range(0, footsteps.Count)];
+        footstepSource.pitch = Random.Range(0.85f, 1.15f);
+        footstepSource.Play();
     }
-    void Awake()
+
+    public void PlaySound(EnemySound enemySound)
     {
-        _playSound = GetComponent<PlaySound>();
-    }
-    void Update()
-    {
-        _timer += Time.deltaTime;
-    }
-    public void PlayFromList(string soundName){
-        if (_timer < _targetTime) return;
-        var (index,range,delay) = SoundMap(soundName);
-        if (index == 0 && range == 0 && delay == 0) return;
-        Debug.Log("playing sound no: " + index + ", with a range of: " + range);
-        _playSound.PlayNewSound(_sounds[index], range);
-        _timer = 0;
-        _targetTime = delay;
-    }
-    (int,float,float) SoundMap(string soundName){
-        switch (soundName)
-        {   case "footStep":
-                return (0,0,0);
-            case "freak":
-                return (0, 15, 0);
-            default:
-            return (0,0,0);
+        AudioClip clip = null;
+        switch (enemySound)
+        {
+            case EnemySound.Freakout:
+                otherSource.Stop();
+                freakout.PlayAudio();
+                return;
+            case EnemySound.Bite:
+                clip = bite;
+                break;
+            case EnemySound.Idle:
+                clip = idle;
+                break;
+            case EnemySound.Chase:
+                clip = chase;
+                break;
+            case EnemySound.Slash:
+                clip = slash;
+                break;
         }
+
+        if (enemySound is EnemySound.Idle or EnemySound.Chase) otherSource.loop = true;
+        else otherSource.loop = false;
+
+        PlaySound(clip);
     }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (otherSource.clip == clip) return;
+
+        footstepSource.pitch = Random.Range(0.9f, 1.1f);
+        otherSource.clip = clip;
+        otherSource.Play();
+    }
+}
+
+public enum EnemySound
+{
+    Freakout,
+    Bite,
+    Idle,
+    Chase,
+    Slash
 }
