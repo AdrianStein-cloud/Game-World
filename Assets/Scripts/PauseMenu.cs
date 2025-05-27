@@ -22,6 +22,10 @@ public class PauseMenu : MonoBehaviour
     PlayerInput playerInput;
     bool isPaused = true;
 
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+    }
     private void Start()
     {
         gammaSetting.Init(PostProcessingHandler.GetEffect<LiftGammaGain>().gamma.value[3], SetGamma);
@@ -104,10 +108,10 @@ public class PauseMenu : MonoBehaviour
     {
         if (once) return;
         once = true;
-        Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         deathMenu.SetActive(true);
         deathMenu.GetComponent<Animator>().SetTrigger("Fade");
+        Time.timeScale = 0f;
     }
 }

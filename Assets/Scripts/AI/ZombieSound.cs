@@ -31,6 +31,7 @@ public class ZombieSound : MonoBehaviour
     public void PlaySound(EnemySound enemySound)
     {
         AudioClip clip = null;
+        //Debug.Log("Playing sound: " + enemySound.ToString());
         switch (enemySound)
         {
             case EnemySound.Freakout:
