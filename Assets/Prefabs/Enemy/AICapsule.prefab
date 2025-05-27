@@ -6720,8 +6720,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2d7b78eec1c969e418da56056e7ddc2d, type: 3}
   - {fileID: 8300000, guid: 4ad099d26fe3b134aab942dd81e625ee, type: 3}
   - {fileID: 8300000, guid: cf9f947ca7bbb96499bac2e18784408f, type: 3}
+  idles:
+  - {fileID: 8300000, guid: ed4e9af6730e9374684990facb77f190, type: 3}
+  - {fileID: 8300000, guid: 92c6e09b69bfd94419cf36356a9592ac, type: 3}
+  - {fileID: 8300000, guid: 90041677d9f6de140b0185a49f0064e9, type: 3}
+  - {fileID: 8300000, guid: 6e6b290e5898f554cbcb25537f9a557f, type: 3}
+  - {fileID: 8300000, guid: 0b748230099f0aa4088288d024e444ef, type: 3}
+  - {fileID: 8300000, guid: bcda6494441a2084cac7491da9df563e, type: 3}
+  - {fileID: 8300000, guid: b77146062529a7f4ab598c05034ad406, type: 3}
   bite: {fileID: 8300000, guid: 1fe5a2a32b8e76446b6a112d1033c6ce, type: 3}
-  idle: {fileID: 8300000, guid: 1e86de23327316b498f7165c73bfddee, type: 3}
   chase: {fileID: 8300000, guid: 502a9c39fcfa711469d53706168f3c23, type: 3}
   slash: {fileID: 8300000, guid: 3ec31b41813becf4ba2262d530a1fb29, type: 3}
   freakout: {fileID: 8058797454254785808}
