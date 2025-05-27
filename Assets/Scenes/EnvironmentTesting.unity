@@ -17320,45 +17320,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4283558583091148100, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 594797037}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
---- !u!1 &594797036 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4283558583091148100, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
-  m_PrefabInstance: {fileID: 594797035}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &594797037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 594797036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2b08b4ed79e9844aaf1adfed7fe29cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  once: 0
-  cosmetic: 0
-  OnInteract:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHoverIn:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHoverOut:
-    m_PersistentCalls:
-      m_Calls: []
-  <HovertextOffset>k__BackingField: {x: 0, y: 0, z: 0}
-  lockCheckerComponent: {fileID: 0}
-  nametext: 
-  actiontext: 
-  hackingInfo: {fileID: 11400000, guid: 4987f6bad8dc8684e88ec19438ab2618, type: 2}
-  scanned: 0
 --- !u!4 &594797045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2820783568259664975, guid: 1f2fd84b6ab8a974185a9d06917ff731, type: 3}
@@ -53694,30 +53657,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-      propertyPath: interactionLayer.m_Bits
-      value: 1537
-      objectReference: {fileID: 0}
-    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-      propertyPath: <denyOutlineMaterial>k__BackingField
-      value: 
-      objectReference: {fileID: 2100000, guid: 0f7f39f521a64ef48ab1a6491a18625c, type: 2}
-    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-      propertyPath: <hackOutlineMaterial>k__BackingField
-      value: 
-      objectReference: {fileID: 2100000, guid: 2505e1b2e272af046b74ca4f2f74e151, type: 2}
-    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-      propertyPath: <normalOutlineMaterial>k__BackingField
-      value: 
-      objectReference: {fileID: 2100000, guid: 10368a4ade42f9548b36126b11596d11, type: 2}
-    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-      propertyPath: <notHackedOutlineMaterial>k__BackingField
-      value: 
-      objectReference: {fileID: 2100000, guid: c16684d9fe2a9094cbc15cba7e796012, type: 2}
-    - target: {fileID: 7597738937996643418, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
-      propertyPath: <hackcooldownOutlineMaterial>k__BackingField
-      value: 
-      objectReference: {fileID: 2100000, guid: 52a7376322d1c2c41b600fd25debe349, type: 2}
     - target: {fileID: 7870443602692568768, guid: 5d03421069888a9458ad7f948f6d0803, type: 3}
       propertyPath: m_Name
       value: Player Container

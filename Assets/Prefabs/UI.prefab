@@ -1423,7 +1423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: F
+  m_text: E
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b32c35f31e24984fb4025cc86a260c3, type: 2}
   m_sharedMaterial: {fileID: -3179098083946525969, guid: 0b32c35f31e24984fb4025cc86a260c3, type: 2}
@@ -2528,6 +2528,7 @@ GameObject:
   - component: {fileID: 4914220786155650737}
   - component: {fileID: 8350017803621637459}
   - component: {fileID: 8061522254932835580}
+  - component: {fileID: 1209569967139410987}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -2575,7 +2576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1764706, g: 0.91372555, b: 0.92549026, a: 0.15294118}
+  m_Color: {r: 0.1764706, g: 0.91372555, b: 0.92549026, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2592,6 +2593,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1209569967139410987
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4318755519775357654}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aa5567557efe2ed4ca22b54d9821ff90, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4328670964309944170
 GameObject:
   m_ObjectHideFlags: 0

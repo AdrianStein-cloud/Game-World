@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 4746115429944567787}
   - component: {fileID: 7673458013607966846}
   - component: {fileID: 6256709976588184363}
+  - component: {fileID: 5818535259337750032}
   m_Layer: 10
   m_Name: R_2
   m_TagString: Untagged
@@ -279,9 +280,26 @@ MonoBehaviour:
   OnHoverOut:
     m_PersistentCalls:
       m_Calls: []
+  <HovertextOffset>k__BackingField: {x: 0, y: 1, z: 0}
   lockCheckerComponent: {fileID: 3117582002316614580}
-  nametext: 
-  actiontext: 
+  nametext: Door
+  actiontext: Open
+--- !u!208 &5818535259337750032
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4299621407357635741}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.544, y: 1.1700001, z: 0.015}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.545, y: 1.1700001, z: -0.031000001}
+  m_TimeToStationary: 0.5
 --- !u!1 &6242312135393320621
 GameObject:
   m_ObjectHideFlags: 0

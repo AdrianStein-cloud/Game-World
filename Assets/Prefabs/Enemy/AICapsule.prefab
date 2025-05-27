@@ -6445,6 +6445,7 @@ GameObject:
   - component: {fileID: -3538119458509015866}
   - component: {fileID: 8392455025756227682}
   - component: {fileID: 7093027926869591244}
+  - component: {fileID: 8312396095475360605}
   m_Layer: 11
   m_Name: AICapsule
   m_TagString: Zombie
@@ -6549,6 +6550,7 @@ MonoBehaviour:
   _pState: 4
   _iState: 7
   _runMultiplier: 2
+  _targetPosition: {x: 0, y: 0, z: 0}
   _freak: 0
 --- !u!95 &8513308133963328125
 Animator:
@@ -6706,6 +6708,35 @@ MonoBehaviour:
   _sounds:
   - {fileID: 8300000, guid: 30909655f17a947438950f8f211f64b2, type: 3}
   - {fileID: 8300000, guid: 30909655f17a947438950f8f211f64b2, type: 3}
+--- !u!114 &8312396095475360605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283558583091148100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b08b4ed79e9844aaf1adfed7fe29cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  once: 0
+  cosmetic: 0
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverIn:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHoverOut:
+    m_PersistentCalls:
+      m_Calls: []
+  <HovertextOffset>k__BackingField: {x: 0, y: 0, z: 0}
+  lockCheckerComponent: {fileID: 0}
+  nametext: 
+  actiontext: 
+  hackingInfo: {fileID: 11400000, guid: 4987f6bad8dc8684e88ec19438ab2618, type: 2}
+  scanned: 0
 --- !u!1 &4337906599933670796
 GameObject:
   m_ObjectHideFlags: 0
