@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject menu;
     [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject deathMenu;
     [SerializeField] SliderSetting gammaSetting;
     [SerializeField] Button resumeButton;
     [SerializeField] Button optionsButton;
@@ -80,5 +81,26 @@ public class PauseMenu : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Player");
         pauseMenu.SetActive(false);
         Cursor.visible = false;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    bool once = false;
+    public void Die()
+    {
+        if (once) return;
+        once = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        deathMenu.SetActive(true);
+        deathMenu.GetComponent<Animator>().SetTrigger("Fade");
     }
 }
