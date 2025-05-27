@@ -5,10 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using System.Collections;
-using UnityEditor.UI;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.UIElements;
 
 public class ZomibeAI : MonoBehaviour
 {
