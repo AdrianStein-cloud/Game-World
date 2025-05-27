@@ -565,7 +565,8 @@ public class ZomibeAI : MonoBehaviour
             WalkSpeed();
             ResetCounts();
             _count = Random.Range(4,6);
-            _look = Random.Range(1,5)*2;
+            _look = 10;//Random.Range(1,5)*2;
+            _patrolFsm.SetState(zBehaviour.LookOut);
             _investigateFsm.SetState(zBehaviour.LookOut);
             Debug.Log("wildGooseChase2");
             return true;
@@ -792,6 +793,7 @@ public class ZomibeAI : MonoBehaviour
         _patrolFsm.AddState(zBehaviour.LookAt, LookingAtPatrolPoint, zBehaviour.Wait);
         _patrolFsm.AddState(zBehaviour.Wait, TimeOut, zBehaviour.LookOut);
         _patrolFsm.AddState(zBehaviour.LookOut, Looked, zBehaviour.Patrol);
+        _patrolFsm.AddState(zBehaviour.Patrol, PathFucked, zBehaviour.SlashAttack);
 
         //add behaviours
         _patrolFsm.AddBehaviour(zBehaviour.Wait, Wait);
