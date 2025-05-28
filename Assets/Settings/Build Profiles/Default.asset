@@ -23,6 +23,8 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/MainMenu.unity
   - m_enabled: 1
+    m_path: Assets/Scenes/Intro/Intro.unity
+  - m_enabled: 1
     m_path: Assets/Scenes/EnvironmentTesting.unity
   - m_enabled: 1
     m_path: Assets/Scenes/OfficeLevel.unity

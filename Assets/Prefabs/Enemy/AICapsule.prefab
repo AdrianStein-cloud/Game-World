@@ -82,7 +82,7 @@ MonoBehaviour:
   _field_of_view: 90
   _layerMask:
     serializedVersion: 2
-    m_Bits: 321
+    m_Bits: 1345
 --- !u!1 &124676022558201777
 GameObject:
   m_ObjectHideFlags: 0
